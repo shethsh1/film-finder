@@ -15,10 +15,10 @@ const App = () => {
       
       `}
     >
-      <Header />
-      <Navigation />
       <main>
         <BrowserRouter>
+          <Header />
+          <Navigation />
           <Routes>
             <Route path="/" element={<Hi />}></Route>
           </Routes>

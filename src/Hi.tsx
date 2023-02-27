@@ -2,11 +2,10 @@ import { useContext } from "react";
 import { ThemeContext } from "./context/Theme/ThemeContext";
 
 const Hi = () => {
-  const { theme, toggleTheme } = useContext(ThemeContext);
+  const { theme } = useContext(ThemeContext);
   console.log(theme);
   return (
     <div>
-      <h1 className="text-light-secondary">{theme}</h1>
       <div
         className={`${
           theme === "light" ? "bg-light-primary" : "bg-dark-primary"
