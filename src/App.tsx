@@ -1,11 +1,11 @@
-import React from 'react';
-
-function App() {
+import { ThemeProvider } from "./context/Theme/ThemeProvider";
+import RouteComponent from "./RouteComponent";
+const App = () => {
   return (
-    <div className="App">
-      Hello World
-    </div>
+    <ThemeProvider>
+      <RouteComponent />
+    </ThemeProvider>
   );
-}
+};
 
 export default App;
