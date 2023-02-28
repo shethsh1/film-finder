@@ -1,10 +1,19 @@
-import React from "react";
+import classNames from "classnames";
+import React, { useContext } from "react";
 import { NavLink } from "react-router-dom";
-
+import { ThemeContext } from "../../context/Theme/ThemeContext";
 export const Navigation = () => {
+  const { theme } = useContext(ThemeContext);
+  const isDarkMode = theme === "dark" ? true : false;
+
   return (
     <nav>
-      <ul className="text-light-font-primary flex text-xl gap-8 py-4">
+      <ul
+        className={classNames("flex text-xl gap-8 py-4", {
+          "text-light-font-primary": !isDarkMode,
+          "text-dark-font-primary": isDarkMode,
+        })}
+      >
         <li>
           <NavLink to="/test">Home</NavLink>
         </li>

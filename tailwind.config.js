@@ -15,6 +15,9 @@ module.exports = {
         dark: {
           primary: "#0d1321",
           secondary: "#A0AEC0",
+          font: {
+            primary: "#f0ebd8",
+          },
         },
       },
     },
