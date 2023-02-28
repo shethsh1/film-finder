@@ -4,6 +4,7 @@ import { Route } from "react-router";
 import Hi from "./Hi";
 import { useContext } from "react";
 import { Header, Navigation } from "./components";
+import { Movies } from "./pages/Movies/Movies";
 const App = () => {
   const { theme } = useContext(ThemeContext);
   return (
@@ -21,6 +22,7 @@ const App = () => {
           <Navigation />
           <Routes>
             <Route path="/" element={<Hi />}></Route>
+            <Route path="/movies" element={<Movies />}></Route>
           </Routes>
         </BrowserRouter>
       </main>
