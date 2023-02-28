@@ -1,9 +1,13 @@
 import { useContext } from "react";
 import { ThemeContext } from "./context/Theme/ThemeContext";
+import { useGetPopularMoviesQuery } from "./features/apiSlice";
 
 const Hi = () => {
   const { theme } = useContext(ThemeContext);
-  console.log(theme);
+  const { data: popularMovieData } = useGetPopularMoviesQuery(1);
+
+  console.log(popularMovieData);
+
   return (
     <div>
       <div
