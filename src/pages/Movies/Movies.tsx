@@ -8,6 +8,7 @@ import { NavLink } from "react-router-dom";
 import { CardTooltip } from "../../components";
 export const Movies = () => {
   const movieState = useAppSelector((state) => state.movie.popularMovies);
+  const currentDetails = useAppSelector((state) => state.movie.movieDetails);
   const dispatch = useAppDispatch();
   const { theme } = useContext(ThemeContext);
   const [page, setPage] = useState<number>(1);
@@ -20,7 +21,9 @@ export const Movies = () => {
   useEffect(() => {
     console.log(movieState);
   }, [movieState]);
-  useEffect(() => {});
+  useEffect(() => {
+    console.log(currentDetails);
+  }, [currentDetails]);
   return (
     <section>
       <h3
@@ -33,8 +36,8 @@ export const Movies = () => {
       </h3>
       <div className="flex flex-wrap gap-4 mt-8 w-96 min-w-full text-white text-xs">
         {movieState?.results.map((movie) => (
-          <div className="h-56 basis-36">
-            <CardTooltip className="h-full" text="Hello there!">
+          <div className="h-56 basis-36 card">
+            <CardTooltip className="h-full" text="Hello there!" movie={movie}>
               <NavLink
                 key={movie.id}
                 to="/test"

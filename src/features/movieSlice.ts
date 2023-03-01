@@ -46,7 +46,7 @@ export const getUpcomingMovies = createAsyncThunk(
 	},
 )
 
-export const getMovieDetails = createAsyncThunk(
+export const getMovieDetails: any = createAsyncThunk(
 	'movieDetails/getMovieDetails',
 	async id => {
 		const response = await fetch(
@@ -75,13 +75,14 @@ type Movies = {
     page: number,
     results: Movie[],
     total_pages: number,
-    total_results: number
+    total_results: number,
     
 } 
 
 interface MovieState {
     loading: boolean,
-    popularMovies: Movies | null
+    popularMovies: Movies | null,
+	movieDetails: any
 }
 
 
@@ -90,6 +91,7 @@ export const movieSlice = createSlice({
     initialState: {
         popularMovies: null,
         loading: false,
+		movieDetails: [],
     } as MovieState,
     reducers: {},
     extraReducers: {
@@ -102,6 +104,18 @@ export const movieSlice = createSlice({
         },
         [getPopularMovies.rejected]: state => {
             state.loading = false
+        },
+		[getMovieDetails.pending]: state => {
+            state.loading = true
+        },
+        [getMovieDetails.fulfilled]: (state, action: any) => {
+			console.log(action.payload);
+            state.movieDetails = action.payload
+            state.loading = false
+        },
+        [getMovieDetails.rejected]: state => {
+            state.loading = false
+			
         },
     },
 })

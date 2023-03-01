@@ -1,25 +1,31 @@
 // @ts-nocheck
 import React, { useState, useRef, useEffect } from "react";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { getMovieDetails, Movie } from "../../features/movieSlice";
 import classNames from "classnames";
 
 type CardTooltipProps = {
   children: ReactNode;
   text: string;
   className?: string;
+  movie: Movie;
 };
 
 export const CardTooltip = ({
   children,
   text,
   className,
+  movie,
 }: CardTooltipProps) => {
   let timeout;
   const [showTooltip, setShowTooltip] = useState(false);
   const [direction, setDirection] = useState("right");
   const buttonRef = useRef(null);
+  const dispatch = useAppDispatch();
 
   const toggleTooltip = () => {
     timeout = setTimeout(() => {
+      dispatch(getMovieDetails(movie.id));
       setShowTooltip(true);
     }, 400);
   };
@@ -55,10 +61,10 @@ export const CardTooltip = ({
         <div
           ref={buttonRef}
           className={classNames(
-            "p-4 w-60 h-auto ml-1 bg-gray-800 text-white text-sm rounded-xl absolute mt-2 z-50 top-1/4",
+            "p-4 w-60 h-auto bg-gray-800 text-white text-sm rounded-xl absolute mt-2 z-50 top-1/4",
             {
-              "right-full": direction === "left",
-              "left-full": direction === "right",
+              "right-full mr-1": direction === "left",
+              "left-full ml-1": direction === "right",
             }
           )}
         >
