@@ -53,7 +53,7 @@ export const CardTooltip = ({
 
   return (
     <div
-      className={`${className} relative z-0`}
+      className={`${className} relative`}
       onMouseEnter={toggleTooltip}
       onMouseLeave={hideTooltip}
     >
