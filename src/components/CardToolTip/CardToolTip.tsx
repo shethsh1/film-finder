@@ -3,6 +3,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { getMovieDetails, Movie } from "../../features/movieSlice";
 import classNames from "classnames";
+import { Fade } from "../Animations/Fade";
 
 type CardTooltipProps = {
   children: ReactNode;
@@ -52,16 +53,16 @@ export const CardTooltip = ({
 
   return (
     <div
-      className={`relative ${className}`}
+      className={`${className} relative z-0`}
       onMouseEnter={toggleTooltip}
       onMouseLeave={hideTooltip}
     >
       {children}
-      {showTooltip && (
+      <Fade show={showTooltip}>
         <div
           ref={buttonRef}
           className={classNames(
-            "p-4 w-60 h-auto bg-gray-800 text-white text-sm rounded-xl absolute mt-2 z-50 top-1/4",
+            "p-4 w-60 h-auto bg-gray-800 text-white text-sm rounded-xl absolute mt-2 top-1/4 z-50",
             {
               "right-full mr-1": direction === "left",
               "left-full ml-1": direction === "right",
@@ -84,7 +85,7 @@ export const CardTooltip = ({
             </p>
           </div>
         </div>
-      )}
+      </Fade>
     </div>
   );
 };

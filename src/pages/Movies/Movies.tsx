@@ -5,7 +5,7 @@ import { ThemeContext } from "../../context/Theme/ThemeContext";
 import { getPopularMovies } from "../../features/movieSlice";
 import { useAppSelector, useAppDispatch } from "../../store/hooks";
 import { NavLink } from "react-router-dom";
-import { CardTooltip } from "../../components";
+import { CardTooltip, Fade } from "../../components";
 export const Movies = () => {
   const movieState = useAppSelector((state) => state.movie.popularMovies);
   const currentDetails = useAppSelector((state) => state.movie.movieDetails);
