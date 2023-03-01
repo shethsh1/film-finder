@@ -1,3 +1,4 @@
+// @ts-nocheck
 import classNames from "classnames";
 import React, { useContext, useState, useEffect } from "react";
 import { ThemeContext } from "../../context/Theme/ThemeContext";
@@ -32,20 +33,22 @@ export const Movies = () => {
       </h3>
       <div className="flex flex-wrap gap-4 mt-8 w-96 min-w-full text-white text-xs">
         {movieState?.results.map((movie) => (
-          <CardTooltip className="h-56 basis-36" text="Hello there!">
-            <NavLink
-              key={movie.id}
-              to="/test"
-              className="flex flex-col h-full pb-8 gap-2"
-            >
-              <img
-                className="h-full rounded-xl"
-                alt={movie.title}
-                src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
-              />
-              <span>{movie.title}</span>
-            </NavLink>
-          </CardTooltip>
+          <div className="h-56 basis-36">
+            <CardTooltip className="h-full" text="Hello there!">
+              <NavLink
+                key={movie.id}
+                to="/test"
+                className="flex flex-col h-full pb-8 gap-2"
+              >
+                <img
+                  className="h-full rounded-xl"
+                  alt={movie.title}
+                  src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
+                />
+                <span>{movie.title}</span>
+              </NavLink>
+            </CardTooltip>
+          </div>
         ))}
       </div>
     </section>

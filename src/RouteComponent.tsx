@@ -10,10 +10,13 @@ const App = () => {
   const { theme } = useContext(ThemeContext);
   return (
     <div
-      className={classNames("overflow-auto min-h-screen py-6 px-10", {
-        "bg-light-primary": theme === "light",
-        "bg-dark-primary": theme === "dark",
-      })}
+      className={classNames(
+        "overflow-auto min-h-screen py-6 px-10 overflow-x-hidden",
+        {
+          "bg-light-primary": theme === "light",
+          "bg-dark-primary": theme === "dark",
+        }
+      )}
     >
       <main>
         <BrowserRouter>
