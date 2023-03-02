@@ -8,7 +8,6 @@ import { NavLink } from "react-router-dom";
 import { CardTooltip, Fade, MediaCard } from "../../components";
 export const Movies = () => {
   const movieState = useAppSelector((state) => state.movie.popularMovies);
-  const currentDetails = useAppSelector((state) => state.movie.movieDetails);
   const dispatch = useAppDispatch();
   const { theme } = useContext(ThemeContext);
   const isDarkMode = theme === "dark" ? true : false;
@@ -19,12 +18,6 @@ export const Movies = () => {
     dispatch(getPopularMovies(1));
   }, [dispatch, page]);
 
-  useEffect(() => {
-    console.log(movieState);
-  }, [movieState]);
-  useEffect(() => {
-    console.log(currentDetails);
-  }, [currentDetails]);
   return (
     <section>
       <h3

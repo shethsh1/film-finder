@@ -71,6 +71,17 @@ interface Movie {
 
 }
 
+interface interfaceMovieDetail {
+    id: number,
+    title: string,
+    vote_average: number,
+    genres: { id: number, name: string}[],
+    overview: string, 
+    status: string,
+    release_date: string
+
+}
+
 type Movies = {
     page: number,
     results: Movie[],
@@ -82,7 +93,7 @@ type Movies = {
 interface MovieState {
     loading: boolean,
     popularMovies: Movies | null,
-	movieDetails: any
+	movieDetails: interfaceMovieDetail | null
 }
 
 
@@ -91,7 +102,7 @@ export const movieSlice = createSlice({
     initialState: {
         popularMovies: null,
         loading: false,
-		movieDetails: [],
+		movieDetails: null,
     } as MovieState,
     reducers: {},
     extraReducers: {
@@ -109,7 +120,6 @@ export const movieSlice = createSlice({
             state.loading = true
         },
         [getMovieDetails.fulfilled]: (state, action: any) => {
-			console.log(action.payload);
             state.movieDetails = action.payload
             state.loading = false
         },

@@ -22,8 +22,10 @@ export const CardTooltip = ({
 }: CardTooltipProps) => {
   let timeout: any;
   const { theme } = useContext(ThemeContext);
+  const details = useAppSelector((state) => state.movie.movieDetails);
   const isDarkMode = theme === "dark" ? true : false;
   const [showTooltip, setShowTooltip] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [direction, setDirection] = useState("right");
   const buttonRef = useRef<HTMLDivElement | null>(null);
   const dispatch = useAppDispatch();
@@ -37,10 +39,13 @@ export const CardTooltip = ({
 
   const hideTooltip = () => {
     clearInterval(timeout);
-    setShowTooltip(false);
+    setTimeout(() => {
+      setShowTooltip(false);
+    }, 400);
   };
 
   useEffect(() => {
+    setLoading(true);
     if (buttonRef.current && showTooltip) {
       const buttonRect = buttonRef.current.getBoundingClientRect();
       const spaceRight = window.innerWidth - buttonRect.right;
@@ -54,6 +59,10 @@ export const CardTooltip = ({
       }
     }
   }, [showTooltip]);
+
+  useEffect(() => {
+    setLoading(false);
+  }, [details]);
 
   return (
     <div
@@ -77,24 +86,28 @@ export const CardTooltip = ({
             }
           )}
         >
-          <div>
-            <h1 className="text-md font-bold">
-              The Simpsons Meet the Bocellis in Feliz Navidad
-            </h1>
-            {/* <h1>Raccoon Rascal</h1>
-            <p>Other names: Araiguma Rascal; Raccoon Rascal</p>
-            <p>Scores: 6.74 / 834 reviews</p>
-            <p>Date aired: Jan 02, 1977 to Dec 25, 1977</p>
-            <p>Duration: 26 min</p>
-            <p>Status: Releasing</p>
-            <p>Genre: Drama, Slice of Life</p>
-            <p>
-              Life in Brailsford Junction, Wisconsin, is simple and quiet for
-              Sterling North, who spends most of his free time caring for
-              animals. With his mother in the hospital and his brother fighting
-              on the Western Front, the boy lives only with his father and...
-            </p> */}
-          </div>
+          {!loading ? (
+            <div>
+              <h1 className="text-md font-bold">{details?.title}</h1>
+              <div className="text-xs mt-2">
+                <p className="mb-2">{details?.overview}</p>
+                <p>Score: {details?.vote_average}</p>
+                <p>Status: {details?.status}</p>
+                <p>Release date: {details?.release_date}</p>
+              </div>
+
+              <div className="genre mt-2 text-xs">
+                <div className="inline-flex gap-1 flex-wrap">
+                  <span className="font-bold">Genre:</span>
+                  {details?.genres.map((o) => (
+                    <span key={o.id}>{o.name}</span>
+                  ))}
+                </div>
+              </div>
+            </div>
+          ) : (
+            <div>loading</div>
+          )}
         </div>
       </Fade>
     </div>
