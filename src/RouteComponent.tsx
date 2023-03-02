@@ -4,16 +4,16 @@ import { Route } from "react-router";
 import Hi from "./Hi";
 import { useContext } from "react";
 import { Header, Navigation } from "./components";
+import { Movies } from "./pages/Movies/Movies";
+import classNames from "classnames";
 const App = () => {
   const { theme } = useContext(ThemeContext);
   return (
     <div
-      className={`overflow-auto min-h-screen ${
-        theme === "light" ? "bg-light-primary" : "bg-dark-primary"
-      }
-        py-6 px-10
-      
-      `}
+      className={classNames("min-h-screen py-6 px-10 overflow-hidden", {
+        "bg-light-primary": theme === "light",
+        "bg-dark-primary": theme === "dark",
+      })}
     >
       <main>
         <BrowserRouter>
@@ -21,6 +21,7 @@ const App = () => {
           <Navigation />
           <Routes>
             <Route path="/" element={<Hi />}></Route>
+            <Route path="/movies" element={<Movies />}></Route>
           </Routes>
         </BrowserRouter>
       </main>

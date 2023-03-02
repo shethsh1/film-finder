@@ -1,9 +1,19 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { ThemeContext } from "./context/Theme/ThemeContext";
+import { getPopularMovies } from "./features/movieSlice";
+import { useAppSelector, useAppDispatch } from "./store/hooks";
 
 const Hi = () => {
   const { theme } = useContext(ThemeContext);
-  console.log(theme);
+
+  const movies = useAppSelector((state) => state.movie.popularMovies);
+  const dispatch = useAppDispatch();
+  console.log(movies);
+
+  useEffect(() => {
+    dispatch(getPopularMovies(1));
+  }, [dispatch]);
+
   return (
     <div>
       <div

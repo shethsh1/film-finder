@@ -7,9 +7,20 @@
 
 body {
   font-family: Manrope, Poppins, sans-serif;
+  overflow-y: auto;
   overflow-x: hidden;
 }
 
 * {
   box-sizing: border-box;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #3e5c76;
+  border-radius: 8rem;
+}
+
+::-webkit-scrollbar {
+  background: #7a92cb;
+  width: 0.4rem;
 }
