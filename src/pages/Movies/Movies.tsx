@@ -4,8 +4,7 @@ import React, { useContext, useState, useEffect } from "react";
 import { ThemeContext } from "../../context/Theme/ThemeContext";
 import { getPopularMovies, getMovieDetails } from "../../features/movieSlice";
 import { useAppSelector, useAppDispatch } from "../../store/hooks";
-import { NavLink } from "react-router-dom";
-import { CardTooltip, Fade, MediaCard } from "../../components";
+import { MediaCard, PaginationButtons } from "../../components";
 export const Movies = () => {
   const movieState = useAppSelector((state) => state.movie.popularMovies);
   const dispatch = useAppDispatch();
@@ -14,8 +13,12 @@ export const Movies = () => {
 
   const [page, setPage] = useState<number>(1);
 
+  const handlePageChange = (page: number) => {
+    setPage(page);
+  };
+
   useEffect(() => {
-    dispatch(getPopularMovies(1));
+    dispatch(getPopularMovies(page));
   }, [dispatch, page]);
 
   return (
@@ -28,6 +31,9 @@ export const Movies = () => {
       >
         Popular Movies
       </h3>
+
+      <PaginationButtons page={page} handlePageChange={handlePageChange} />
+
       <div
         className={classNames(
           "flex flex-wrap gap-x-4 gap-y-6 mt-8 w-96 min-w-full text-xs",
