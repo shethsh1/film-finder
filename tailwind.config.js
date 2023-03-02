@@ -7,14 +7,14 @@ module.exports = {
       colors: {
         light: {
           primary: "#7a92cb",
-          secondary: "#718096",
+          secondary: "#1d2d44",
           font: {
             primary: "#f0ebd8",
           },
         },
         dark: {
           primary: "#0d1321",
-          secondary: "#A0AEC0",
+          secondary: "#1d2d44",
           font: {
             primary: "#f0ebd8",
           },

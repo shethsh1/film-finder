@@ -1,32 +1,36 @@
-// @ts-nocheck
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useContext } from "react";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { getMovieDetails, Movie } from "../../features/movieSlice";
 import classNames from "classnames";
 import { Fade } from "../Animations/Fade";
+import { ThemeContext } from "../../context/Theme/ThemeContext";
 
 type CardTooltipProps = {
-  children: ReactNode;
+  children: React.ReactNode;
   text: string;
   className?: string;
-  movie: Movie;
+  id: number;
+  detailMethod: any;
 };
 
 export const CardTooltip = ({
   children,
   text,
   className,
-  movie,
+  id,
+  detailMethod,
 }: CardTooltipProps) => {
-  let timeout;
+  let timeout: any;
+  const { theme } = useContext(ThemeContext);
+  const isDarkMode = theme === "dark" ? true : false;
   const [showTooltip, setShowTooltip] = useState(false);
   const [direction, setDirection] = useState("right");
-  const buttonRef = useRef(null);
+  const buttonRef = useRef<HTMLDivElement | null>(null);
   const dispatch = useAppDispatch();
 
   const toggleTooltip = () => {
     timeout = setTimeout(() => {
-      dispatch(getMovieDetails(movie.id));
+      dispatch(detailMethod(id));
       setShowTooltip(true);
     }, 400);
   };
@@ -62,10 +66,14 @@ export const CardTooltip = ({
         <div
           ref={buttonRef}
           className={classNames(
-            "p-4 w-60 h-auto bg-gray-800 text-white text-sm rounded-xl absolute mt-2 top-1/4 z-50",
+            "p-4 w-60 h-auto text-sm rounded-xl absolute mt-2 top-1/4 z-50",
             {
               "right-full mr-1": direction === "left",
               "left-full ml-1": direction === "right",
+              "text-dark-font-primary": isDarkMode,
+              "text-light-font-primary": !isDarkMode,
+              "bg-dark-secondary": isDarkMode,
+              "bg-light-secondary": !isDarkMode,
             }
           )}
         >
