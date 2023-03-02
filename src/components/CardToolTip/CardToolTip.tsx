@@ -78,7 +78,10 @@ export const CardTooltip = ({
           )}
         >
           <div>
-            <h1>Raccoon Rascal</h1>
+            <h1 className="text-md font-bold">
+              The Simpsons Meet the Bocellis in Feliz Navidad
+            </h1>
+            {/* <h1>Raccoon Rascal</h1>
             <p>Other names: Araiguma Rascal; Raccoon Rascal</p>
             <p>Scores: 6.74 / 834 reviews</p>
             <p>Date aired: Jan 02, 1977 to Dec 25, 1977</p>
@@ -90,7 +93,7 @@ export const CardTooltip = ({
               Sterling North, who spends most of his free time caring for
               animals. With his mother in the hospital and his brother fighting
               on the Western Front, the boy lives only with his father and...
-            </p>
+            </p> */}
           </div>
         </div>
       </Fade>
