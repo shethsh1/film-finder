@@ -5,6 +5,7 @@ import { ThemeContext } from "../../context/Theme/ThemeContext";
 import { getPopularMovies, getMovieDetails } from "../../features/movieSlice";
 import { useAppSelector, useAppDispatch } from "../../store/hooks";
 import { MediaCard, PaginationButtons } from "../../components";
+import styles from "./Movies.module.css";
 export const Movies = () => {
   const movieState = useAppSelector((state) => state.movie.popularMovies);
   const dispatch = useAppDispatch();
@@ -36,7 +37,7 @@ export const Movies = () => {
 
       <div
         className={classNames(
-          "flex flex-wrap gap-x-4 gap-y-6 mt-8 w-96 min-w-full text-xs",
+          `${styles.cardExtraHeight} flex flex-wrap gap-x-4 gap-y-6 mt-8 w-96 min-w-full text-xs card-test`,
           {
             "text-dark-font-primary": isDarkMode,
             "text-light-font-primary": !isDarkMode,
