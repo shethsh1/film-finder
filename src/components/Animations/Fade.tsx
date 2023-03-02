@@ -1,33 +1,25 @@
-import React, { useState, useEffect } from "react";
-import classNames from "classnames";
-
-interface Props {
-  show: boolean;
-  children: React.ReactNode;
-}
-
-export const Fade: React.FC<Props> = ({ show, children }) => {
-  const [isVisible, setIsVisible] = useState(show);
+//@ts-nocheck
+import React, { useState, useEffect, cloneElement } from "react";
+const duration = 300;
+export const Fade = ({ children, show }) => {
+  const [opacity, setOpacity] = useState(0);
 
   useEffect(() => {
     if (show) {
-      setIsVisible(true);
-    } else {
       const timer = setTimeout(() => {
-        setIsVisible(false);
-      }, 300);
+        setOpacity(1);
+      }, 10);
       return () => clearTimeout(timer);
+    } else {
+      setOpacity(0);
     }
   }, [show]);
 
-  return (
-    <div
-      className={classNames(`transition-opacity duration-300`, {
-        "opacity-0": !isVisible,
-        "opacity-100": isVisible,
-      })}
-    >
-      {children}
-    </div>
-  );
+  const fadeStyles = {
+    opacity: opacity,
+    transition: `opacity ${duration}ms`,
+    visibility: show ? "visible" : "hidden",
+  };
+
+  return cloneElement(children, { style: fadeStyles });
 };
