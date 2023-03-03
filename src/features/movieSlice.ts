@@ -12,7 +12,7 @@ export const getPopularMovies: any = createAsyncThunk(
 	},
 )
 
-export const getTopRatedMovies = createAsyncThunk(
+export const getTopRatedMovies: any = createAsyncThunk(
 	'topRatedMovies/getTopRatedMovies',
 	async page => {
 		const response = await fetch(
@@ -23,19 +23,9 @@ export const getTopRatedMovies = createAsyncThunk(
 	},
 )
 
-export const getMovieDiscover = createAsyncThunk(
-	'movieDiscover/getMovieDiscover',
-	async () => {
-		const response = await fetch(
-			`
-         https://api.themoviedb.org/3/discover/movie?api_key=69a8a5f5d8ff53eb47ca412ef26ae76f&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_watch_monetization_types=flatratehttps://api.themoviedb.org/3/discover/movie?api_key=${process.env.REACT_APP_MOVIE_DB_KEY}&language=en-US&sort_by=revenue.desc&include_adult=false&include_video=false&page=1&with_watch_monetization_types=flatrate`,
-		)
-		const formatResponse = await response.json()
-		return formatResponse
-	},
-)
 
-export const getUpcomingMovies = createAsyncThunk(
+
+export const getUpcomingMovies: any = createAsyncThunk(
 	'upcomingMovies/getUpcomingMovies',
 	async page => {
 		const response = await fetch(
@@ -93,7 +83,8 @@ type Movies = {
 interface MovieState {
     loading: boolean,
     popularMovies: Movies | null,
-	movieDetails: interfaceMovieDetail | null
+	movieDetails: interfaceMovieDetail | null,
+    cardDetailLoading: boolean,
 }
 
 
@@ -103,6 +94,7 @@ export const movieSlice = createSlice({
         popularMovies: null,
         loading: false,
 		movieDetails: null,
+        cardDetailLoading: false,
     } as MovieState,
     reducers: {},
     extraReducers: {
@@ -116,15 +108,35 @@ export const movieSlice = createSlice({
         [getPopularMovies.rejected]: state => {
             state.loading = false
         },
-		[getMovieDetails.pending]: state => {
+        [getTopRatedMovies.pending]: state => {
             state.loading = true
+        },
+        [getTopRatedMovies.fulfilled]: (state, action: PayloadAction<Movies>) => {
+            state.popularMovies = action.payload
+            state.loading = false
+        },
+        [getTopRatedMovies.rejected]: state => {
+            state.loading = false
+        },
+        [getUpcomingMovies.pending]: state => {
+            state.loading = true
+        },
+        [getUpcomingMovies.fulfilled]: (state, action: PayloadAction<Movies>) => {
+            state.popularMovies = action.payload
+            state.loading = false
+        },
+        [getUpcomingMovies.rejected]: state => {
+            state.loading = false
+        },
+		[getMovieDetails.pending]: state => {
+            state.cardDetailLoading = true
         },
         [getMovieDetails.fulfilled]: (state, action: any) => {
             state.movieDetails = action.payload
-            state.loading = false
+            state.cardDetailLoading = false
         },
         [getMovieDetails.rejected]: state => {
-            state.loading = false
+            state.cardDetailLoading = false
 			
         },
     },

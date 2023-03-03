@@ -23,9 +23,9 @@ export const CardTooltip = ({
   let timeout: any;
   const { theme } = useContext(ThemeContext);
   const details = useAppSelector((state) => state.movie.movieDetails);
+  const loading = useAppSelector((state) => state.movie.cardDetailLoading);
   const isDarkMode = theme === "dark" ? true : false;
   const [showTooltip, setShowTooltip] = useState(false);
-  const [loading, setLoading] = useState(true);
   const [direction, setDirection] = useState("right");
   const buttonRef = useRef<HTMLDivElement | null>(null);
   const dispatch = useAppDispatch();
@@ -45,7 +45,6 @@ export const CardTooltip = ({
   };
 
   useEffect(() => {
-    setLoading(true);
     if (buttonRef.current && showTooltip) {
       const buttonRect = buttonRef.current.getBoundingClientRect();
       const spaceRight = window.innerWidth - buttonRect.right;
@@ -59,10 +58,6 @@ export const CardTooltip = ({
       }
     }
   }, [showTooltip]);
-
-  useEffect(() => {
-    setLoading(false);
-  }, [details]);
 
   return (
     <div
