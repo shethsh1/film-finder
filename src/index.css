@@ -24,3 +24,7 @@ body {
   background: #7a92cb;
   width: 0.4rem;
 }
+
+.test-border {
+  border: 2px solid red;
+}

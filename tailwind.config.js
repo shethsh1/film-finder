@@ -8,6 +8,7 @@ module.exports = {
         light: {
           primary: "#7a92cb",
           secondary: "#1d2d44",
+          tertiary: "#d5dfed",
           font: {
             primary: "#f0ebd8",
           },
@@ -15,6 +16,7 @@ module.exports = {
         dark: {
           primary: "#0d1321",
           secondary: "#1d2d44",
+          tertiary: "#d5dfed",
           font: {
             primary: "#f0ebd8",
           },
