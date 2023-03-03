@@ -16,12 +16,7 @@ export const MediaCard = ({
 }: MediaCardTooltipProps) => {
   return (
     <div className="h-56 basis-36 card ">
-      <CardTooltip
-        className="h-full "
-        text="Hello there!"
-        id={id}
-        detailMethod={detailMethod}
-      >
+      <CardTooltip className="h-full" id={id} detailMethod={detailMethod}>
         <NavLink
           key={id}
           to={`/watch/movies/${id}`}

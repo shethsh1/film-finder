@@ -97,7 +97,7 @@ export const Movies = () => {
           }
         )}
       >
-        {movieState?.results.map((movie) => (
+        {movieState?.results?.map((movie) => (
           <MediaCard
             key={movie.id}
             id={movie.id}
