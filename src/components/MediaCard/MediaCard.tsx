@@ -15,9 +15,9 @@ export const MediaCard = ({
   detailMethod,
 }: MediaCardTooltipProps) => {
   return (
-    <div className="h-56 basis-36 card">
+    <div className="h-56 basis-36 card ">
       <CardTooltip
-        className="h-full"
+        className="h-full "
         text="Hello there!"
         id={id}
         detailMethod={detailMethod}
