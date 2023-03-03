@@ -10,6 +10,7 @@ import {
 import { useAppSelector, useAppDispatch } from "../../store/hooks";
 import { MediaCard, PaginationButtons } from "../../components";
 import styles from "./Movies.module.css";
+import { TypeButton } from "../../components";
 
 type PageType = "Trending" | "Top Rated" | "Upcoming";
 
@@ -65,45 +66,24 @@ export const Movies = () => {
           "text-light-font-primary": !isDarkMode,
         })}
       >
-        <button
-          disabled={pageType === "Trending"}
-          onClick={() => handlePageType("Trending")}
-          className={classNames(
-            "px-4 py-2 transition duration-500 ease-in-out",
-            {
-              "bg-dark-secondary": isDarkMode && pageType === "Trending",
-              "bg-light-secondary": !isDarkMode && pageType === "Trending",
-            }
-          )}
-        >
-          Trending
-        </button>
-        <button
-          disabled={pageType === "Top Rated"}
-          onClick={() => handlePageType("Top Rated")}
-          className={classNames(
-            "px-4 py-2 transition duration-500 ease-in-out",
-            {
-              "bg-dark-secondary": isDarkMode && pageType === "Top Rated",
-              "bg-light-secondary": !isDarkMode && pageType === "Top Rated",
-            }
-          )}
-        >
-          Top Rated
-        </button>
-        <button
-          disabled={pageType === "Upcoming"}
-          onClick={() => handlePageType("Upcoming")}
-          className={classNames(
-            "px-4 py-2 transition duration-500 ease-in-out",
-            {
-              "bg-dark-secondary": isDarkMode && pageType === "Upcoming",
-              "bg-light-secondary": !isDarkMode && pageType === "Upcoming",
-            }
-          )}
-        >
-          Upcoming
-        </button>
+        <TypeButton
+          isDarkMode={isDarkMode}
+          pageType={pageType}
+          handlePageType={handlePageType}
+          label="Trending"
+        />
+        <TypeButton
+          isDarkMode={isDarkMode}
+          pageType={pageType}
+          handlePageType={handlePageType}
+          label="Top Rated"
+        />
+        <TypeButton
+          isDarkMode={isDarkMode}
+          pageType={pageType}
+          handlePageType={handlePageType}
+          label="Upcoming"
+        />
       </div>
 
       <PaginationButtons page={page} handlePageChange={handlePageChange} />

@@ -5,6 +5,7 @@ import { MediaCard } from "./MediaCard/MediaCard";
 import { CardTooltip } from "./CardToolTip/CardToolTip";
 import { Fade } from "./Animations/Fade";
 import { PaginationButtons } from "./PaginationButtons/PaginationButtons";
+import { TypeButton } from "./TypeButton/TypeButton";
 export {
   Header,
   ThemeChangeButton,
@@ -13,4 +14,5 @@ export {
   CardTooltip,
   Fade,
   PaginationButtons,
+  TypeButton,
 };
