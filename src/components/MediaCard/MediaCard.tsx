@@ -24,7 +24,7 @@ export const MediaCard = ({
       >
         <NavLink
           key={id}
-          to="/test"
+          to={`/watch/movies/${id}`}
           className="flex flex-col h-full pb-8 gap-2"
         >
           <img
