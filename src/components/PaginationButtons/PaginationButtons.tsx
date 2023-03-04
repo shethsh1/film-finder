@@ -1,23 +1,25 @@
 import classNames from "classnames";
-import { useContext } from "react";
+import React, { useContext } from "react";
 import { ThemeContext } from "../../context/Theme/ThemeContext";
 
-type PaginationTooltipProps = {
+interface PaginationTooltipProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   page: number;
   handlePageChange: (page: number) => void;
-};
+}
 
-export const PaginationButtons = ({
+export const PaginationButtons: React.FC<PaginationTooltipProps> = ({
   page,
   handlePageChange,
-}: PaginationTooltipProps) => {
+  ...props
+}) => {
   const { theme } = useContext(ThemeContext);
   const isDarkMode = theme === "dark" ? true : false;
 
   return (
     <div
       className={classNames(
-        "mt-8 inline-flex gap-4 justify-center items-center",
+        "mt-8 flex gap-4 justify-center md:justify-start items-center",
         {
           "text-dark-font-primary": isDarkMode,
           "text-light-font-primary": !isDarkMode,
@@ -28,6 +30,7 @@ export const PaginationButtons = ({
         <button
           onClick={() => handlePageChange(page - 1)}
           disabled={page === 1}
+          {...props}
           className={classNames(
             "py-2 px-4 rounded-md transition duration-500 ease-in-out w-36",
             {
@@ -45,6 +48,7 @@ export const PaginationButtons = ({
       <div>
         <button
           onClick={() => handlePageChange(page + 1)}
+          {...props}
           className={classNames(
             "py-2 px-4 rounded-md hover:bg-gray-600 transition duration-300 ease-in-out w-36",
             {

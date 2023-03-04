@@ -1,0 +1,23 @@
+.hover-gray:hover {
+  filter: grayscale(100%);
+}
+
+.image-container {
+  position: relative;
+}
+
+.play-button {
+  position: absolute;
+  top: 48%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.image-container:hover .play-button {
+  display: flex;
+}

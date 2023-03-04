@@ -1,40 +1,33 @@
 import React, { useState, useRef, useEffect, useContext } from "react";
-import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import classNames from "classnames";
 import { Fade } from "../Animations/Fade";
 import { ThemeContext } from "../../context/Theme/ThemeContext";
-import { MediaTypes, MediaType } from "../../types/MediaTypes";
-
+import { useAppSelector } from "../../store/hooks";
+import { AnimeObject } from "../../features/animeSlice";
 type CardTooltipProps = {
   children: React.ReactNode;
   className?: string;
   id: number;
-  detailMethod: any;
-  type: MediaTypes;
 };
 
-export const CardTooltip = ({
+export const CardTooltipAnime = ({
   children,
   className,
   id,
-  detailMethod,
-  type,
 }: CardTooltipProps) => {
   let timeout: any;
   const { theme } = useContext(ThemeContext);
-  const details = useAppSelector((state) =>
-    type === MediaType.MOVIE ? state.movie.movieDetails : state.show.showDetails
-  );
-  const loading = useAppSelector((state) => state.movie.cardDetailLoading);
+  const loading = useAppSelector((state) => state.anime.cardDetailLoading);
+  const animeState = useAppSelector((state) => state.anime.activeAnimes);
+  const [details, setDetails] = useState<AnimeObject | null>(null);
+
   const isDarkMode = theme === "dark" ? true : false;
   const [showTooltip, setShowTooltip] = useState(false);
   const [direction, setDirection] = useState("right");
   const buttonRef = useRef<HTMLDivElement | null>(null);
-  const dispatch = useAppDispatch();
 
   const toggleTooltip = () => {
     timeout = setTimeout(() => {
-      dispatch(detailMethod(id));
       setShowTooltip(true);
     }, 400);
   };
@@ -45,6 +38,11 @@ export const CardTooltip = ({
       setShowTooltip(false);
     }, 400);
   };
+
+  useEffect(() => {
+    const result = animeState?.data.find((anime) => anime.mal_id === id);
+    setDetails(result as AnimeObject);
+  }, [animeState, id]);
 
   useEffect(() => {
     if (buttonRef.current && showTooltip) {
@@ -87,17 +85,17 @@ export const CardTooltip = ({
             <div>
               <h1 className="text-md font-bold">{details?.title}</h1>
               <div className="text-xs mt-2">
-                <p className="mb-2">{details?.overview}</p>
-                <p>Score: {details?.vote_average}</p>
+                <p className="mb-2">{details?.synopsis?.slice(0, 400)}...</p>
+                <p>Score: {details?.score}</p>
                 <p>Status: {details?.status}</p>
-                <p>Release date: {details?.release_date}</p>
+                <p>Release date: {details?.aired?.string}</p>
               </div>
 
               <div className="genre mt-2 text-xs">
                 <div className="inline-flex gap-1 flex-wrap">
                   <span className="font-bold">Genre:</span>
                   {details?.genres?.map((o) => (
-                    <span key={o.id}>{o.name}</span>
+                    <span key={o.mal_id}>{o.name}</span>
                   ))}
                 </div>
               </div>

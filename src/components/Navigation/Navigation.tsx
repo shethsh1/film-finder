@@ -21,10 +21,10 @@ export const Navigation = () => {
           <NavLink to="/movies">Movies</NavLink>
         </li>
         <li>
-          <NavLink to="/test">Shows</NavLink>
+          <NavLink to="/shows">Shows</NavLink>
         </li>
         <li>
-          <NavLink to="/test">Anime</NavLink>
+          <NavLink to="/anime">Anime</NavLink>
         </li>
       </ul>
     </nav>

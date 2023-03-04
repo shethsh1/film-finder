@@ -9,6 +9,10 @@ import { Watch } from "./pages/watch/Watch";
 import { getMovieDetails } from "./features/movieSlice";
 import classNames from "classnames";
 import { Shows } from "./pages/shows/Shows";
+import { getShowDetails } from "./features/showSlice";
+import { Anime } from "./pages/anime/Anime";
+import { getAnimeDetails } from "./features/animeSlice";
+
 const RouteComponent = () => {
   const { theme } = useContext(ThemeContext);
   return (
@@ -26,9 +30,18 @@ const RouteComponent = () => {
             <Route path="/" element={<Hi />}></Route>
             <Route path="/movies" element={<Movies />}></Route>
             <Route path="/shows" element={<Shows />}></Route>
+            <Route path="/anime" element={<Anime />}></Route>
             <Route
               path="/watch/movies/:id"
-              element={<Watch detailMethod={getMovieDetails} />}
+              element={<Watch detailMethod={getMovieDetails} type={"movie"} />}
+            ></Route>
+            <Route
+              path="/watch/shows/:id"
+              element={<Watch detailMethod={getShowDetails} type={"show"} />}
+            ></Route>
+            <Route
+              path="/watch/anime/:id"
+              element={<Watch detailMethod={getAnimeDetails} type={"anime"} />}
             ></Route>
           </Routes>
         </BrowserRouter>

@@ -1,23 +1,20 @@
 import classNames from "classnames";
 import React, { useContext, useState, useEffect } from "react";
 import { ThemeContext } from "../../context/Theme/ThemeContext";
-import {
-  getPopularMovies,
-  getTopRatedMovies,
-  getUpcomingMovies,
-} from "../../features/movieSlice";
+
+import { getPopularAnime, getUpcomingAnime } from "../../features/animeSlice";
 import { useAppSelector, useAppDispatch } from "../../store/hooks";
 import { MediaCard, PaginationButtons } from "../../components";
-import styles from "./Movies.module.css";
+import styles from "./Anime.module.css";
 import { TypeButton } from "../../components";
 import { MediaType } from "../../types/MediaTypes";
 import { ThreeDots } from "react-loader-spinner";
 
 type PageType = "Trending" | "Top Rated" | "Upcoming";
 
-export const Movies = () => {
-  const movieState = useAppSelector((state) => state.movie.popularMovies);
-  const loading = useAppSelector((state) => state.movie.loading);
+export const Anime = () => {
+  const animeState = useAppSelector((state) => state.anime.activeAnimes);
+  const loading = useAppSelector((state) => state.anime.loading);
 
   const [pageType, setPageType] = useState<PageType>("Trending");
   const dispatch = useAppDispatch();
@@ -38,19 +35,20 @@ export const Movies = () => {
   useEffect(() => {
     switch (pageType) {
       case "Trending":
-        dispatch(getPopularMovies(page));
-        break;
-      case "Top Rated":
-        dispatch(getTopRatedMovies(page));
+        dispatch(getPopularAnime(page));
         break;
       case "Upcoming":
-        dispatch(getUpcomingMovies(page));
+        dispatch(getUpcomingAnime(page));
         break;
       default:
-        dispatch(getPopularMovies(page));
+        dispatch(getPopularAnime(page));
         break;
     }
   }, [dispatch, page, pageType]);
+
+  useEffect(() => {
+    console.log(animeState);
+  }, [animeState]);
 
   return (
     <section>
@@ -82,17 +80,15 @@ export const Movies = () => {
           isDarkMode={isDarkMode}
           pageType={pageType}
           handlePageType={handlePageType}
-          label="Top Rated"
-        />
-        <TypeButton
-          isDarkMode={isDarkMode}
-          pageType={pageType}
-          handlePageType={handlePageType}
           label="Upcoming"
         />
       </div>
 
-      <PaginationButtons page={page} handlePageChange={handlePageChange} />
+      <PaginationButtons
+        page={page}
+        handlePageChange={handlePageChange}
+        disabled={loading}
+      />
 
       <div
         className={classNames(
@@ -103,14 +99,14 @@ export const Movies = () => {
           }
         )}
       >
-        {!loading && movieState ? (
-          movieState?.results?.map((movie) => (
+        {!loading && animeState && animeState.status !== "429" ? (
+          animeState?.data?.map((anime) => (
             <MediaCard
-              key={movie.id}
-              id={movie.id}
-              title={movie.title}
-              poster_path={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
-              type={MediaType.MOVIE}
+              key={anime.mal_id}
+              id={anime.mal_id}
+              title={anime.title}
+              poster_path={anime?.images?.jpg?.image_url}
+              type={MediaType.ANIME}
             />
           ))
         ) : (
