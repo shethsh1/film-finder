@@ -1,5 +1,4 @@
 .cardExtraHeight::after {
-    content: "";
-    height: 350px /* set the same height as one card */;
-  }
-  
+  content: "";
+  height: 500px /* set the same height as one card */;
+}

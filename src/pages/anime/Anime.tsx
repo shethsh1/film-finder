@@ -84,7 +84,11 @@ export const Anime = () => {
         />
       </div>
 
-      <PaginationButtons page={page} handlePageChange={handlePageChange} />
+      <PaginationButtons
+        page={page}
+        handlePageChange={handlePageChange}
+        disabled={loading}
+      />
 
       <div
         className={classNames(
