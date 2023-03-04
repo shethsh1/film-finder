@@ -2,7 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import MovieReducer from "../features/movieSlice";
 import ShowReducer from "../features/showSlice";
 import AnimeReducer from "../features/animeSlice";
-import { moviesApi, showsApi } from "../features/apiSlice";
+import { moviesApi, showsApi, animeApi } from "../features/apiSlice";
 
 export const store = configureStore({
   reducer: {
@@ -11,6 +11,7 @@ export const store = configureStore({
     anime: AnimeReducer,
     [moviesApi.reducerPath]: moviesApi.reducer,
     [showsApi.reducerPath]: showsApi.reducer,
+    [animeApi.reducerPath]: animeApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(moviesApi.middleware, showsApi.middleware),

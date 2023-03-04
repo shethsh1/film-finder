@@ -122,4 +122,6 @@ export const animeSlice = createSlice({
   },
 });
 
+export type { interfaceAnimeDetail };
+
 export default animeSlice.reducer;
