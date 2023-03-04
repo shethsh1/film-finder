@@ -78,7 +78,7 @@ export const Shows = () => {
 
       <div
         className={classNames(
-          `${styles.cardExtraHeight} flex flex-wrap gap-x-4 gap-y-12 mt-8 text-xs card-test`,
+          `${styles.cardExtraHeight} flex flex-wrap justify-center gap-x-4 gap-y-12 mt-8 text-xs card-test`,
           {
             "text-dark-font-primary": isDarkMode,
             "text-light-font-primary": !isDarkMode,

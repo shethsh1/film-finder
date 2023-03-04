@@ -5,6 +5,8 @@ import {
   CardTooltipShow,
 } from "../CardToolTip";
 import { MediaType, MediaTypes } from "../../types/MediaTypes";
+import { BsFillPlayFill } from "react-icons/bs";
+import styles from "./MediaCard.module.css";
 
 type MediaCardTooltipProps = {
   id: number;
@@ -26,9 +28,12 @@ export const MediaCard = ({
           <NavLink
             key={id}
             to={`/watch/movies/${id}`}
-            className="flex flex-col h-full pb-8 gap-2"
+            className={`flex flex-col h-full pb-8 gap-2 ${styles["image-container"]} ${styles["hover-gray"]}`}
           >
             <img className="h-full rounded-xl" alt={title} src={poster_path} />
+            <div className={styles["play-button"]}>
+              <BsFillPlayFill size={48} color="#fff" />
+            </div>
             <span>{title}</span>
           </NavLink>
         </CardTooltipMovie>
@@ -37,9 +42,12 @@ export const MediaCard = ({
           <NavLink
             key={id}
             to={`/watch/shows/${id}`}
-            className="flex flex-col h-full pb-8 gap-2"
+            className={`flex flex-col h-full pb-8 gap-2 ${styles["image-container"]} ${styles["hover-gray"]}`}
           >
             <img className="h-full rounded-xl" alt={title} src={poster_path} />
+            <div className={styles["play-button"]}>
+              <BsFillPlayFill size={48} color="#fff" />
+            </div>
             <span>{title}</span>
           </NavLink>
         </CardTooltipShow>
@@ -48,9 +56,12 @@ export const MediaCard = ({
           <NavLink
             key={id}
             to={`/watch/anime/${id}`}
-            className="flex flex-col h-full pb-8 gap-2"
+            className={`flex flex-col h-full pb-8 gap-2 ${styles["image-container"]} ${styles["hover-gray"]}`}
           >
             <img className="h-full rounded-xl" alt={title} src={poster_path} />
+            <div className={styles["play-button"]}>
+              <BsFillPlayFill size={48} color="#fff" />
+            </div>
             <span>{title}</span>
           </NavLink>
         </CardTooltipAnime>
