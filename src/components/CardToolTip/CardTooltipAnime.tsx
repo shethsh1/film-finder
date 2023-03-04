@@ -2,8 +2,8 @@ import React, { useState, useRef, useEffect, useContext } from "react";
 import classNames from "classnames";
 import { Fade } from "../Animations/Fade";
 import { ThemeContext } from "../../context/Theme/ThemeContext";
-import { useGetAnimeByIdQuery } from "../../features/apiSlice";
-
+import { useAppSelector } from "../../store/hooks";
+import { AnimeObject } from "../../features/animeSlice";
 type CardTooltipProps = {
   children: React.ReactNode;
   className?: string;
@@ -17,11 +17,9 @@ export const CardTooltipAnime = ({
 }: CardTooltipProps) => {
   let timeout: any;
   const { theme } = useContext(ThemeContext);
-  const {
-    data: details,
-    isLoading: loading,
-    isError,
-  } = useGetAnimeByIdQuery(id);
+  const loading = useAppSelector((state) => state.anime.cardDetailLoading);
+  const animeState = useAppSelector((state) => state.anime.activeAnimes);
+  const [details, setDetails] = useState<AnimeObject | null>(null);
 
   const isDarkMode = theme === "dark" ? true : false;
   const [showTooltip, setShowTooltip] = useState(false);
@@ -42,8 +40,9 @@ export const CardTooltipAnime = ({
   };
 
   useEffect(() => {
-    console.log(details);
-  }, [details]);
+    const result = animeState?.data.find((anime) => anime.mal_id === id);
+    setDetails(result as AnimeObject);
+  }, [animeState, id]);
 
   useEffect(() => {
     if (buttonRef.current && showTooltip) {
@@ -82,7 +81,7 @@ export const CardTooltipAnime = ({
             }
           )}
         >
-          {!loading || isError ? (
+          {!loading ? (
             <div>
               <h1 className="text-md font-bold">{details?.title}</h1>
               <div className="text-xs mt-2">

@@ -45,6 +45,13 @@ interface AnimeObject {
   status: string;
   score: string;
   genres: { mal_id: number; name: string }[];
+  trailer: {
+    youtube_id: string;
+  };
+  synopsis: string;
+  aired: {
+    string: string;
+  };
 }
 
 interface interfaceAnimeDetail {
@@ -127,6 +134,6 @@ export const animeSlice = createSlice({
   },
 });
 
-export type { interfaceAnimeDetail };
+export type { interfaceAnimeDetail, AnimeObject };
 
 export default animeSlice.reducer;

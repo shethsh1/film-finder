@@ -59,6 +59,7 @@ export const CardTooltipMovie = ({
       onMouseLeave={hideTooltip}
     >
       {children}
+
       <Fade show={showTooltip}>
         <div
           ref={buttonRef}
