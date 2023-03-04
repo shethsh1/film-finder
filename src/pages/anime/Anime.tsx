@@ -100,7 +100,7 @@ export const Anime = () => {
         )}
       >
         {!loading && animeState && animeState.status !== "429" ? (
-          animeState.data?.map((anime) => (
+          animeState?.data?.map((anime) => (
             <MediaCard
               key={anime.mal_id}
               id={anime.mal_id}

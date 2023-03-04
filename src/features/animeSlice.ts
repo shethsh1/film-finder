@@ -126,7 +126,7 @@ export const animeSlice = createSlice({
       state.cardDetailLoading = true;
     },
     [getAnimeDetails.fulfilled]: (state, action) => {
-      state.activeAnimes = action.payload;
+      state.animeDetail = action.payload.data;
       state.cardDetailLoading = false;
     },
     [getAnimeDetails.rejected]: (state) => {

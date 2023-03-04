@@ -11,6 +11,8 @@ import classNames from "classnames";
 import { Shows } from "./pages/shows/Shows";
 import { getShowDetails } from "./features/showSlice";
 import { Anime } from "./pages/anime/Anime";
+import { getAnimeDetails } from "./features/animeSlice";
+
 const RouteComponent = () => {
   const { theme } = useContext(ThemeContext);
   return (
@@ -36,6 +38,10 @@ const RouteComponent = () => {
             <Route
               path="/watch/shows/:id"
               element={<Watch detailMethod={getShowDetails} type={"show"} />}
+            ></Route>
+            <Route
+              path="/watch/anime/:id"
+              element={<Watch detailMethod={getAnimeDetails} type={"anime"} />}
             ></Route>
           </Routes>
         </BrowserRouter>
