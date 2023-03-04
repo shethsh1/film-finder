@@ -90,7 +90,7 @@ export const Shows = () => {
             key={show.id}
             id={show.id}
             title={show.title}
-            poster_path={show.poster_path}
+            poster_path={`https://image.tmdb.org/t/p/w500/${show.poster_path}`}
             type={MediaType.SHOW}
           />
         ))}

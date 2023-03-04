@@ -5,7 +5,7 @@ import { MediaType, MediaTypes } from "../../types/MediaTypes";
 type MediaCardTooltipProps = {
   id: number;
   title: string;
-  poster_path: string;
+  poster_path: string | undefined;
   type: MediaTypes;
 };
 
@@ -24,11 +24,7 @@ export const MediaCard = ({
             to={`/watch/movies/${id}`}
             className="flex flex-col h-full pb-8 gap-2"
           >
-            <img
-              className="h-full rounded-xl"
-              alt={title}
-              src={`https://image.tmdb.org/t/p/w500/${poster_path}`}
-            />
+            <img className="h-full rounded-xl" alt={title} src={poster_path} />
             <span>{title}</span>
           </NavLink>
         </CardTooltipMovie>
@@ -39,11 +35,7 @@ export const MediaCard = ({
             to={`/watch/${type === MediaType.SHOW ? "shows" : "movies"}/${id}`}
             className="flex flex-col h-full pb-8 gap-2"
           >
-            <img
-              className="h-full rounded-xl"
-              alt={title}
-              src={`https://image.tmdb.org/t/p/w500/${poster_path}`}
-            />
+            <img className="h-full rounded-xl" alt={title} src={poster_path} />
             <span>{title}</span>
           </NavLink>
         </CardTooltipShow>

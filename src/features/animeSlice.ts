@@ -67,11 +67,12 @@ interface interfaceAnimeDetail {
 
 interface AnimeState {
   activeAnimes: {
-    data: AnimeObject;
+    data: AnimeObject[];
     pagination: {
       current_page: number;
     };
-  }[];
+  } | null;
+
   loading: boolean;
   cardDetailLoading: boolean;
   animeDetail: interfaceAnimeDetail | null;
@@ -80,7 +81,7 @@ interface AnimeState {
 export const animeSlice = createSlice({
   name: "anime",
   initialState: {
-    activeAnimes: [],
+    activeAnimes: null,
     loading: false,
     cardDetailLoading: false,
     animeDetail: null,
