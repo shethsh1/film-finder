@@ -95,7 +95,7 @@ export const Anime = () => {
             id={anime.mal_id}
             title={anime.title}
             poster_path={anime?.images?.jpg?.image_url}
-            type={MediaType.MOVIE}
+            type={MediaType.ANIME}
           />
         ))}
       </div>

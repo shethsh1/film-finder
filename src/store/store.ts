@@ -14,7 +14,11 @@ export const store = configureStore({
     [animeApi.reducerPath]: animeApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(moviesApi.middleware, showsApi.middleware),
+    getDefaultMiddleware().concat(
+      moviesApi.middleware,
+      showsApi.middleware,
+      animeApi.middleware
+    ),
   devTools: true,
 });
 

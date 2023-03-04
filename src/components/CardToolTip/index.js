@@ -1,3 +1,4 @@
 import { CardTooltipMovie } from "./CardToolTipMovie";
 import { CardTooltipShow } from "./CardToolTipShow";
-export { CardTooltipMovie, CardTooltipShow };
+import { CardTooltipAnime } from "./CardTooltipAnime";
+export { CardTooltipMovie, CardTooltipShow, CardTooltipAnime };

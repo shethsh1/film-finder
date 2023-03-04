@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect, useContext } from "react";
 import classNames from "classnames";
 import { Fade } from "../Animations/Fade";
 import { ThemeContext } from "../../context/Theme/ThemeContext";
-import { useGetMovieByIdQuery } from "../../features/apiSlice";
+import { useGetAnimeByIdQuery } from "../../features/apiSlice";
 
 type CardTooltipProps = {
   children: React.ReactNode;
@@ -10,14 +10,18 @@ type CardTooltipProps = {
   id: number;
 };
 
-export const CardTooltipMovie = ({
+export const CardTooltipAnime = ({
   children,
   className,
   id,
 }: CardTooltipProps) => {
   let timeout: any;
   const { theme } = useContext(ThemeContext);
-  const { data: details, isLoading: loading } = useGetMovieByIdQuery(id);
+  const {
+    data: details,
+    isLoading: loading,
+    isError,
+  } = useGetAnimeByIdQuery(id);
 
   const isDarkMode = theme === "dark" ? true : false;
   const [showTooltip, setShowTooltip] = useState(false);
@@ -36,6 +40,10 @@ export const CardTooltipMovie = ({
       setShowTooltip(false);
     }, 400);
   };
+
+  useEffect(() => {
+    console.log(details);
+  }, [details]);
 
   useEffect(() => {
     if (buttonRef.current && showTooltip) {
@@ -74,21 +82,21 @@ export const CardTooltipMovie = ({
             }
           )}
         >
-          {!loading ? (
+          {!loading || isError ? (
             <div>
               <h1 className="text-md font-bold">{details?.title}</h1>
               <div className="text-xs mt-2">
-                <p className="mb-2">{details?.overview}</p>
-                <p>Score: {details?.vote_average}</p>
+                <p className="mb-2">{details?.synopsis}</p>
+                <p>Score: {details?.score}</p>
                 <p>Status: {details?.status}</p>
-                <p>Release date: {details?.release_date}</p>
+                <p>Release date: {details?.aired?.string}</p>
               </div>
 
               <div className="genre mt-2 text-xs">
                 <div className="inline-flex gap-1 flex-wrap">
                   <span className="font-bold">Genre:</span>
-                  {details?.genres?.map((o: any) => (
-                    <span key={o.id}>{o.name}</span>
+                  {details?.genres?.map((o) => (
+                    <span key={o.mal_id}>{o.name}</span>
                   ))}
                 </div>
               </div>

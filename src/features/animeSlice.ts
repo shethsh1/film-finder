@@ -63,6 +63,11 @@ interface interfaceAnimeDetail {
   title: string;
   status: string;
   genres: { mal_id: number; name: string }[];
+  synopsis: string;
+  score: string;
+  aired: {
+    string: string;
+  };
 }
 
 interface AnimeState {

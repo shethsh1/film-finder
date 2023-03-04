@@ -31,6 +31,8 @@ export const animeApi = createApi({
   endpoints: (builder) => ({
     getAnimeById: builder.query<interfaceAnimeDetail, number>({
       query: (id) => `/${id}`,
+      transformResponse: (response: { data: interfaceAnimeDetail }) =>
+        response.data,
     }),
   }),
 });
