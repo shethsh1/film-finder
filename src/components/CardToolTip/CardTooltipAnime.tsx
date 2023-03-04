@@ -85,7 +85,7 @@ export const CardTooltipAnime = ({
             <div>
               <h1 className="text-md font-bold">{details?.title}</h1>
               <div className="text-xs mt-2">
-                <p className="mb-2">{details?.synopsis}</p>
+                <p className="mb-2">{details?.synopsis?.slice(0, 400)}...</p>
                 <p>Score: {details?.score}</p>
                 <p>Status: {details?.status}</p>
                 <p>Release date: {details?.aired?.string}</p>

@@ -17,7 +17,7 @@ export const PaginationButtons = ({
   return (
     <div
       className={classNames(
-        "mt-8 inline-flex gap-4 justify-center items-center",
+        "mt-8 flex gap-4 justify-center md:justify-start items-center",
         {
           "text-dark-font-primary": isDarkMode,
           "text-light-font-primary": !isDarkMode,

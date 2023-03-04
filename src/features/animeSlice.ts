@@ -83,6 +83,7 @@ interface AnimeState {
     pagination: {
       current_page: number;
     };
+    status: string;
   } | null;
 
   loading: boolean;

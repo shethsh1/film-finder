@@ -8,11 +8,14 @@ import { MediaCard, PaginationButtons } from "../../components";
 import styles from "./Anime.module.css";
 import { TypeButton } from "../../components";
 import { MediaType } from "../../types/MediaTypes";
+import { ThreeDots } from "react-loader-spinner";
 
 type PageType = "Trending" | "Top Rated" | "Upcoming";
 
 export const Anime = () => {
   const animeState = useAppSelector((state) => state.anime.activeAnimes);
+  const loading = useAppSelector((state) => state.anime.loading);
+
   const [pageType, setPageType] = useState<PageType>("Trending");
   const dispatch = useAppDispatch();
   const { theme } = useContext(ThemeContext);
@@ -59,10 +62,13 @@ export const Anime = () => {
       </h3>
 
       <div
-        className={classNames("text-white mt-8 flex flex-wrap gap-4", {
-          "text-dark-font-primary": isDarkMode,
-          "text-light-font-primary": !isDarkMode,
-        })}
+        className={classNames(
+          "text-white mt-8 flex flex-wrap md:flex-row flex-col gap-4",
+          {
+            "text-dark-font-primary": isDarkMode,
+            "text-light-font-primary": !isDarkMode,
+          }
+        )}
       >
         <TypeButton
           isDarkMode={isDarkMode}
@@ -89,15 +95,30 @@ export const Anime = () => {
           }
         )}
       >
-        {animeState?.data?.map((anime) => (
-          <MediaCard
-            key={anime.mal_id}
-            id={anime.mal_id}
-            title={anime.title}
-            poster_path={anime?.images?.jpg?.image_url}
-            type={MediaType.ANIME}
-          />
-        ))}
+        {!loading && animeState && animeState.status !== "429" ? (
+          animeState.data?.map((anime) => (
+            <MediaCard
+              key={anime.mal_id}
+              id={anime.mal_id}
+              title={anime.title}
+              poster_path={anime?.images?.jpg?.image_url}
+              type={MediaType.ANIME}
+            />
+          ))
+        ) : (
+          <div>
+            <ThreeDots
+              height="80"
+              width="80"
+              radius="9"
+              color="fill-dark-tertiary"
+              ariaLabel="three-dots-loading"
+              wrapperStyle={{}}
+              wrapperClass="fill-dark-tertiary"
+              visible={true}
+            />
+          </div>
+        )}
       </div>
     </section>
   );
