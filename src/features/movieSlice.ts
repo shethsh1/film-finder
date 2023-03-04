@@ -151,4 +151,5 @@ export type {
     Movies,
     MovieState,
     Movie,
+    interfaceMovieDetail,
 }

@@ -2,11 +2,7 @@ import classNames from "classnames";
 import React, { useContext, useState, useEffect } from "react";
 import { ThemeContext } from "../../context/Theme/ThemeContext";
 
-import {
-  getPopularShows,
-  getShowDetails,
-  getTopRatedShows,
-} from "../../features/showSlice";
+import { getPopularShows, getTopRatedShows } from "../../features/showSlice";
 import { useAppSelector, useAppDispatch } from "../../store/hooks";
 import { MediaCard, PaginationButtons } from "../../components";
 import styles from "./Shows.module.css";
@@ -95,7 +91,6 @@ export const Shows = () => {
             id={show.id}
             title={show.title}
             poster_path={show.poster_path}
-            detailMethod={getShowDetails}
             type={MediaType.SHOW}
           />
         ))}

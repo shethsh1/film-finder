@@ -1,12 +1,17 @@
 import { configureStore } from "@reduxjs/toolkit";
 import MovieReducer from '../features/movieSlice'
 import ShowReducer from '../features/showSlice'
+import { moviesApi, showsApi } from "../features/apiSlice";
 
 export const store = configureStore({
   reducer: {
     movie: MovieReducer,
     show: ShowReducer,
+    [moviesApi.reducerPath]: moviesApi.reducer,
+    [showsApi.reducerPath]: showsApi.reducer
   },
+  middleware: (getDefaultMiddleware) =>
+  getDefaultMiddleware().concat(moviesApi.middleware, showsApi.middleware),
   devTools: true,
 })
 

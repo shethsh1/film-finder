@@ -1,40 +1,31 @@
 import React, { useState, useRef, useEffect, useContext } from "react";
-import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import classNames from "classnames";
 import { Fade } from "../Animations/Fade";
 import { ThemeContext } from "../../context/Theme/ThemeContext";
-import { MediaTypes, MediaType } from "../../types/MediaTypes";
+import { useGetMovieByIdQuery } from "../../features/apiSlice";
 
 type CardTooltipProps = {
   children: React.ReactNode;
   className?: string;
   id: number;
-  detailMethod: any;
-  type: MediaTypes;
 };
 
-export const CardTooltip = ({
+export const CardTooltipMovie = ({
   children,
   className,
   id,
-  detailMethod,
-  type,
 }: CardTooltipProps) => {
   let timeout: any;
   const { theme } = useContext(ThemeContext);
-  const details = useAppSelector((state) =>
-    type === MediaType.MOVIE ? state.movie.movieDetails : state.show.showDetails
-  );
-  const loading = useAppSelector((state) => state.movie.cardDetailLoading);
+  const { data: details, isLoading: loading } = useGetMovieByIdQuery(id);
+
   const isDarkMode = theme === "dark" ? true : false;
   const [showTooltip, setShowTooltip] = useState(false);
   const [direction, setDirection] = useState("right");
   const buttonRef = useRef<HTMLDivElement | null>(null);
-  const dispatch = useAppDispatch();
 
   const toggleTooltip = () => {
     timeout = setTimeout(() => {
-      dispatch(detailMethod(id));
       setShowTooltip(true);
     }, 400);
   };
@@ -96,7 +87,7 @@ export const CardTooltip = ({
               <div className="genre mt-2 text-xs">
                 <div className="inline-flex gap-1 flex-wrap">
                   <span className="font-bold">Genre:</span>
-                  {details?.genres?.map((o) => (
+                  {details?.genres?.map((o: any) => (
                     <span key={o.id}>{o.name}</span>
                   ))}
                 </div>

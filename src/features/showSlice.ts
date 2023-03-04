@@ -63,7 +63,7 @@ interface Show {
 
 interface interfaceShowDetail {
     id: number,
-    title: string,
+    name: string,
     vote_average: number,
     genres: { id: number, name: string}[],
     overview: string, 
@@ -151,4 +151,5 @@ export type {
     Shows,
     ShowState,
     Show,
+    interfaceShowDetail
 }

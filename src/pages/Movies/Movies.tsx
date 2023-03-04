@@ -3,7 +3,6 @@ import React, { useContext, useState, useEffect } from "react";
 import { ThemeContext } from "../../context/Theme/ThemeContext";
 import {
   getPopularMovies,
-  getMovieDetails,
   getTopRatedMovies,
   getUpcomingMovies,
 } from "../../features/movieSlice";
@@ -104,7 +103,6 @@ export const Movies = () => {
             id={movie.id}
             title={movie.title}
             poster_path={movie.poster_path}
-            detailMethod={getMovieDetails}
             type={MediaType.MOVIE}
           />
         ))}
