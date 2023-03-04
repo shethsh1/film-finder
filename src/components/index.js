@@ -6,6 +6,7 @@ import { CardTooltip } from "./CardToolTip/CardToolTip";
 import { Fade } from "./Animations/Fade";
 import { PaginationButtons } from "./PaginationButtons/PaginationButtons";
 import { TypeButton } from "./TypeButton/TypeButton";
+import { MDContainer, XLContainer } from "./Containers";
 export {
   Header,
   ThemeChangeButton,
@@ -15,4 +16,6 @@ export {
   Fade,
   PaginationButtons,
   TypeButton,
+  MDContainer,
+  XLContainer,
 };

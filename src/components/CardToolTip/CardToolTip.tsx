@@ -1,28 +1,30 @@
 import React, { useState, useRef, useEffect, useContext } from "react";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import { getMovieDetails, Movie } from "../../features/movieSlice";
 import classNames from "classnames";
 import { Fade } from "../Animations/Fade";
 import { ThemeContext } from "../../context/Theme/ThemeContext";
+import { MediaTypes, MediaType } from "../../types/MediaTypes";
 
 type CardTooltipProps = {
   children: React.ReactNode;
-  text: string;
   className?: string;
   id: number;
   detailMethod: any;
+  type: MediaTypes;
 };
 
 export const CardTooltip = ({
   children,
-  text,
   className,
   id,
   detailMethod,
+  type,
 }: CardTooltipProps) => {
   let timeout: any;
   const { theme } = useContext(ThemeContext);
-  const details = useAppSelector((state) => state.movie.movieDetails);
+  const details = useAppSelector((state) =>
+    type === MediaType.MOVIE ? state.movie.movieDetails : state.show.showDetails
+  );
   const loading = useAppSelector((state) => state.movie.cardDetailLoading);
   const isDarkMode = theme === "dark" ? true : false;
   const [showTooltip, setShowTooltip] = useState(false);
@@ -70,7 +72,7 @@ export const CardTooltip = ({
         <div
           ref={buttonRef}
           className={classNames(
-            "p-4 w-60 h-auto text-sm rounded-xl absolute mt-2 top-1/4 z-50",
+            "p-4 w-60 h-auto text-sm rounded-xl absolute mt-2 top-1/4 z-50 hidden md:block",
             {
               "right-full mr-1": direction === "left",
               "left-full ml-1": direction === "right",
@@ -94,7 +96,7 @@ export const CardTooltip = ({
               <div className="genre mt-2 text-xs">
                 <div className="inline-flex gap-1 flex-wrap">
                   <span className="font-bold">Genre:</span>
-                  {details?.genres.map((o) => (
+                  {details?.genres?.map((o) => (
                     <span key={o.id}>{o.name}</span>
                   ))}
                 </div>

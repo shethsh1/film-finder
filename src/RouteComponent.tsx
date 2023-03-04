@@ -4,9 +4,12 @@ import { Route } from "react-router";
 import Hi from "./Hi";
 import { useContext } from "react";
 import { Header, Navigation } from "./components";
-import { Movies } from "./pages/Movies/Movies";
+import { Movies } from "./pages/movies/Movies";
+import { Watch } from "./pages/watch/Watch";
+import { getMovieDetails } from "./features/movieSlice";
 import classNames from "classnames";
-const App = () => {
+import { Shows } from "./pages/shows/Shows";
+const RouteComponent = () => {
   const { theme } = useContext(ThemeContext);
   return (
     <div
@@ -22,6 +25,11 @@ const App = () => {
           <Routes>
             <Route path="/" element={<Hi />}></Route>
             <Route path="/movies" element={<Movies />}></Route>
+            <Route path="/shows" element={<Shows />}></Route>
+            <Route
+              path="/watch/movies/:id"
+              element={<Watch detailMethod={getMovieDetails} />}
+            ></Route>
           </Routes>
         </BrowserRouter>
       </main>
@@ -29,4 +37,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default RouteComponent;

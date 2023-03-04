@@ -68,7 +68,11 @@ interface interfaceMovieDetail {
     genres: { id: number, name: string}[],
     overview: string, 
     status: string,
-    release_date: string
+    release_date: string,
+    poster_path: string,
+    videos: {
+        results: { key: string, id: number }[]
+    }
 
 }
 

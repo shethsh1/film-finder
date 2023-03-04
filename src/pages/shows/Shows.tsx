@@ -1,22 +1,22 @@
 import classNames from "classnames";
 import React, { useContext, useState, useEffect } from "react";
 import { ThemeContext } from "../../context/Theme/ThemeContext";
+
 import {
-  getPopularMovies,
-  getMovieDetails,
-  getTopRatedMovies,
-  getUpcomingMovies,
-} from "../../features/movieSlice";
+  getPopularShows,
+  getShowDetails,
+  getTopRatedShows,
+} from "../../features/showSlice";
 import { useAppSelector, useAppDispatch } from "../../store/hooks";
 import { MediaCard, PaginationButtons } from "../../components";
-import styles from "./Movies.module.css";
+import styles from "./Shows.module.css";
 import { TypeButton } from "../../components";
 import { MediaType } from "../../types/MediaTypes";
 
 type PageType = "Trending" | "Top Rated" | "Upcoming";
 
-export const Movies = () => {
-  const movieState = useAppSelector((state) => state.movie.popularMovies);
+export const Shows = () => {
+  const Showstate = useAppSelector((state) => state.show.activeShows);
   const [pageType, setPageType] = useState<PageType>("Trending");
   const dispatch = useAppDispatch();
   const { theme } = useContext(ThemeContext);
@@ -36,16 +36,13 @@ export const Movies = () => {
   useEffect(() => {
     switch (pageType) {
       case "Trending":
-        dispatch(getPopularMovies(page));
+        dispatch(getPopularShows(page));
         break;
       case "Top Rated":
-        dispatch(getTopRatedMovies(page));
-        break;
-      case "Upcoming":
-        dispatch(getUpcomingMovies(page));
+        dispatch(getTopRatedShows(page));
         break;
       default:
-        dispatch(getPopularMovies(page));
+        dispatch(getPopularShows(page));
         break;
     }
   }, [dispatch, page, pageType]);
@@ -79,12 +76,6 @@ export const Movies = () => {
           handlePageType={handlePageType}
           label="Top Rated"
         />
-        <TypeButton
-          isDarkMode={isDarkMode}
-          pageType={pageType}
-          handlePageType={handlePageType}
-          label="Upcoming"
-        />
       </div>
 
       <PaginationButtons page={page} handlePageChange={handlePageChange} />
@@ -98,14 +89,14 @@ export const Movies = () => {
           }
         )}
       >
-        {movieState?.results?.map((movie) => (
+        {Showstate?.results?.map((show) => (
           <MediaCard
-            key={movie.id}
-            id={movie.id}
-            title={movie.title}
-            poster_path={movie.poster_path}
-            detailMethod={getMovieDetails}
-            type={MediaType.MOVIE}
+            key={show.id}
+            id={show.id}
+            title={show.title}
+            poster_path={show.poster_path}
+            detailMethod={getShowDetails}
+            type={MediaType.SHOW}
           />
         ))}
       </div>
