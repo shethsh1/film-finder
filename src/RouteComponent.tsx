@@ -9,6 +9,7 @@ import { Watch } from "./pages/watch/Watch";
 import { getMovieDetails } from "./features/movieSlice";
 import classNames from "classnames";
 import { Shows } from "./pages/shows/Shows";
+import { getShowDetails } from "./features/showSlice";
 const RouteComponent = () => {
   const { theme } = useContext(ThemeContext);
   return (
@@ -28,7 +29,11 @@ const RouteComponent = () => {
             <Route path="/shows" element={<Shows />}></Route>
             <Route
               path="/watch/movies/:id"
-              element={<Watch detailMethod={getMovieDetails} />}
+              element={<Watch detailMethod={getMovieDetails} type={"movie"} />}
+            ></Route>
+            <Route
+              path="/watch/shows/:id"
+              element={<Watch detailMethod={getShowDetails} type={"show"} />}
             ></Route>
           </Routes>
         </BrowserRouter>

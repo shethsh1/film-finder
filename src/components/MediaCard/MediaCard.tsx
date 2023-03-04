@@ -36,7 +36,7 @@ export const MediaCard = ({
         <CardTooltipShow className="h-full" id={id}>
           <NavLink
             key={id}
-            to={`/watch/movies/${id}`}
+            to={`/watch/${type === MediaType.SHOW ? "shows" : "movies"}/${id}`}
             className="flex flex-col h-full pb-8 gap-2"
           >
             <img
