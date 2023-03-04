@@ -1,11 +1,13 @@
 import { NavLink } from "react-router-dom";
 import { CardTooltip } from "../CardToolTip/CardToolTip";
+import { MediaTypes } from "../../types/MediaTypes";
 
 type MediaCardTooltipProps = {
   id: number;
   title: string;
   poster_path: string;
   detailMethod: any;
+  type: MediaTypes;
 };
 
 export const MediaCard = ({
@@ -13,10 +15,16 @@ export const MediaCard = ({
   title,
   poster_path,
   detailMethod,
+  type,
 }: MediaCardTooltipProps) => {
   return (
-    <div className="h-56 basis-36 card ">
-      <CardTooltip className="h-full" id={id} detailMethod={detailMethod}>
+    <div className="h-56 basis-36 card flex-shrink-0">
+      <CardTooltip
+        className="h-full"
+        id={id}
+        detailMethod={detailMethod}
+        type={type}
+      >
         <NavLink
           key={id}
           to={`/watch/movies/${id}`}

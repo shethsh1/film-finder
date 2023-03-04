@@ -3,12 +3,14 @@ import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import classNames from "classnames";
 import { Fade } from "../Animations/Fade";
 import { ThemeContext } from "../../context/Theme/ThemeContext";
+import { MediaTypes, MediaType } from "../../types/MediaTypes";
 
 type CardTooltipProps = {
   children: React.ReactNode;
   className?: string;
   id: number;
   detailMethod: any;
+  type: MediaTypes;
 };
 
 export const CardTooltip = ({
@@ -16,10 +18,13 @@ export const CardTooltip = ({
   className,
   id,
   detailMethod,
+  type,
 }: CardTooltipProps) => {
   let timeout: any;
   const { theme } = useContext(ThemeContext);
-  const details = useAppSelector((state) => state.movie.movieDetails);
+  const details = useAppSelector((state) =>
+    type === MediaType.MOVIE ? state.movie.movieDetails : state.show.showDetails
+  );
   const loading = useAppSelector((state) => state.movie.cardDetailLoading);
   const isDarkMode = theme === "dark" ? true : false;
   const [showTooltip, setShowTooltip] = useState(false);
