@@ -7,7 +7,7 @@ import {
   CardTooltipShow,
   CardTooltipAnime,
 } from "./CardToolTip";
-import { Fade } from "./Animations/Fade";
+import { Fade, Collapse } from "./Animations";
 import { PaginationButtons } from "./PaginationButtons/PaginationButtons";
 import { TypeButton } from "./TypeButton/TypeButton";
 import { MDContainer, XLContainer } from "./Containers";
@@ -21,6 +21,7 @@ export {
   CardTooltipMovie,
   CardTooltipAnime,
   Fade,
+  Collapse,
   PaginationButtons,
   TypeButton,
   MDContainer,

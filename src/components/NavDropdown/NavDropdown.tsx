@@ -2,6 +2,7 @@ import { useState, useContext } from "react";
 import { ThemeContext } from "../../context/Theme/ThemeContext";
 import classNames from "classnames";
 import { NavLink } from "react-router-dom";
+import { Collapse } from "../Animations";
 
 interface NavDropdownProps extends React.HTMLAttributes<HTMLDivElement> {
   label: React.ReactNode;
@@ -70,19 +71,19 @@ export const NavDropdown: NavDropdownType = ({
         )}
       </button>
 
-      {isOpen && (
-        <div
-          className={classNames(
-            "absolute z-10 w-40 cursor-pointer select-none mt-2 origin-top-right divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none",
-            {
-              "bg-light-secondary": !isDarkMode,
-              "bg-dark-secondary": isDarkMode,
-            }
-          )}
-        >
+      <div
+        className={classNames(
+          "absolute z-10 w-40 cursor-pointer select-none mt-2 origin-top-right divide-y divide-gray-100 rounded-md shadow-lg ring-black ring-opacity-5 focus:outline-none",
+          {
+            "bg-light-secondary": !isDarkMode,
+            "bg-dark-secondary": isDarkMode,
+          }
+        )}
+      >
+        <Collapse show={isOpen}>
           <div className="py-1">{children}</div>
-        </div>
-      )}
+        </Collapse>
+      </div>
     </div>
   );
 };
