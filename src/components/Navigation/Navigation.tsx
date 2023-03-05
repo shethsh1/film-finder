@@ -41,7 +41,11 @@ export const Navigation = () => {
             {item.label}
           </NavLink>
         ))}
-        <NavDropdown items={NavItems} title="string" />
+        <NavDropdown title="string">
+          <NavDropdown.Item href="#" label="Item 1" />
+          <NavDropdown.Item href="#" label="Item 2" />
+          <NavDropdown.Item href="#" label="Item 3" />
+        </NavDropdown>
       </ul>
     </nav>
   );

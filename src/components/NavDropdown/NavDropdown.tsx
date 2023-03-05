@@ -1,11 +1,20 @@
 import { useState } from "react";
 
-interface Props {
+interface NavDropdownProps {
   title: string;
-  items: any[];
+  children: React.ReactNode;
 }
 
-export const NavDropdown: React.FC<Props> = ({ title, items }) => {
+interface NavDropdownType extends React.FC<NavDropdownProps> {
+  Item: React.FC<NavItemProps>;
+}
+
+interface NavItemProps {
+  href: string;
+  label: React.ReactNode;
+}
+
+export const NavDropdown: NavDropdownType = ({ title, children }) => {
   let timeout: string | number | NodeJS.Timeout | undefined;
   const [isOpen, setIsOpen] = useState(false);
 
@@ -43,19 +52,22 @@ export const NavDropdown: React.FC<Props> = ({ title, items }) => {
 
       {isOpen && (
         <div className="absolute z-10 w-40 cursor-pointer select-none mt-2 origin-top-right bg-white divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-          <div className="py-1">
-            {items.map((item) => (
-              <a
-                key={item.id}
-                href={item.href}
-                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
-              >
-                {item.label}
-              </a>
-            ))}
-          </div>
+          <div className="py-1">{children}</div>
         </div>
       )}
     </div>
   );
 };
+
+const NavDropdownItem: React.FC<NavItemProps> = ({ href, label }) => {
+  return (
+    <a
+      href={href}
+      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+    >
+      {label}
+    </a>
+  );
+};
+
+NavDropdown.Item = NavDropdownItem;
