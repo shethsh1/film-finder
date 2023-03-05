@@ -28,3 +28,7 @@ body {
 .test-border {
   border: 2px solid red;
 }
+
+.top-ddd-border {
+  border-top: 1px solid #ddd;
+}
