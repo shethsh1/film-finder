@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { NavLink } from "react-router-dom";
 import { ThemeContext } from "../../context/Theme/ThemeContext";
 import { GiHamburgerMenu } from "react-icons/gi";
@@ -37,14 +37,26 @@ export const Navigation = () => {
         })}
       >
         {NavItems.map((item, i) => (
-          <NavLink key={i} to={item.to}>
-            {item.label}
-          </NavLink>
+          <li className={"md:block hidden "}>
+            <NavLink
+              key={i}
+              to={item.to}
+              className={({ isActive }) =>
+                classNames({ "font-bold": isActive })
+              }
+            >
+              {item.label}
+            </NavLink>
+          </li>
         ))}
-        <NavDropdown title="string">
-          <NavDropdown.Item href="#" label="Item 1" />
-          <NavDropdown.Item href="#" label="Item 2" />
-          <NavDropdown.Item href="#" label="Item 3" />
+        <NavDropdown
+          label={<GiHamburgerMenu size={25} />}
+          hideArrow={true}
+          className={"md:hidden block"}
+        >
+          {NavItems.map((item, i) => (
+            <NavDropdown.Item key={i} href={item.to} label={item.label} />
+          ))}
         </NavDropdown>
       </ul>
     </nav>
