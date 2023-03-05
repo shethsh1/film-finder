@@ -58,7 +58,7 @@ export const Shows = () => {
 
       <div
         className={classNames(
-          "text-white mt-8 flex flex-wrap md:flex-row flex-col gap-4",
+          "mt-8 flex flex-wrap md:flex-row flex-col gap-4",
           {
             "text-dark-font-primary": isDarkMode,
             "text-light-font-primary": !isDarkMode,
@@ -106,10 +106,12 @@ export const Shows = () => {
               height="80"
               width="80"
               radius="9"
-              color="fill-dark-tertiary"
+              color="fill"
               ariaLabel="three-dots-loading"
               wrapperStyle={{}}
-              wrapperClass="fill-dark-tertiary"
+              wrapperClass={
+                isDarkMode ? "fill-dark-tertiary" : "fill-light-tertiary"
+              }
               visible={true}
             />
           </div>
