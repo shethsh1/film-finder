@@ -6,10 +6,25 @@ interface Props {
 }
 
 export const NavDropdown: React.FC<Props> = ({ title, items }) => {
+  let timeout: string | number | NodeJS.Timeout | undefined;
   const [isOpen, setIsOpen] = useState(false);
 
+  const handleMouseLeave = () => {
+    timeout = setTimeout(() => {
+      setIsOpen(false);
+    }, 800); // Set the delay time in milliseconds
+  };
+
+  const handleMouseEnter = () => {
+    clearTimeout(timeout);
+  };
+
   return (
-    <div className="relative">
+    <div
+      className="relative"
+      onMouseLeave={() => handleMouseLeave()}
+      onMouseEnter={() => handleMouseEnter()}
+    >
       <button
         className="inline-flex items-center justify-center w-full text-white focus:outline-none"
         onClick={() => setIsOpen(!isOpen)}
