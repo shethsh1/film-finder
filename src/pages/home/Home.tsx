@@ -24,9 +24,12 @@ const movies = [
   },
 ];
 
+type ActiveTab = "Movies" | "Shows" | "Anime";
+
 export const Home = () => {
   const { theme } = useContext(ThemeContext);
   const isDarkMode = theme === "dark" ? true : false;
+  const [activeTab, setActiveTab] = useState<ActiveTab>("Movies");
 
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -37,6 +40,10 @@ export const Home = () => {
   function handleSubmit(event: any) {
     event.preventDefault();
     // do something with the search term
+  }
+
+  function handleActiveTab(tab: ActiveTab) {
+    setActiveTab(tab);
   }
 
   return (
@@ -77,16 +84,42 @@ export const Home = () => {
               <div className="p-4">
                 {/* tabs start */}
                 <div id="tabs" className="inline-flex font-bold gap-4">
-                  <span
-                    className={classNames("border-b-2", {
-                      "border-light-tertiary": !isDarkMode,
-                      "border-dark-tertiary": isDarkMode,
+                  <button
+                    disabled={activeTab === "Movies"}
+                    onClick={() => handleActiveTab("Movies")}
+                    className={classNames({
+                      "border-light-tertiary border-b-2":
+                        !isDarkMode && activeTab === "Movies",
+                      "border-dark-tertiary border-b-2":
+                        isDarkMode && activeTab === "Movies",
                     })}
                   >
                     Movies
-                  </span>
-                  <span>Shows</span>
-                  <span>Anime</span>
+                  </button>
+                  <button
+                    disabled={activeTab === "Shows"}
+                    onClick={() => handleActiveTab("Shows")}
+                    className={classNames({
+                      "border-light-tertiary border-b-2":
+                        !isDarkMode && activeTab === "Shows",
+                      "border-dark-tertiary border-b-2":
+                        isDarkMode && activeTab === "Shows",
+                    })}
+                  >
+                    Shows
+                  </button>
+                  <button
+                    disabled={activeTab === "Anime"}
+                    onClick={() => handleActiveTab("Anime")}
+                    className={classNames({
+                      "border-light-tertiary border-b-2":
+                        !isDarkMode && activeTab === "Anime",
+                      "border-dark-tertiary border-b-2":
+                        isDarkMode && activeTab === "Anime",
+                    })}
+                  >
+                    Anime
+                  </button>
                 </div>
                 {/* tabs ends */}
 
