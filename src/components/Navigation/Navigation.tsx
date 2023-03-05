@@ -3,6 +3,7 @@ import React, { useContext, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { ThemeContext } from "../../context/Theme/ThemeContext";
 import { GiHamburgerMenu } from "react-icons/gi";
+import { NavDropdown } from "../NavDropdown/NavDropdown";
 
 const NavItems = [
   {
@@ -40,6 +41,7 @@ export const Navigation = () => {
             {item.label}
           </NavLink>
         ))}
+        <NavDropdown items={NavItems} title="string" />
       </ul>
     </nav>
   );

@@ -11,6 +11,7 @@ import { Fade } from "./Animations/Fade";
 import { PaginationButtons } from "./PaginationButtons/PaginationButtons";
 import { TypeButton } from "./TypeButton/TypeButton";
 import { MDContainer, XLContainer } from "./Containers";
+import { NavDropdown } from "./NavDropdown/NavDropdown";
 export {
   Header,
   ThemeChangeButton,
@@ -24,4 +25,5 @@ export {
   TypeButton,
   MDContainer,
   XLContainer,
+  NavDropdown,
 };
