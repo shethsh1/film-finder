@@ -1,7 +1,7 @@
 import { ThemeContext } from "./context/Theme/ThemeContext";
 import { BrowserRouter, Routes } from "react-router-dom";
 import { Route } from "react-router";
-import Hi from "./Hi";
+import { Home } from "./pages/home/Home";
 import { useContext } from "react";
 import { Header, Navigation } from "./components";
 import { Movies } from "./pages/movies/Movies";
@@ -27,7 +27,7 @@ const RouteComponent = () => {
           <Header />
           <Navigation />
           <Routes>
-            <Route path="/" element={<Hi />}></Route>
+            <Route path="/" element={<Home />}></Route>
             <Route path="/movies" element={<Movies />}></Route>
             <Route path="/shows" element={<Shows />}></Route>
             <Route path="/anime" element={<Anime />}></Route>

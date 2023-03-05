@@ -1,27 +1,19 @@
 import { useContext, useEffect } from "react";
-import { ThemeContext } from "./context/Theme/ThemeContext";
-import { getPopularMovies } from "./features/movieSlice";
-import { useAppSelector, useAppDispatch } from "./store/hooks";
+import { ThemeContext } from "../../context/Theme/ThemeContext";
+import classNames from "classnames";
 
-const Hi = () => {
+export const Home = () => {
   const { theme } = useContext(ThemeContext);
-
-  const movies = useAppSelector((state) => state.movie.popularMovies);
-  const dispatch = useAppDispatch();
-  console.log(movies);
-
-  useEffect(() => {
-    dispatch(getPopularMovies(1));
-  }, [dispatch]);
+  const isDarkMode = theme === "dark" ? true : false;
 
   return (
     <div>
       <div
-        className={`${
-          theme === "light" ? "bg-light-primary" : "bg-dark-primary"
-        } w-16 h-16`}
-      ></div>
-      <div className="text-light-font-primary">
+        className={classNames("mt-8", {
+          "text-dark-font-primary": isDarkMode,
+          "text-light-font-primary": !isDarkMode,
+        })}
+      >
         Lorem Ipsum is simply dummy text of the printing and typesetting
         industry. Lorem Ipsum has been the industry's standard dummy text ever
         since the 1500s, when an unknown printer took a galley of type and
@@ -35,5 +27,3 @@ const Hi = () => {
     </div>
   );
 };
-
-export default Hi;
