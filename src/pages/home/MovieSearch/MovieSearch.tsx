@@ -12,8 +12,6 @@ export const MovieSearch: React.FC<Props> = ({ searchTerm, isFocused }) => {
   const { data: movies, isFetching } =
     useGetMoviesBySearchTermQuery(searchTerm);
 
-  console.log(isFocused);
-
   return (
     <Collapse show={!isFetching && isFocused}>
       <div className="p-4">
