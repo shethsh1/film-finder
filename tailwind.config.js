@@ -9,6 +9,7 @@ module.exports = {
           primary: "#F8F8F8",
           secondary: "#01c6ac",
           tertiary: "#01c6ac",
+          hover: "#00b29a",
           font: {
             primary: "#212529",
           },
@@ -17,6 +18,7 @@ module.exports = {
           primary: "#0d1321",
           secondary: "#1d2d44",
           tertiary: "#d5dfed",
+          hover: "#172436",
           font: {
             primary: "#f0ebd8",
           },

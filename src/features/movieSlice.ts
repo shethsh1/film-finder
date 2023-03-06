@@ -63,7 +63,7 @@ interface Movie {
   vote_count: number;
   title: string;
   release_date: string;
-  populrity: number;
+  popularity: number;
   original_title: string;
   original_language: string;
 }

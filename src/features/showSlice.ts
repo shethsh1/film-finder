@@ -53,7 +53,7 @@ interface Show {
   vote_count: number;
   name: string;
   release_date: string;
-  populrity: number;
+  popularity: number;
   original_title: string;
   original_language: string;
 }
