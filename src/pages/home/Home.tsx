@@ -39,7 +39,7 @@ export const Home = () => {
   }
 
   return (
-    <div className="mt-16">
+    <div className="mt-16 min-h-[800px]">
       <MDContainer>
         <div
           onMouseEnter={handleMouseEnter}
