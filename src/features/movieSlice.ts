@@ -49,7 +49,7 @@ export const getMovieByQuery: any = createAsyncThunk(
   "getMovieByQuery/getMovieByQuery",
   async (searchterm) => {
     const response = await fetch(`
-        https://api.themoviedb.org/3/search/movie?api_key=${process.env.REACT_APP_MOVIE_API_KEY}&language=en-US&query=${searchterm}&include_adult=false`);
+        https://api.themoviedb.org/3/search/movie?api_key=${process.env.REACT_APP_MOVIE_DB_KEY}&language=en-US&query=${searchterm}&include_adult=false`);
     const formatResponse = await response.json();
     return formatResponse;
   }

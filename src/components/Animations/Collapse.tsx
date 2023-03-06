@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useRef, useEffect, useState } from "react";
 
 interface Props {
   children: React.ReactNode;
@@ -11,24 +11,19 @@ export const Collapse: React.FC<Props> = ({
   show,
   duration = 200,
 }) => {
-  const [height, setHeight] = useState(0);
   const contentRef = useRef<HTMLDivElement | null>(null);
+  const [contentHeight, setContentHeight] = useState<number | null>(null);
 
   useEffect(() => {
-    if (show) {
-      // Get the height of the collapsed content and set it as the max-height
-      setHeight(contentRef.current?.scrollHeight || 0);
-    } else {
-      setHeight(0);
-    }
-  }, [show]);
+    setContentHeight(contentRef.current?.scrollHeight || null);
+  }, [children]);
 
   return (
     <div
       className="overflow-hidden"
       style={{
-        transition: `max-height ${duration}ms ease-in-out`,
-        maxHeight: show ? `${height}px` : "0px",
+        transition: `height ${duration}ms ease-in-out`,
+        height: show ? `${contentHeight}px` : "0px",
       }}
     >
       <div ref={contentRef}>{children}</div>

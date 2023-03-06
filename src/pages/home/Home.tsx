@@ -1,46 +1,8 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { ThemeContext } from "../../context/Theme/ThemeContext";
 import classNames from "classnames";
-import { XLContainer, MDContainer, Collapse } from "../../components";
-
-const movies = [
-  {
-    label: "test",
-  },
-  {
-    label: "test2",
-  },
-  {
-    label: "test3",
-  },
-  {
-    label: "test4",
-  },
-  {
-    label: "test5",
-  },
-  {
-    label: "test6",
-  },
-  {
-    label: "test",
-  },
-  {
-    label: "test2",
-  },
-  {
-    label: "test3",
-  },
-  {
-    label: "test4",
-  },
-  {
-    label: "test5",
-  },
-  {
-    label: "test6",
-  },
-];
+import { MDContainer, Collapse } from "../../components";
+import { MovieSearch } from "./MovieSearch/MovieSearch";
 
 type ActiveTab = "Movies" | "Shows" | "Anime";
 
@@ -106,7 +68,7 @@ export const Home = () => {
             {/* Search below starts */}
             <div
               className={classNames(
-                "absolute z-10 w-full cursor-pointer select-none mt-2 origin-top-right divide-gray-100 rounded-md shadow-lg ring-black ring-opacity-5 focus:outline-none",
+                "absolute w-full cursor-pointer select-none mt-2 origin-top-right divide-gray-100 rounded-md shadow-lg ring-black ring-opacity-5 focus:outline-none",
                 {
                   "bg-light-secondary": !isDarkMode,
                   "bg-dark-secondary": isDarkMode,
@@ -115,7 +77,6 @@ export const Home = () => {
             >
               <Collapse show={isFocused}>
                 <div className="p-4">
-                  {/* tabs start */}
                   <div id="tabs" className="inline-flex font-bold gap-4">
                     <button
                       disabled={activeTab === "Movies"}
@@ -154,19 +115,13 @@ export const Home = () => {
                       Anime
                     </button>
                   </div>
-                  {/* tabs ends */}
                 </div>
               </Collapse>
 
               {/* results starts */}
-              <Collapse show={searchTerm.length > 0 && isFocused}>
-                <div className="p-4">
-                  {movies.map((movie) => (
-                    <div>{movie.label}</div>
-                  ))}
-                </div>
-              </Collapse>
-              {/* results ends */}
+              {activeTab === "Movies" && (
+                <MovieSearch searchTerm={searchTerm} isFocused={isFocused} />
+              )}
             </div>
             {/* Search below ends */}
           </form>
