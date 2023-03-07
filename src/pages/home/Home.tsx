@@ -3,6 +3,7 @@ import { ThemeContext } from "../../context/Theme/ThemeContext";
 import classNames from "classnames";
 import { MDContainer, Collapse } from "../../components";
 import MovieSearch from "./MovieSearch/MovieSearch";
+import ShowSearch from "./ShowSearch/ShowSearch";
 
 type ActiveTab = "Movies" | "Shows" | "Anime";
 
@@ -134,6 +135,9 @@ export const Home = () => {
               {/* results starts */}
               {activeTab === "Movies" && searchTerm !== "" && (
                 <MovieSearch searchTerm={searchTerm} isFocused={isFocused} />
+              )}
+              {activeTab === "Shows" && searchTerm !== "" && (
+                <ShowSearch searchTerm={searchTerm} isFocused={isFocused} />
               )}
             </div>
             {/* Search below ends */}

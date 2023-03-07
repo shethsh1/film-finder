@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { interfaceMovieDetail, Movies } from "./movieSlice";
-import { interfaceShowDetail } from "./showSlice";
+import { interfaceShowDetail, Shows } from "./showSlice";
 import { interfaceAnimeDetail } from "./animeSlice";
 
 export const moviesApi = createApi({
@@ -20,11 +20,15 @@ export const moviesApi = createApi({
 
 export const showsApi = createApi({
   reducerPath: "showsApi",
-  baseQuery: fetchBaseQuery({ baseUrl: `https://api.themoviedb.org/3/tv` }),
+  baseQuery: fetchBaseQuery({ baseUrl: `https://api.themoviedb.org/3` }),
   endpoints: (builder) => ({
     getShowById: builder.query<interfaceShowDetail, number>({
       query: (id) =>
-        `/${id}?api_key=${process.env.REACT_APP_MOVIE_DB_KEY}&append_to_response=videos&language=en-US`,
+        `/tv/${id}?api_key=${process.env.REACT_APP_MOVIE_DB_KEY}&append_to_response=videos&language=en-US`,
+    }),
+    getShowsBySearchTerm: builder.query<Shows, string>({
+      query: (searchterm) =>
+        `/search/tv?api_key=${process.env.REACT_APP_MOVIE_DB_KEY}&language=en-US&query=${searchterm}&include_adult=false`,
     }),
   }),
 });
@@ -43,5 +47,5 @@ export const animeApi = createApi({
 
 export const { useGetMovieByIdQuery, useGetMoviesBySearchTermQuery } =
   moviesApi;
-export const { useGetShowByIdQuery } = showsApi;
+export const { useGetShowByIdQuery, useGetShowsBySearchTermQuery } = showsApi;
 export const { useGetAnimeByIdQuery } = animeApi;
