@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useRef, useEffect } from "react";
 import { ThemeContext } from "../../context/Theme/ThemeContext";
 import classNames from "classnames";
 import { MDContainer, Collapse } from "../../components";
@@ -7,21 +7,23 @@ import { MovieSearch } from "./MovieSearch/MovieSearch";
 type ActiveTab = "Movies" | "Shows" | "Anime";
 
 export const Home = () => {
-  let timeout: string | number | NodeJS.Timeout | undefined;
   const { theme } = useContext(ThemeContext);
   const isDarkMode = theme === "dark" ? true : false;
   const [activeTab, setActiveTab] = useState<ActiveTab>("Movies");
   const [searchTerm, setSearchTerm] = useState("");
   const [isFocused, setIsFocused] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
 
-  const handleMouseLeave = () => {
-    timeout = setTimeout(() => {
+  const handleClickOutside = (event: MouseEvent) => {
+    if (
+      containerRef.current &&
+      !containerRef.current.contains(event.target as Node)
+    ) {
       setIsFocused(false);
-    }, 600); // Set the delay time in milliseconds
+    }
   };
 
-  const handleMouseEnter = () => {
-    clearTimeout(timeout);
+  const handleFocus = () => {
     setIsFocused(true);
   };
 
@@ -38,12 +40,18 @@ export const Home = () => {
     setActiveTab(tab);
   }
 
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   return (
     <div className="mt-16 min-h-[800px]">
       <MDContainer>
         <div
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
+          ref={containerRef}
           className={classNames({
             "text-dark-font-primary": isDarkMode,
             "text-light-font-primary": !isDarkMode,
@@ -57,6 +65,7 @@ export const Home = () => {
               })}
             >
               <input
+                onFocus={handleFocus}
                 className="appearance-none bg-transparent border-none w-full mr-3 py-1 px-2 leading-tight focus:outline-none"
                 type="text"
                 placeholder="Search"
