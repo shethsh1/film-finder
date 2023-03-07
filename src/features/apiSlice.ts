@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { interfaceMovieDetail, Movies } from "./movieSlice";
 import { interfaceShowDetail, Shows } from "./showSlice";
-import { interfaceAnimeDetail } from "./animeSlice";
+import { AnimeObject, interfaceAnimeDetail } from "./animeSlice";
 
 export const moviesApi = createApi({
   reducerPath: "moviesApi",
@@ -38,9 +38,13 @@ export const animeApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: `https://api.jikan.moe/v4/anime` }),
   endpoints: (builder) => ({
     getAnimeById: builder.query<interfaceAnimeDetail, number>({
-      query: (id) => `/${id}`,
+      query: (id) => `${id}`,
       transformResponse: (response: { data: interfaceAnimeDetail }) =>
         response.data,
+    }),
+    getAnimeBySearchTerm: builder.query<AnimeObject[], string>({
+      query: (searchterm) => `?q=${searchterm}`,
+      transformResponse: (response: { data: AnimeObject[] }) => response.data,
     }),
   }),
 });
@@ -48,4 +52,4 @@ export const animeApi = createApi({
 export const { useGetMovieByIdQuery, useGetMoviesBySearchTermQuery } =
   moviesApi;
 export const { useGetShowByIdQuery, useGetShowsBySearchTermQuery } = showsApi;
-export const { useGetAnimeByIdQuery } = animeApi;
+export const { useGetAnimeByIdQuery, useGetAnimeBySearchTermQuery } = animeApi;

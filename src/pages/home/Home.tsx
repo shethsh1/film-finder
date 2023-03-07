@@ -4,6 +4,7 @@ import classNames from "classnames";
 import { MDContainer, Collapse } from "../../components";
 import MovieSearch from "./MovieSearch/MovieSearch";
 import ShowSearch from "./ShowSearch/ShowSearch";
+import AnimeSearch from "./AnimeSearch/AnimeSearch";
 
 type ActiveTab = "Movies" | "Shows" | "Anime";
 
@@ -138,6 +139,9 @@ export const Home = () => {
               )}
               {activeTab === "Shows" && searchTerm !== "" && (
                 <ShowSearch searchTerm={searchTerm} isFocused={isFocused} />
+              )}
+              {activeTab === "Anime" && searchTerm !== "" && (
+                <AnimeSearch searchTerm={searchTerm} isFocused={isFocused} />
               )}
             </div>
             {/* Search below ends */}
