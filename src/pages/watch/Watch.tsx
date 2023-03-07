@@ -45,10 +45,6 @@ export const Watch = ({ detailMethod, type }: Props) => {
     dispatch(detailMethod(id));
   }, [detailMethod, dispatch, id]);
 
-  useEffect(() => {
-    console.log(details);
-  }, [details]);
-
   const getMovie = () => {
     if (type === MediaType.ANIME && isAnimeDetail(details)) {
       return details?.trailer?.youtube_id;
