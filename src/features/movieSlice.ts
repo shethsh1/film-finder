@@ -5,7 +5,7 @@ export const getPopularMovies: any = createAsyncThunk(
   async (page) => {
     const response = await fetch(
       `
-      /api/movie/popular?language=en-US&page=${page}`
+      /.netlify/functions/movie?page=${page}`
     );
     const formatResponse = await response.json();
     return formatResponse;
