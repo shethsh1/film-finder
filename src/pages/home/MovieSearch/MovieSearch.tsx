@@ -2,8 +2,9 @@ import classNames from "classnames";
 import React, { useState, useEffect, useContext } from "react";
 import { Collapse } from "../../../components";
 import { ThemeContext } from "../../../context/Theme/ThemeContext";
-// import Collapse from "@mui/material/Collapse";
 import { useGetMoviesBySearchTermQuery } from "../../../features/apiSlice";
+import { debounce } from "lodash";
+import defaultImage from "../../../images/No-Image.png";
 
 interface Props {
   searchTerm: string;
@@ -11,8 +12,10 @@ interface Props {
 }
 
 export const MovieSearch: React.FC<Props> = ({ searchTerm, isFocused }) => {
+  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
+  const [loading, setLoading] = useState(false);
   const { data: movies, isFetching } =
-    useGetMoviesBySearchTermQuery(searchTerm);
+    useGetMoviesBySearchTermQuery(debouncedSearchTerm);
   const [firstLoad, setFirstLoad] = useState(true);
   const { theme } = useContext(ThemeContext);
   const isDarkMode = theme === "dark" ? true : false;
@@ -21,8 +24,20 @@ export const MovieSearch: React.FC<Props> = ({ searchTerm, isFocused }) => {
     setFirstLoad(false);
   }, []);
 
+  useEffect(() => {
+    const debouncedSearch = debounce(() => {
+      setDebouncedSearchTerm(searchTerm);
+    }, 500);
+
+    debouncedSearch();
+
+    return () => {
+      debouncedSearch.cancel();
+    };
+  }, [searchTerm]);
+
   return (
-    <Collapse show={!isFetching && !firstLoad && isFocused}>
+    <Collapse show={!firstLoad && isFocused}>
       <div>
         {movies?.results?.slice(0, 5).map((movie) => (
           <div
@@ -36,7 +51,11 @@ export const MovieSearch: React.FC<Props> = ({ searchTerm, isFocused }) => {
               <img
                 className="h-15 w-10"
                 alt={movie.title}
-                src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
+                src={
+                  movie.poster_path
+                    ? `https://image.tmdb.org/t/p/w500/${movie.poster_path}`
+                    : defaultImage
+                }
               ></img>
             </div>
             <div className="">

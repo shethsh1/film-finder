@@ -15,7 +15,7 @@ export const Collapse: React.FC<Props> = ({
   const [contentHeight, setContentHeight] = useState<number | null>(null);
 
   useEffect(() => {
-    setContentHeight(contentRef.current?.scrollHeight || null);
+    setContentHeight(contentRef.current?.scrollHeight || 0);
   }, [children]);
 
   return (
