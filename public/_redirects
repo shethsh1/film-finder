@@ -1,1 +1,0 @@
-/api/*  https://api.themoviedb.org/3/:splat?api_key=${process.env.REACT_APP_MOVIE_DB_KEY}  200
