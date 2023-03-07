@@ -11,17 +11,18 @@ export const Collapse: React.FC<Props> = ({
   children,
   show,
   duration = 200,
-  addBuffer = 0,
 }) => {
   const contentRef = useRef<HTMLDivElement | null>(null);
   const [contentHeight, setContentHeight] = useState<number | null>(null);
 
   useEffect(() => {
     if (contentRef.current) {
-      const { height } = contentRef.current.getBoundingClientRect();
-      setContentHeight(height + addBuffer);
+      const height = contentRef.current.scrollHeight;
+      setContentHeight(height);
+      console.log(height);
+      console.log(contentRef.current);
     }
-  }, [children, addBuffer]);
+  }, [children]);
 
   return (
     <div

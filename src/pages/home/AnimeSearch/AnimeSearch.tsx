@@ -64,9 +64,9 @@ export default function AnimeSearch({ searchTerm, isFocused }: Props) {
                 "hover:bg-light-hover": !isDarkMode,
               })}
             >
-              <div className="flex-shrink-0">
+              <div className="flex-shrink-0 h-16 w-10">
                 <img
-                  className="h-15 w-10"
+                  className="h-full w-full"
                   alt={ani.title}
                   src={
                     ani?.images.jpg?.image_url
