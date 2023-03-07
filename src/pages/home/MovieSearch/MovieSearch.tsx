@@ -6,6 +6,7 @@ import { useGetMoviesBySearchTermQuery } from "../../../features/apiSlice";
 import { debounce } from "lodash";
 import defaultImage from "../../../images/No-Image.png";
 import { ThreeDots } from "react-loader-spinner";
+import { useNavigate } from "react-router";
 
 interface Props {
   searchTerm: string;
@@ -19,6 +20,11 @@ export default function MovieSearch({ searchTerm, isFocused }: Props) {
   const [firstLoad, setFirstLoad] = useState(true);
   const { theme } = useContext(ThemeContext);
   const isDarkMode = theme === "dark" ? true : false;
+  const navigate = useNavigate();
+
+  const goToPage = (id: number) => {
+    navigate(`/watch/movies/${id}`);
+  };
 
   useEffect(() => {
     setFirstLoad(false);
@@ -52,6 +58,7 @@ export default function MovieSearch({ searchTerm, isFocused }: Props) {
           movies?.results?.slice(0, 5).map((movie) => (
             <div
               key={movie.id}
+              onClick={() => goToPage(movie.id)}
               className={classNames("flex gap-4 hover:bg-dark-hover p-4", {
                 "hover:bg-dark-hover": isDarkMode,
                 "hover:bg-light-hover": !isDarkMode,
