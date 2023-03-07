@@ -37,7 +37,7 @@ export const Navigation = () => {
         })}
       >
         {NavItems.map((item, i) => (
-          <li className={"md:block hidden "}>
+          <li key={i} className={"md:block hidden "}>
             <NavLink
               key={i}
               to={item.to}

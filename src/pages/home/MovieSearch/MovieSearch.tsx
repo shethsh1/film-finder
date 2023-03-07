@@ -12,11 +12,10 @@ interface Props {
   isFocused: boolean;
 }
 
-export const MovieSearch: React.FC<Props> = ({ searchTerm, isFocused }) => {
-  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
-  const [loading, setLoading] = useState(false);
-  const { data: movies, isLoading } =
-    useGetMoviesBySearchTermQuery(debouncedSearchTerm);
+export default function MovieSearch({ searchTerm, isFocused }: Props) {
+  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState(searchTerm);
+  const [loading, setLoading] = useState(true);
+  const { data: movies } = useGetMoviesBySearchTermQuery(debouncedSearchTerm);
   const [firstLoad, setFirstLoad] = useState(true);
   const { theme } = useContext(ThemeContext);
   const isDarkMode = theme === "dark" ? true : false;
@@ -39,11 +38,15 @@ export const MovieSearch: React.FC<Props> = ({ searchTerm, isFocused }) => {
   }, [searchTerm]);
 
   useEffect(() => {
+    setFirstLoad(false);
+  }, []);
+
+  useEffect(() => {
     setLoading(false);
   }, [movies]);
 
   return (
-    <Collapse show={!firstLoad && isFocused}>
+    <Collapse show={!firstLoad && isFocused} addBuffer={31}>
       <div>
         {!loading && movies && movies.results && movies.results.length > 0 ? (
           movies?.results?.slice(0, 5).map((movie) => (
@@ -98,4 +101,4 @@ export const MovieSearch: React.FC<Props> = ({ searchTerm, isFocused }) => {
       </div>
     </Collapse>
   );
-};
+}

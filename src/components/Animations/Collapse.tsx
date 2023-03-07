@@ -4,19 +4,24 @@ interface Props {
   children: React.ReactNode;
   show: boolean;
   duration?: number;
+  addBuffer?: number;
 }
 
 export const Collapse: React.FC<Props> = ({
   children,
   show,
   duration = 200,
+  addBuffer = 0,
 }) => {
   const contentRef = useRef<HTMLDivElement | null>(null);
   const [contentHeight, setContentHeight] = useState<number | null>(null);
 
   useEffect(() => {
-    setContentHeight(contentRef.current?.scrollHeight || 0);
-  }, [children]);
+    if (contentRef.current) {
+      const { height } = contentRef.current.getBoundingClientRect();
+      setContentHeight(height + addBuffer);
+    }
+  }, [children, addBuffer]);
 
   return (
     <div

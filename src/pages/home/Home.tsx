@@ -2,7 +2,7 @@ import { useContext, useState, useRef, useEffect } from "react";
 import { ThemeContext } from "../../context/Theme/ThemeContext";
 import classNames from "classnames";
 import { MDContainer, Collapse } from "../../components";
-import { MovieSearch } from "./MovieSearch/MovieSearch";
+import MovieSearch from "./MovieSearch/MovieSearch";
 
 type ActiveTab = "Movies" | "Shows" | "Anime";
 
@@ -46,6 +46,10 @@ export const Home = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+
+  useEffect(() => {
+    setSearchTerm("");
+  }, [activeTab]);
 
   return (
     <div className="mt-16 min-h-[800px]">
@@ -128,7 +132,7 @@ export const Home = () => {
               </Collapse>
 
               {/* results starts */}
-              {activeTab === "Movies" && (
+              {activeTab === "Movies" && searchTerm !== "" && (
                 <MovieSearch searchTerm={searchTerm} isFocused={isFocused} />
               )}
             </div>
