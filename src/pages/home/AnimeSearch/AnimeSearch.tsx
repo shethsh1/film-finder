@@ -76,7 +76,7 @@ export default function AnimeSearch({ searchTerm, isFocused }: Props) {
                 ></img>
               </div>
               <div className="">
-                <p className="text-lg font-bold">{ani.title}</p>
+                <p className="md:text-lg font-bold">{ani.title}</p>
                 <p className="md:inline-flex gap-2 hidden">
                   <span>Score: {ani.score}</span>
                   <span>&bull;</span>

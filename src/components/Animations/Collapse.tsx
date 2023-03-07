@@ -19,8 +19,6 @@ export const Collapse: React.FC<Props> = ({
     if (contentRef.current) {
       const height = contentRef.current.scrollHeight;
       setContentHeight(height);
-      console.log(height);
-      console.log(contentRef.current);
     }
   }, [children]);
 

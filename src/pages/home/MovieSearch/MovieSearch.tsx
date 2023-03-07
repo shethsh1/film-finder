@@ -76,7 +76,7 @@ export default function MovieSearch({ searchTerm, isFocused }: Props) {
                 ></img>
               </div>
               <div className="">
-                <p className="text-lg font-bold">{movie.title}</p>
+                <p className="md:text-lg font-bold">{movie.title}</p>
                 <p className="md:inline-flex gap-2 hidden">
                   <span>Score: {movie.vote_average}</span>
                   <span>&bull;</span>

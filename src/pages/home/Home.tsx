@@ -63,6 +63,17 @@ export const Home = () => {
             "text-light-font-primary": !isDarkMode,
           })}
         >
+          <div className="text-4xl flex flex-col gap-4 items-center mb-12">
+            <h1 className="text-center" style={{ fontFamily: "Lobster Two" }}>
+              Hello! Welcome to Film Finder
+            </h1>
+            <p
+              className="text-3xl text-center"
+              style={{ fontFamily: "Poppins" }}
+            >
+              Find Your Favorite Movies, TV Shows, and Anime
+            </p>
+          </div>
           <form onSubmit={handleSubmit} className="relative">
             <div
               className={classNames("flex items-center border-b-2  py-2", {
