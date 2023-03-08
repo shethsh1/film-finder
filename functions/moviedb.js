@@ -6,9 +6,8 @@ exports.handler = async (event) => {
   // Get the page number from the query string
   const page = event.queryStringParameters.page || 1;
   // Get the endpoint from the path parameter
-  const endpoint = event.pathParameters.endpoint;
   // Construct the API URL with the key, page and endpoint
-  const apiUrl = `https://api.themoviedb.org/3/${endpoint}?api_key=${apiKey}&language=en-US&page=${page}`;
+  const apiUrl = `https://api.themoviedb.org/3/${event.path}?api_key=${apiKey}&language=en-US&page=${page}`;
   try {
     const response = await axios.get(apiUrl);
     return {
