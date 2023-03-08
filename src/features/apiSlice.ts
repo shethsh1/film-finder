@@ -3,23 +3,26 @@ import { interfaceMovieDetail, Movies } from "./movieSlice";
 import { interfaceShowDetail, Shows } from "./showSlice";
 import { AnimeObject, interfaceAnimeDetail } from "./animeSlice";
 
+let API_KEY = "";
+let cond = "&";
+if (process.env.REACT_APP_MOVIE_DB_KEY_LOCAL) {
+  API_KEY = `&api_key=${process.env.REACT_APP_MOVIE_DB_KEY_LOCAL}`;
+  cond = "?";
+}
+
 export const moviesApi = createApi({
   reducerPath: "moviesApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: `         ${process.env.REACT_APP_MOVIE_DB_API_WEBSITE}`,
+    baseUrl: `${process.env.REACT_APP_MOVIE_DB_API_WEBSITE}`,
   }),
   endpoints: (builder) => ({
     getMovieById: builder.query<interfaceMovieDetail, number>({
       query: (id) =>
-        `/movie/${id}?append_to_response=videos&language=en-US&api_key=${
-          process.env.REACT_APP_MOVIE_DB_KEY_LOCAL || ""
-        }`,
+        `/movie/${id}${cond}append_to_response=videos&language=en-US${API_KEY}`,
     }),
     getMoviesBySearchTerm: builder.query<Movies, string>({
       query: (searchterm) =>
-        `/search/movie?language=en-US&query=${searchterm}&include_adult=false&api_key=${
-          process.env.REACT_APP_MOVIE_DB_KEY_LOCAL || ""
-        }`,
+        `/search/movie${cond}language=en-US&query=${searchterm}&include_adult=false${API_KEY}`,
     }),
   }),
 });
@@ -27,20 +30,16 @@ export const moviesApi = createApi({
 export const showsApi = createApi({
   reducerPath: "showsApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: `         ${process.env.REACT_APP_MOVIE_DB_API_WEBSITE}`,
+    baseUrl: `${process.env.REACT_APP_MOVIE_DB_API_WEBSITE}`,
   }),
   endpoints: (builder) => ({
     getShowById: builder.query<interfaceShowDetail, number>({
       query: (id) =>
-        `/tv/${id}?append_to_response=videos&language=en-US&api_key=${
-          process.env.REACT_APP_MOVIE_DB_KEY_LOCAL || ""
-        }`,
+        `/tv/${id}${cond}append_to_response=videos&language=en-US${API_KEY}`,
     }),
     getShowsBySearchTerm: builder.query<Shows, string>({
       query: (searchterm) =>
-        `/search/tv?language=en-US&query=${searchterm}&include_adult=false&api_key=${
-          process.env.REACT_APP_MOVIE_DB_KEY_LOCAL || ""
-        }`,
+        `/search/tv${cond}language=en-US&query=${searchterm}&include_adult=false${API_KEY}`,
     }),
   }),
 });
