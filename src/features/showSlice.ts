@@ -1,15 +1,18 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 
+let API_KEY = "";
+let cond = "&";
+if (process.env.REACT_APP_MOVIE_DB_KEY_LOCAL) {
+  API_KEY = `&api_key=${process.env.REACT_APP_MOVIE_DB_KEY_LOCAL}`;
+  cond = "?";
+}
+
 export const getPopularShows: any = createAsyncThunk(
   "popularShows/getPopularShows",
   async (page) => {
     const response = await fetch(
       `
-      ${
-        process.env.REACT_APP_MOVIE_DB_API_WEBSITE
-      }/tv/popular?language=en-US&page=${page}&api_key=${
-        process.env.REACT_APP_MOVIE_DB_KEY_LOCAL || ""
-      }`
+      ${process.env.REACT_APP_MOVIE_DB_API_WEBSITE}/tv/popular${cond}language=en-US&page=${page}${API_KEY}`
     );
     const formatResponse = await response.json();
     return formatResponse;
@@ -20,11 +23,7 @@ export const getTopRatedShows: any = createAsyncThunk(
   "topRatedShows/getTopRatedShows",
   async (page) => {
     const response = await fetch(
-      `${
-        process.env.REACT_APP_MOVIE_DB_API_WEBSITE
-      }/tv/top_rated?language=en-US&page=${page}&api_key=${
-        process.env.REACT_APP_MOVIE_DB_KEY_LOCAL || ""
-      }`
+      `${process.env.REACT_APP_MOVIE_DB_API_WEBSITE}/tv/top_rated${cond}language=en-US&page=${page}${API_KEY}`
     );
     const formatResponse = await response.json();
     return formatResponse;
@@ -35,11 +34,7 @@ export const getUpcomingShows: any = createAsyncThunk(
   "upcomingShows/getUpcomingShows",
   async (page) => {
     const response = await fetch(
-      `${
-        process.env.REACT_APP_MOVIE_DB_API_WEBSITE
-      }/tv/upcoming?language=en-US&page=${page}&api_key=${
-        process.env.REACT_APP_MOVIE_DB_KEY_LOCAL || ""
-      }`
+      `${process.env.REACT_APP_MOVIE_DB_API_WEBSITE}/tv/upcoming${cond}language=en-US&page=${page}${API_KEY}`
     );
     const formatResponse = await response.json();
     return formatResponse;
@@ -50,11 +45,7 @@ export const getShowDetails: any = createAsyncThunk(
   "ShowsDetails/getShowsDetails",
   async (id) => {
     const response = await fetch(
-      `${
-        process.env.REACT_APP_MOVIE_DB_API_WEBSITE
-      }/tv/${id}?append_to_response=videos&language=en-US&api_key=${
-        process.env.REACT_APP_MOVIE_DB_KEY_LOCAL || ""
-      }`
+      `${process.env.REACT_APP_MOVIE_DB_API_WEBSITE}/tv/${id}${cond}append_to_response=videos&language=en-US${API_KEY}`
     );
     const formatResponse = await response.json();
     return formatResponse;
