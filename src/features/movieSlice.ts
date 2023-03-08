@@ -51,7 +51,7 @@ export const getMovieDetails: any = createAsyncThunk(
   async (id) => {
     const response = await fetch(
       `${
-        process.env.REACT_APP_TEST
+        process.env.REACT_APP_MOVIE_DB_API_WEBSITE
       }/movie/${id}?append_to_response=videos&language=en-US&api_key=${
         process.env.REACT_APP_MOVIE_DB_KEY_LOCAL || ""
       }`

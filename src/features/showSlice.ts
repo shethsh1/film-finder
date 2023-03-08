@@ -5,7 +5,11 @@ export const getPopularShows: any = createAsyncThunk(
   async (page) => {
     const response = await fetch(
       `
-         https://api.themoviedb.org/3/tv/popular?api_key=${process.env.REACT_APP_MOVIE_DB_KEY}&language=en-US&page=${page}`
+      ${
+        process.env.REACT_APP_MOVIE_DB_API_WEBSITE
+      }/tv/popular?language=en-US&page=${page}&api_key=${
+        process.env.REACT_APP_MOVIE_DB_KEY_LOCAL || ""
+      }`
     );
     const formatResponse = await response.json();
     return formatResponse;
@@ -16,7 +20,11 @@ export const getTopRatedShows: any = createAsyncThunk(
   "topRatedShows/getTopRatedShows",
   async (page) => {
     const response = await fetch(
-      `https://api.themoviedb.org/3/tv/top_rated?api_key=${process.env.REACT_APP_MOVIE_DB_KEY}&language=en-US&page=${page}`
+      `${
+        process.env.REACT_APP_MOVIE_DB_API_WEBSITE
+      }/tv/top_rated?language=en-US&page=${page}&api_key=${
+        process.env.REACT_APP_MOVIE_DB_KEY_LOCAL || ""
+      }`
     );
     const formatResponse = await response.json();
     return formatResponse;
@@ -27,7 +35,11 @@ export const getUpcomingShows: any = createAsyncThunk(
   "upcomingShows/getUpcomingShows",
   async (page) => {
     const response = await fetch(
-      `https://api.themoviedb.org/3/tv/upcoming?api_key=${process.env.REACT_APP_MOVIE_DB_KEY}&language=en-US&page=${page}`
+      `${
+        process.env.REACT_APP_MOVIE_DB_API_WEBSITE
+      }/tv/upcoming?language=en-US&page=${page}&api_key=${
+        process.env.REACT_APP_MOVIE_DB_KEY_LOCAL || ""
+      }`
     );
     const formatResponse = await response.json();
     return formatResponse;
@@ -38,7 +50,11 @@ export const getShowDetails: any = createAsyncThunk(
   "ShowsDetails/getShowsDetails",
   async (id) => {
     const response = await fetch(
-      `https://api.themoviedb.org/3/tv/${id}?api_key=${process.env.REACT_APP_MOVIE_DB_KEY}&append_to_response=videos&language=en-US`
+      `${
+        process.env.REACT_APP_MOVIE_DB_API_WEBSITE
+      }/tv/${id}?&append_to_response=videos&language=en-US&api_key=${
+        process.env.REACT_APP_MOVIE_DB_KEY_LOCAL || ""
+      }`
     );
     const formatResponse = await response.json();
     return formatResponse;
