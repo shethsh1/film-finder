@@ -5,7 +5,11 @@ export const getPopularMovies: any = createAsyncThunk(
   async (page) => {
     const response = await fetch(
       `
-         /.netlify/functions/moviedb/movie/popular&language=en-US&page=${page}`
+         ${
+           process.env.REACT_APP_MOVIE_DB_API_WEBSITE
+         }/movie/popular?language=en-US&page=${page}&api_key=${
+        process.env.REACT_APP_MOVIE_DB_KEY_LOCAL || ""
+      }`
     );
     const formatResponse = await response.json();
     return formatResponse;
@@ -16,7 +20,11 @@ export const getTopRatedMovies: any = createAsyncThunk(
   "topRatedMovies/getTopRatedMovies",
   async (page) => {
     const response = await fetch(
-      `https://api.themoviedb.org/3/movie/top_rated?api_key=${process.env.REACT_APP_MOVIE_DB_KEY}&language=en-US&page=${page}`
+      `         ${
+        process.env.REACT_APP_MOVIE_DB_API_WEBSITE
+      }/movie/top_rated?language=en-US&page=${page}&api_key=${
+        process.env.REACT_APP_MOVIE_DB_KEY_LOCAL || ""
+      }&`
     );
     const formatResponse = await response.json();
     return formatResponse;
@@ -27,7 +35,11 @@ export const getUpcomingMovies: any = createAsyncThunk(
   "upcomingMovies/getUpcomingMovies",
   async (page) => {
     const response = await fetch(
-      `https://api.themoviedb.org/3/movie/upcoming?api_key=${process.env.REACT_APP_MOVIE_DB_KEY}&language=en-US&page=${page}`
+      `         ${
+        process.env.REACT_APP_MOVIE_DB_API_WEBSITE
+      }/movie/upcoming?language=en-US&page=${page}&api_key=${
+        process.env.REACT_APP_MOVIE_DB_KEY_LOCAL || ""
+      }`
     );
     const formatResponse = await response.json();
     return formatResponse;
@@ -38,7 +50,11 @@ export const getMovieDetails: any = createAsyncThunk(
   "movieDetails/getMovieDetails",
   async (id) => {
     const response = await fetch(
-      `https://api.themoviedb.org/3/movie/${id}?api_key=${process.env.REACT_APP_MOVIE_DB_KEY}&append_to_response=videos&language=en-US`
+      `${
+        process.env.REACT_APP_TEST
+      }/movie/${id}?append_to_response=videos&language=en-US&api_key=${
+        process.env.REACT_APP_MOVIE_DB_KEY_LOCAL || ""
+      }`
     );
     const formatResponse = await response.json();
     return formatResponse;
@@ -49,7 +65,11 @@ export const getMovieByQuery: any = createAsyncThunk(
   "getMovieByQuery/getMovieByQuery",
   async (searchterm) => {
     const response = await fetch(`
-        https://api.themoviedb.org/3/search/movie?api_key=${process.env.REACT_APP_MOVIE_DB_KEY}&language=en-US&query=${searchterm}&include_adult=false`);
+    ${
+      process.env.REACT_APP_MOVIE_DB_API_WEBSITE
+    }/search/movie?language=en-US&query=${searchterm}&include_adult=false&api_key=${
+      process.env.REACT_APP_MOVIE_DB_KEY_LOCAL || ""
+    }`);
     const formatResponse = await response.json();
     return formatResponse;
   }
