@@ -52,7 +52,7 @@ export const getShowDetails: any = createAsyncThunk(
     const response = await fetch(
       `${
         process.env.REACT_APP_MOVIE_DB_API_WEBSITE
-      }/tv/${id}?&append_to_response=videos&language=en-US&api_key=${
+      }/tv/${id}?append_to_response=videos&language=en-US&api_key=${
         process.env.REACT_APP_MOVIE_DB_KEY_LOCAL || ""
       }`
     );

@@ -1,5 +1,5 @@
 const axios = require("axios");
-const querystring = require("querystring");
+const QueryString = require("querystring");
 
 exports.handler = async (event) => {
   // Get the API key from the environment variable
@@ -11,10 +11,10 @@ exports.handler = async (event) => {
   const queryString = event.queryStringParameters;
   delete queryString["endpoint"];
   delete queryString["api_key"];
-
-  const apiUrl = `https://api.themoviedb.org/3${endpoint}&${querystring.stringify(
+  const apiUrl = `https://api.themoviedb.org/3${endpoint}&${QueryString.stringify(
     queryString
   )}&api_key=${apiKey}`;
+  console.log(apiUrl);
   // Make a GET request to the API and return the response
   try {
     const response = await axios.get(apiUrl);
