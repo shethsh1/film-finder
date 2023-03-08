@@ -5,7 +5,7 @@ export const getPopularMovies: any = createAsyncThunk(
   async (page) => {
     const response = await fetch(
       `
-         https://api.themoviedb.org/3/movie/popular?api_key=${process.env.REACT_APP_MOVIE_DB_KEY}&language=en-US&page=${page}`
+         /.netlify/functions/moviedb/movie/popular&language=en-US&page=${page}`
     );
     const formatResponse = await response.json();
     return formatResponse;
