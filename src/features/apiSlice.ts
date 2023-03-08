@@ -5,30 +5,42 @@ import { AnimeObject, interfaceAnimeDetail } from "./animeSlice";
 
 export const moviesApi = createApi({
   reducerPath: "moviesApi",
-  baseQuery: fetchBaseQuery({ baseUrl: `https://api.themoviedb.org/3` }),
+  baseQuery: fetchBaseQuery({
+    baseUrl: `         ${process.env.REACT_APP_MOVIE_DB_API_WEBSITE}`,
+  }),
   endpoints: (builder) => ({
     getMovieById: builder.query<interfaceMovieDetail, number>({
       query: (id) =>
-        `/movie/${id}?api_key=${process.env.REACT_APP_MOVIE_DB_KEY}&append_to_response=videos&language=en-US`,
+        `/movie/${id}?append_to_response=videos&language=en-US&api_key=${
+          process.env.REACT_APP_MOVIE_DB_KEY_LOCAL || ""
+        }`,
     }),
     getMoviesBySearchTerm: builder.query<Movies, string>({
       query: (searchterm) =>
-        `/search/movie?api_key=${process.env.REACT_APP_MOVIE_DB_KEY}&language=en-US&query=${searchterm}&include_adult=false`,
+        `/search/movie?language=en-US&query=${searchterm}&include_adult=false&api_key=${
+          process.env.REACT_APP_MOVIE_DB_KEY_LOCAL || ""
+        }`,
     }),
   }),
 });
 
 export const showsApi = createApi({
   reducerPath: "showsApi",
-  baseQuery: fetchBaseQuery({ baseUrl: `https://api.themoviedb.org/3` }),
+  baseQuery: fetchBaseQuery({
+    baseUrl: `         ${process.env.REACT_APP_MOVIE_DB_API_WEBSITE}`,
+  }),
   endpoints: (builder) => ({
     getShowById: builder.query<interfaceShowDetail, number>({
       query: (id) =>
-        `/tv/${id}?api_key=${process.env.REACT_APP_MOVIE_DB_KEY}&append_to_response=videos&language=en-US`,
+        `/tv/${id}?append_to_response=videos&language=en-US&api_key=${
+          process.env.REACT_APP_MOVIE_DB_KEY_LOCAL || ""
+        }`,
     }),
     getShowsBySearchTerm: builder.query<Shows, string>({
       query: (searchterm) =>
-        `/search/tv?api_key=${process.env.REACT_APP_MOVIE_DB_KEY}&language=en-US&query=${searchterm}&include_adult=false`,
+        `/search/tv?language=en-US&query=${searchterm}&include_adult=false&api_key=${
+          process.env.REACT_APP_MOVIE_DB_KEY_LOCAL || ""
+        }`,
     }),
   }),
 });
