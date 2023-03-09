@@ -34,7 +34,7 @@ export const getUpcomingShows: any = createAsyncThunk(
   "upcomingShows/getUpcomingShows",
   async (page) => {
     const response = await fetch(
-      `${process.env.REACT_APP_MOVIE_DB_API_WEBSITE}/tv/upcoming${cond}language=en-US&page=${page}${API_KEY}`
+      `${process.env.REACT_APP_MOVIE_DB_API_WEBSITE}/tv/airing_today${cond}language=en-US&page=${page}${API_KEY}`
     );
     const formatResponse = await response.json();
     return formatResponse;
@@ -63,6 +63,7 @@ interface Show {
   popularity: number;
   original_title: string;
   original_language: string;
+  first_air_date: string;
 }
 
 interface interfaceShowDetail {
@@ -77,6 +78,7 @@ interface interfaceShowDetail {
   videos: {
     results: { key: string; id: number }[];
   };
+  first_air_date: string;
 }
 
 type Shows = {
@@ -89,6 +91,7 @@ type Shows = {
 interface ShowState {
   loading: boolean;
   activeShows: Shows | null;
+  topRatedShows: Shows | null;
   showDetails: interfaceShowDetail | null;
   cardDetailLoading: boolean;
 }
@@ -117,7 +120,7 @@ export const showSlice = createSlice({
       state.loading = true;
     },
     [getTopRatedShows.fulfilled]: (state, action: PayloadAction<Shows>) => {
-      state.activeShows = action.payload;
+      state.topRatedShows = action.payload;
       state.loading = false;
     },
     [getTopRatedShows.rejected]: (state) => {

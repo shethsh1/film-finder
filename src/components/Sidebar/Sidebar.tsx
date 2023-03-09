@@ -2,11 +2,13 @@ import classNames from "classnames";
 import { useContext } from "react";
 import { ThemeContext } from "../../context/Theme/ThemeContext";
 import { Movies } from "../../features/movieSlice";
-import { MovieCards } from "./MovieCards.tsx/MovieCards";
+import { Shows } from "../../features/showSlice";
+import { MovieCards } from "./MovieCards/MovieCards";
+import { ShowCards } from "./ShowCards/ShowCards";
 
 interface Props {
   title: string;
-  topMedia: Movies | null;
+  topMedia: Movies | Shows | null;
   type: "movies" | "shows" | "anime";
 }
 
@@ -26,6 +28,8 @@ export default function Sidebar({ title, topMedia, type }: Props) {
       <div>
         {type === "movies" ? (
           <MovieCards topMovies={topMedia as Movies} />
+        ) : type === "shows" ? (
+          <ShowCards topShows={topMedia as Shows} />
         ) : (
           <></>
         )}

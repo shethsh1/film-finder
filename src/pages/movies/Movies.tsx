@@ -37,7 +37,6 @@ export const Movies = () => {
   };
 
   useEffect(() => {
-    dispatch(getTopRatedMovies(1));
     switch (pageType) {
       case "Trending":
         dispatch(getPopularMovies(page));
