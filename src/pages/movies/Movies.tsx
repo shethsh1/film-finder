@@ -7,12 +7,11 @@ import {
   getUpcomingMovies,
 } from "../../features/movieSlice";
 import { useAppSelector, useAppDispatch } from "../../store/hooks";
-import { MediaCard, PaginationButtons } from "../../components";
+import { MediaCard, PaginationButtons, Sidebar } from "../../components";
 import styles from "./Movies.module.css";
 import { TypeButton } from "../../components";
 import { MediaType } from "../../types/MediaTypes";
 import { ThreeDots } from "react-loader-spinner";
-import { AiFillStar } from "react-icons/ai";
 
 type PageType = "Trending" | "Top Rated" | "Upcoming";
 
@@ -132,50 +131,7 @@ export const Movies = () => {
         </div>
       </section>
 
-      <div className="flex-shrink-0 basis-[22rem] hidden lg:block">
-        <div
-          className={classNames("text-2xl font-bold my-4", {
-            "text-dark-font-primary": isDarkMode,
-            "text-light-font-primary": !isDarkMode,
-          })}
-        >
-          Top Movies
-        </div>
-        <div>
-          <div className="flex flex-col gap-4">
-            {topMovies?.results?.slice(0, 10).map((movie) => (
-              <div
-                key={movie.id}
-                className={classNames("flex text-xs gap-4 cursor-pointer", {
-                  "text-dark-font-primary bg-dark-secondary hover:bg-dark-hover":
-                    isDarkMode,
-                  "text-light-font-primary bg-light-secondary hover:bg-light-hover":
-                    !isDarkMode,
-                })}
-              >
-                <img
-                  className="h-20 w-16 flex-shrink-0"
-                  src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
-                  alt={movie.title}
-                />
-                <div className="py-2 mt-2">
-                  <p className="font-bold">{movie.title}</p>
-                  <p className="inline-flex gap-1 mt-1 items-center">
-                    <div className="inline-flex text-md items-center gap-1">
-                      <AiFillStar color="gold" size={16} />
-                      <span>{movie.vote_average}</span>
-                    </div>
-                    <span>&bull;</span>
-                    <span>Popularity: {movie.popularity}</span>
-                    <span>&bull;</span>
-                    <span>{movie.release_date}</span>
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
+      <Sidebar topMedia={topMovies} type={"movies"} title={"Top Movies"} />
     </div>
   );
 };
