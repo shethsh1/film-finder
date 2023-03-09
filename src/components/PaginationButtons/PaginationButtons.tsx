@@ -19,7 +19,7 @@ export const PaginationButtons: React.FC<PaginationTooltipProps> = ({
   return (
     <div
       className={classNames(
-        "mt-8 flex gap-4 justify-center md:justify-start items-center",
+        "mt-8 flex gap-4 sm:flex-row flex-col justify-center md:justify-start items-center ",
         {
           "text-dark-font-primary": isDarkMode,
           "text-light-font-primary": !isDarkMode,

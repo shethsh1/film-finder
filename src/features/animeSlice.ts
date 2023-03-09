@@ -4,7 +4,7 @@ export const getPopularAnime: any = createAsyncThunk(
   "popularAnime/getPopularAnime",
   async (page) => {
     const response = await fetch(
-      `https://api.jikan.moe/v4/top/anime?page=${page}`
+      `https://api.jikan.moe/v4/seasons/now?page=${page}`
     );
     const formatResponse = await response.json();
     return formatResponse;
@@ -12,10 +12,21 @@ export const getPopularAnime: any = createAsyncThunk(
 );
 
 export const getUpcomingAnime: any = createAsyncThunk(
-  "animeSeasons/getAnimeRecommendations",
+  "animeSeasons/upcoming",
   async (page) => {
     const response = await fetch(
       `https://api.jikan.moe/v4/seasons/upcoming?page=${page}`
+    );
+    const formatResponse = await response.json();
+    return formatResponse;
+  }
+);
+
+export const getTopRatedAnime: any = createAsyncThunk(
+  "etTopRatedAnime/getTopRatedAnime",
+  async (page) => {
+    const response = await fetch(
+      `https://api.jikan.moe/v4/top/anime?page=${page}`
     );
     const formatResponse = await response.json();
     return formatResponse;
@@ -50,8 +61,10 @@ interface AnimeObject {
   };
   synopsis: string;
   aired: {
+    from: string;
     string: string;
   };
+  popularity: string;
 }
 
 interface interfaceAnimeDetail {
@@ -73,28 +86,33 @@ interface interfaceAnimeDetail {
   synopsis: string;
   score: string;
   aired: {
+    from: string;
     string: string;
   };
+  popularity: string;
+}
+
+interface Anime {
+  data: AnimeObject[];
+  pagination: {
+    current_page: number;
+  };
+  status: string;
 }
 
 interface AnimeState {
-  activeAnimes: {
-    data: AnimeObject[];
-    pagination: {
-      current_page: number;
-    };
-    status: string;
-  } | null;
-
+  activeAnimes: Anime | null;
   loading: boolean;
   cardDetailLoading: boolean;
   animeDetail: interfaceAnimeDetail | null;
+  topRatedAnime: Anime | null;
 }
 
 export const animeSlice = createSlice({
   name: "anime",
   initialState: {
     activeAnimes: null,
+    topRatedAnime: null,
     loading: false,
     cardDetailLoading: false,
     animeDetail: null,
@@ -122,6 +140,17 @@ export const animeSlice = createSlice({
       state.loading = false;
     },
 
+    [getTopRatedAnime.pending]: (state) => {
+      state.loading = true;
+    },
+    [getTopRatedAnime.fulfilled]: (state, action) => {
+      state.topRatedAnime = action.payload;
+      state.loading = false;
+    },
+    [getTopRatedAnime.rejected]: (state) => {
+      state.loading = false;
+    },
+
     [getAnimeDetails.pending]: (state) => {
       state.cardDetailLoading = true;
     },
@@ -135,6 +164,6 @@ export const animeSlice = createSlice({
   },
 });
 
-export type { interfaceAnimeDetail, AnimeObject };
+export type { interfaceAnimeDetail, AnimeObject, Anime };
 
 export default animeSlice.reducer;

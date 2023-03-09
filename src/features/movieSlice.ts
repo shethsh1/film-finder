@@ -99,6 +99,7 @@ type Movies = {
 interface MovieState {
   loading: boolean;
   popularMovies: Movies | null;
+  topRatedMovies: Movies | null;
   movieDetails: interfaceMovieDetail | null;
   cardDetailLoading: boolean;
 }
@@ -107,6 +108,7 @@ export const movieSlice = createSlice({
   name: "movie",
   initialState: {
     popularMovies: null,
+    topRatedMovies: null,
     loading: false,
     movieDetails: null,
     cardDetailLoading: false,
@@ -123,16 +125,11 @@ export const movieSlice = createSlice({
     [getPopularMovies.rejected]: (state) => {
       state.loading = false;
     },
-    [getTopRatedMovies.pending]: (state) => {
-      state.loading = true;
-    },
+    [getTopRatedMovies.pending]: (state) => {},
     [getTopRatedMovies.fulfilled]: (state, action: PayloadAction<Movies>) => {
-      state.popularMovies = action.payload;
-      state.loading = false;
+      state.topRatedMovies = action.payload;
     },
-    [getTopRatedMovies.rejected]: (state) => {
-      state.loading = false;
-    },
+    [getTopRatedMovies.rejected]: (state) => {},
     [getUpcomingMovies.pending]: (state) => {
       state.loading = true;
     },
