@@ -5,9 +5,10 @@ import { ThemeContext } from "../../../context/Theme/ThemeContext";
 import { Shows } from "../../../features/showSlice";
 interface Props {
   topShows: Shows;
+  goToMedia: (id: number) => void;
 }
 
-export const ShowCards: React.FC<Props> = ({ topShows }) => {
+export const ShowCards: React.FC<Props> = ({ topShows, goToMedia }) => {
   const { theme } = useContext(ThemeContext);
   const isDarkMode = theme === "dark" ? true : false;
   return (
@@ -15,6 +16,7 @@ export const ShowCards: React.FC<Props> = ({ topShows }) => {
       {topShows?.results?.slice(0, 10).map((show) => (
         <div
           key={show.id}
+          onClick={() => goToMedia(show.id)}
           className={classNames("flex text-xs gap-4 cursor-pointer", {
             "text-dark-font-primary bg-dark-secondary hover:bg-dark-hover":
               isDarkMode,

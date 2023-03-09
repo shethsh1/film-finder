@@ -6,9 +6,10 @@ import { Movies } from "../../../features/movieSlice";
 
 interface Props {
   topMovies: Movies;
+  goToMedia: (id: number) => void;
 }
 
-export const MovieCards: React.FC<Props> = ({ topMovies }) => {
+export const MovieCards: React.FC<Props> = ({ topMovies, goToMedia }) => {
   const { theme } = useContext(ThemeContext);
   const isDarkMode = theme === "dark" ? true : false;
   return (
@@ -16,6 +17,7 @@ export const MovieCards: React.FC<Props> = ({ topMovies }) => {
       {topMovies?.results?.slice(0, 10).map((movie) => (
         <div
           key={movie.id}
+          onClick={() => goToMedia(movie.id)}
           className={classNames("flex text-xs gap-4 cursor-pointer", {
             "text-dark-font-primary bg-dark-secondary hover:bg-dark-hover":
               isDarkMode,

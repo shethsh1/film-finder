@@ -7,16 +7,19 @@ import { format } from "date-fns";
 
 interface Props {
   topAnime: Anime;
+  goToMedia: (id: number) => void;
 }
 
-export const AnimeCards: React.FC<Props> = ({ topAnime }) => {
+export const AnimeCards: React.FC<Props> = ({ topAnime, goToMedia }) => {
   const { theme } = useContext(ThemeContext);
   const isDarkMode = theme === "dark" ? true : false;
+
   return (
     <div className="flex flex-col gap-4">
       {topAnime?.data?.slice(0, 10).map((anime) => (
         <div
           key={anime.mal_id}
+          onClick={() => goToMedia(anime.mal_id)}
           className={classNames("flex text-xs gap-4 cursor-pointer", {
             "text-dark-font-primary bg-dark-secondary hover:bg-dark-hover":
               isDarkMode,

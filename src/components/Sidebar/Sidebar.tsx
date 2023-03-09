@@ -7,6 +7,7 @@ import { MovieCards } from "./MovieCards/MovieCards";
 import { ShowCards } from "./ShowCards/ShowCards";
 import { Anime } from "../../features/animeSlice";
 import { AnimeCards } from "./AnimeCards/AnimeCards";
+import { useNavigate } from "react-router-dom";
 
 interface Props {
   title: string;
@@ -15,8 +16,14 @@ interface Props {
 }
 
 export default function Sidebar({ title, topMedia, type }: Props) {
+  const navigate = useNavigate();
   const { theme } = useContext(ThemeContext);
   const isDarkMode = theme === "dark" ? true : false;
+
+  const goToMedia = (id: number) => {
+    navigate(`/watch/${type}/${id}`);
+  };
+
   return (
     <div className="flex-shrink-0 basis-[22rem] hidden lg:block">
       <div
@@ -29,11 +36,11 @@ export default function Sidebar({ title, topMedia, type }: Props) {
       </div>
       <div>
         {type === "movies" ? (
-          <MovieCards topMovies={topMedia as Movies} />
+          <MovieCards topMovies={topMedia as Movies} goToMedia={goToMedia} />
         ) : type === "shows" ? (
-          <ShowCards topShows={topMedia as Shows} />
+          <ShowCards topShows={topMedia as Shows} goToMedia={goToMedia} />
         ) : type === "anime" ? (
-          <AnimeCards topAnime={topMedia as Anime} />
+          <AnimeCards topAnime={topMedia as Anime} goToMedia={goToMedia} />
         ) : (
           <></>
         )}
