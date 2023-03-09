@@ -58,7 +58,7 @@ export const Movies = () => {
     <div className="flex gap-4 justify-between">
       <section className="flex-1">
         <h3
-          className={classNames("font-bold text-4xl mt-8 w-96 min-w-full", {
+          className={classNames("font-bold md:text-4xl text-3xl mt-8", {
             "text-dark-font-primary": isDarkMode,
             "text-light-font-primary": !isDarkMode,
           })}
