@@ -12,6 +12,7 @@ import { PaginationButtons } from "./PaginationButtons/PaginationButtons";
 import { TypeButton } from "./TypeButton/TypeButton";
 import { MDContainer, XLContainer } from "./Containers";
 import { NavDropdown } from "./NavDropdown/NavDropdown";
+import Sidebar from "./Sidebar/Sidebar";
 export {
   Header,
   ThemeChangeButton,
@@ -27,4 +28,5 @@ export {
   MDContainer,
   XLContainer,
   NavDropdown,
+  Sidebar,
 };
