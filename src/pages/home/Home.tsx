@@ -63,12 +63,12 @@ export const Home = () => {
             "text-light-font-primary": !isDarkMode,
           })}
         >
-          <div className="text-4xl flex flex-col gap-4 items-center mb-12">
+          <div className="lg:text-4xl md:text-3xl text-2xl  flex flex-col gap-4 items-center mb-12">
             <h1 className="text-center" style={{ fontFamily: "Lobster Two" }}>
               Hello! Welcome to Film Finder
             </h1>
             <p
-              className="text-3xl text-center"
+              className="lg:text-3xl md:text-2xl text-xl text-center"
               style={{ fontFamily: "Poppins" }}
             >
               Find Your Favorite Movies, TV Shows, and Anime
