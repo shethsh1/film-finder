@@ -81,7 +81,7 @@ export const CardTooltipShow = ({
                 <p className="mb-2">{details?.overview}</p>
                 <p>Score: {details?.vote_average}</p>
                 <p>Status: {details?.status}</p>
-                <p>Release date: {details?.release_date}</p>
+                <p>Release date: {details?.first_air_date}</p>
               </div>
 
               <div className="genre mt-2 text-xs">
