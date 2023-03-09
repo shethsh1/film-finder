@@ -62,7 +62,7 @@ export const MediaCard = ({
             <div className={styles["play-button"]}>
               <BsFillPlayFill size={48} color="#fff" />
             </div>
-            <span>{title}</span>
+            <span>{title.slice(0, 48)}</span>
           </NavLink>
         </CardTooltipAnime>
       )}

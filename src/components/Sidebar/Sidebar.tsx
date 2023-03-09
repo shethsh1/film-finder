@@ -5,10 +5,12 @@ import { Movies } from "../../features/movieSlice";
 import { Shows } from "../../features/showSlice";
 import { MovieCards } from "./MovieCards/MovieCards";
 import { ShowCards } from "./ShowCards/ShowCards";
+import { Anime } from "../../features/animeSlice";
+import { AnimeCards } from "./AnimeCards/AnimeCards";
 
 interface Props {
   title: string;
-  topMedia: Movies | Shows | null;
+  topMedia: Movies | Shows | Anime | null;
   type: "movies" | "shows" | "anime";
 }
 
@@ -30,6 +32,8 @@ export default function Sidebar({ title, topMedia, type }: Props) {
           <MovieCards topMovies={topMedia as Movies} />
         ) : type === "shows" ? (
           <ShowCards topShows={topMedia as Shows} />
+        ) : type === "anime" ? (
+          <AnimeCards topAnime={topMedia as Anime} />
         ) : (
           <></>
         )}
