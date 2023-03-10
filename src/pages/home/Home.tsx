@@ -145,7 +145,7 @@ export const Home = () => {
               </Collapse>
 
               {/* results starts */}
-              {activeTab === "Movies" && searchTerm !== "" && (
+              {activeTab === "Movies" && (
                 <MovieSearch searchTerm={searchTerm} isFocused={isFocused} />
               )}
               {activeTab === "Shows" && searchTerm !== "" && (
