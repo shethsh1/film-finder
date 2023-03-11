@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import React, { useState, useEffect, useContext } from "react";
-import { Collapse } from "../../../components";
+import { Collapse } from "../..";
 import { ThemeContext } from "../../../context/Theme/ThemeContext";
 import { useGetAnimeBySearchTermQuery } from "../../../features/apiSlice";
 import { debounce } from "lodash";

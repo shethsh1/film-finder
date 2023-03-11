@@ -13,6 +13,7 @@ import { TypeButton } from "./TypeButton/TypeButton";
 import { MDContainer, XLContainer } from "./Containers";
 import { NavDropdown } from "./NavDropdown/NavDropdown";
 import Sidebar from "./Sidebar/Sidebar";
+import MediaSearchQuery from "./MediaSearchQuery/MediaSearchQuery";
 export {
   Header,
   ThemeChangeButton,
@@ -29,4 +30,5 @@ export {
   XLContainer,
   NavDropdown,
   Sidebar,
+  MediaSearchQuery,
 };
