@@ -28,18 +28,16 @@ export default function ShowSearch({ searchTerm, isFocused }: Props) {
   };
 
   useEffect(() => {
-    console.log(searchTerm);
-    if (searchTerm) {
-      const debouncedSearch = debounce(() => {
-        setDebouncedSearchTerm(searchTerm);
-      }, 500);
+    setLoading(true);
+    const debouncedSearch = debounce(() => {
+      setDebouncedSearchTerm(searchTerm);
+    }, 500);
 
-      debouncedSearch();
+    debouncedSearch();
 
-      return () => {
-        debouncedSearch.cancel();
-      };
-    }
+    return () => {
+      debouncedSearch.cancel();
+    };
   }, [searchTerm]);
 
   useEffect(() => {

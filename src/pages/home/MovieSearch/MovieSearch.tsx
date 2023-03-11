@@ -28,7 +28,7 @@ export default function MovieSearch({ searchTerm, isFocused }: Props) {
   };
 
   useEffect(() => {
-    if (searchTerm) setLoading(true);
+    setLoading(true);
     const debouncedSearch = debounce(() => {
       setDebouncedSearchTerm(searchTerm);
     }, 500);
