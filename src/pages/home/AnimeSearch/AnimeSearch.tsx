@@ -17,7 +17,6 @@ export default function AnimeSearch({ searchTerm, isFocused }: Props) {
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState(searchTerm);
   const [loading, setLoading] = useState(true);
   const { data: anime } = useGetAnimeBySearchTermQuery(debouncedSearchTerm);
-  const [firstLoad, setFirstLoad] = useState(true);
   const { theme } = useContext(ThemeContext);
   const isDarkMode = theme === "dark" ? true : false;
   const navigate = useNavigate();
@@ -27,11 +26,7 @@ export default function AnimeSearch({ searchTerm, isFocused }: Props) {
   };
 
   useEffect(() => {
-    setFirstLoad(false);
-  }, []);
-
-  useEffect(() => {
-    setLoading(true);
+    if (searchTerm) setLoading(true);
     const debouncedSearch = debounce(() => {
       setDebouncedSearchTerm(searchTerm);
     }, 500);
@@ -44,15 +39,11 @@ export default function AnimeSearch({ searchTerm, isFocused }: Props) {
   }, [searchTerm]);
 
   useEffect(() => {
-    setFirstLoad(false);
-  }, []);
-
-  useEffect(() => {
     setLoading(false);
   }, [anime]);
 
   return (
-    <Collapse show={!firstLoad && isFocused} addBuffer={31}>
+    <Collapse show={isFocused} addBuffer={31}>
       <div>
         {!loading && anime && anime.length > 0 ? (
           anime?.slice(0, 5).map((ani) => (
@@ -103,7 +94,9 @@ export default function AnimeSearch({ searchTerm, isFocused }: Props) {
             />
           </div>
         ) : (
-          <div className="p-4 text-center">No results Found</div>
+          searchTerm && (
+            <div className="p-4 pb-8 text-center">No results Found</div>
+          )
         )}
       </div>
     </Collapse>

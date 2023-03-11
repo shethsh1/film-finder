@@ -148,10 +148,10 @@ export const Home = () => {
               {activeTab === "Movies" && (
                 <MovieSearch searchTerm={searchTerm} isFocused={isFocused} />
               )}
-              {activeTab === "Shows" && searchTerm !== "" && (
+              {activeTab === "Shows" && (
                 <ShowSearch searchTerm={searchTerm} isFocused={isFocused} />
               )}
-              {activeTab === "Anime" && searchTerm !== "" && (
+              {activeTab === "Anime" && (
                 <AnimeSearch searchTerm={searchTerm} isFocused={isFocused} />
               )}
             </div>
