@@ -16,7 +16,9 @@ interface Props {
 export default function ShowSearch({ searchTerm, isFocused }: Props) {
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState(searchTerm);
   const [loading, setLoading] = useState(true);
-  const { data: shows } = useGetShowsBySearchTermQuery(debouncedSearchTerm);
+  const { data: shows } = useGetShowsBySearchTermQuery(debouncedSearchTerm, {
+    skip: debouncedSearchTerm === "",
+  });
   const { theme } = useContext(ThemeContext);
   const isDarkMode = theme === "dark" ? true : false;
   const navigate = useNavigate();
@@ -26,16 +28,18 @@ export default function ShowSearch({ searchTerm, isFocused }: Props) {
   };
 
   useEffect(() => {
-    if (searchTerm) setLoading(true);
-    const debouncedSearch = debounce(() => {
-      setDebouncedSearchTerm(searchTerm);
-    }, 500);
+    console.log(searchTerm);
+    if (searchTerm) {
+      const debouncedSearch = debounce(() => {
+        setDebouncedSearchTerm(searchTerm);
+      }, 500);
 
-    debouncedSearch();
+      debouncedSearch();
 
-    return () => {
-      debouncedSearch.cancel();
-    };
+      return () => {
+        debouncedSearch.cancel();
+      };
+    }
   }, [searchTerm]);
 
   useEffect(() => {
@@ -73,7 +77,7 @@ export default function ShowSearch({ searchTerm, isFocused }: Props) {
                   <span>&bull;</span>
                   <span>Popularity: {show.popularity}</span>
                   <span>&bull;</span>
-                  <span>{show.release_date}</span>
+                  <span>{show.first_air_date}</span>
                 </p>
               </div>
             </div>

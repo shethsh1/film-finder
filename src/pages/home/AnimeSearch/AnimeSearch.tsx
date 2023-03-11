@@ -16,7 +16,9 @@ interface Props {
 export default function AnimeSearch({ searchTerm, isFocused }: Props) {
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState(searchTerm);
   const [loading, setLoading] = useState(true);
-  const { data: anime } = useGetAnimeBySearchTermQuery(debouncedSearchTerm);
+  const { data: anime } = useGetAnimeBySearchTermQuery(debouncedSearchTerm, {
+    skip: debouncedSearchTerm === "",
+  });
   const { theme } = useContext(ThemeContext);
   const isDarkMode = theme === "dark" ? true : false;
   const navigate = useNavigate();

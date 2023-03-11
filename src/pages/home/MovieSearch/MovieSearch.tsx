@@ -16,7 +16,9 @@ interface Props {
 export default function MovieSearch({ searchTerm, isFocused }: Props) {
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState(searchTerm);
   const [loading, setLoading] = useState(true);
-  const { data: movies } = useGetMoviesBySearchTermQuery(debouncedSearchTerm);
+  const { data: movies } = useGetMoviesBySearchTermQuery(debouncedSearchTerm, {
+    skip: debouncedSearchTerm === "",
+  });
   const { theme } = useContext(ThemeContext);
   const isDarkMode = theme === "dark" ? true : false;
   const navigate = useNavigate();

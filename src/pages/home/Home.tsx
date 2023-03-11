@@ -40,6 +40,7 @@ export const Home = () => {
 
   function handleActiveTab(tab: ActiveTab) {
     setActiveTab(tab);
+    setSearchTerm("");
   }
 
   useEffect(() => {
@@ -48,10 +49,6 @@ export const Home = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
-
-  useEffect(() => {
-    setSearchTerm("");
-  }, [activeTab]);
 
   return (
     <div className="mt-16 min-h-[800px]">
