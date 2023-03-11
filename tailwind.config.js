@@ -7,9 +7,9 @@ module.exports = {
       colors: {
         light: {
           primary: "#F8F8F8",
-          secondary: "#01c6ac",
+          secondary: "#c7e5d0",
           tertiary: "#004f44",
-          hover: "#00b29a",
+          hover: "#b3cebb",
           font: {
             primary: "#212529",
           },
@@ -21,6 +21,7 @@ module.exports = {
           hover: "#172436",
           font: {
             primary: "#f0ebd8",
+            secondary: "#f4f1e3",
           },
         },
       },

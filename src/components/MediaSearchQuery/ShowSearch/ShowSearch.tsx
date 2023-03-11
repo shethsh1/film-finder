@@ -2,7 +2,7 @@ import classNames from "classnames";
 import React, { useState, useEffect, useContext } from "react";
 import { Collapse } from "../../../components";
 import { ThemeContext } from "../../../context/Theme/ThemeContext";
-import { useGetAnimeBySearchTermQuery } from "../../../features/apiSlice";
+import { useGetShowsBySearchTermQuery } from "../../../features/apiSlice";
 import { debounce } from "lodash";
 import defaultImage from "../../../images/No-Image.png";
 import { ThreeDots } from "react-loader-spinner";
@@ -11,24 +11,27 @@ import { useNavigate } from "react-router";
 interface Props {
   searchTerm: string;
   isFocused: boolean;
+  handleCloseFocus: () => void;
 }
 
-export default function AnimeSearch({ searchTerm, isFocused }: Props) {
+export default function ShowSearch({
+  searchTerm,
+  isFocused,
+  handleCloseFocus,
+}: Props) {
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState(searchTerm);
-  const [loading, setLoading] = useState(true);
-  const { data: anime } = useGetAnimeBySearchTermQuery(debouncedSearchTerm);
-  const [firstLoad, setFirstLoad] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const { data: shows } = useGetShowsBySearchTermQuery(debouncedSearchTerm, {
+    skip: debouncedSearchTerm === "",
+  });
   const { theme } = useContext(ThemeContext);
   const isDarkMode = theme === "dark" ? true : false;
   const navigate = useNavigate();
 
   const goToPage = (id: number) => {
-    navigate(`/watch/anime/${id}`);
+    navigate(`/watch/shows/${id}`);
+    handleCloseFocus();
   };
-
-  useEffect(() => {
-    setFirstLoad(false);
-  }, []);
 
   useEffect(() => {
     setLoading(true);
@@ -44,21 +47,17 @@ export default function AnimeSearch({ searchTerm, isFocused }: Props) {
   }, [searchTerm]);
 
   useEffect(() => {
-    setFirstLoad(false);
-  }, []);
-
-  useEffect(() => {
     setLoading(false);
-  }, [anime]);
+  }, [shows]);
 
   return (
-    <Collapse show={!firstLoad && isFocused} addBuffer={31}>
+    <Collapse show={isFocused}>
       <div>
-        {!loading && anime && anime.length > 0 ? (
-          anime?.slice(0, 5).map((ani) => (
+        {!loading && shows && shows.results && shows.results.length > 0 ? (
+          shows?.results?.slice(0, 5).map((show) => (
             <div
-              key={ani.mal_id}
-              onClick={() => goToPage(ani.mal_id)}
+              key={show.id}
+              onClick={() => goToPage(show.id)}
               className={classNames("flex gap-4 hover:bg-dark-hover p-4", {
                 "hover:bg-dark-hover": isDarkMode,
                 "hover:bg-light-hover": !isDarkMode,
@@ -67,22 +66,22 @@ export default function AnimeSearch({ searchTerm, isFocused }: Props) {
               <div className="flex-shrink-0 h-16 w-10">
                 <img
                   className="h-full w-full"
-                  alt={ani.title}
+                  alt={show.name}
                   src={
-                    ani?.images.jpg?.image_url
-                      ? ani.images.jpg.image_url
+                    show.poster_path
+                      ? `https://image.tmdb.org/t/p/w500/${show.poster_path}`
                       : defaultImage
                   }
                 ></img>
               </div>
               <div className="">
-                <p className="md:text-lg font-bold">{ani.title}</p>
+                <p className="md:text-lg font-bold">{show.name}</p>
                 <p className="md:inline-flex gap-2 hidden">
-                  <span>Score: {ani.score}</span>
+                  <span>Score: {show.vote_average}</span>
                   <span>&bull;</span>
-                  <span>{ani.status}</span>
+                  <span>Popularity: {show.popularity}</span>
                   <span>&bull;</span>
-                  <span>{ani.aired.string}</span>
+                  <span>{show.first_air_date}</span>
                 </p>
               </div>
             </div>
@@ -103,7 +102,9 @@ export default function AnimeSearch({ searchTerm, isFocused }: Props) {
             />
           </div>
         ) : (
-          <div className="p-4 text-center">No results Found</div>
+          searchTerm && (
+            <div className="p-4 pb-8 text-center">No results Found</div>
+          )
         )}
       </div>
     </Collapse>

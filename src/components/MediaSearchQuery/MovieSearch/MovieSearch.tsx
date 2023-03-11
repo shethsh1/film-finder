@@ -11,24 +11,27 @@ import { useNavigate } from "react-router";
 interface Props {
   searchTerm: string;
   isFocused: boolean;
+  handleCloseFocus: () => void;
 }
 
-export default function MovieSearch({ searchTerm, isFocused }: Props) {
+export default function MovieSearch({
+  searchTerm,
+  isFocused,
+  handleCloseFocus,
+}: Props) {
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState(searchTerm);
-  const [loading, setLoading] = useState(true);
-  const { data: movies } = useGetMoviesBySearchTermQuery(debouncedSearchTerm);
-  const [firstLoad, setFirstLoad] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const { data: movies } = useGetMoviesBySearchTermQuery(debouncedSearchTerm, {
+    skip: debouncedSearchTerm === "",
+  });
   const { theme } = useContext(ThemeContext);
   const isDarkMode = theme === "dark" ? true : false;
   const navigate = useNavigate();
 
   const goToPage = (id: number) => {
     navigate(`/watch/movies/${id}`);
+    handleCloseFocus();
   };
-
-  useEffect(() => {
-    setFirstLoad(false);
-  }, []);
 
   useEffect(() => {
     setLoading(true);
@@ -44,15 +47,11 @@ export default function MovieSearch({ searchTerm, isFocused }: Props) {
   }, [searchTerm]);
 
   useEffect(() => {
-    setFirstLoad(false);
-  }, []);
-
-  useEffect(() => {
     setLoading(false);
   }, [movies]);
 
   return (
-    <Collapse show={!firstLoad && isFocused} addBuffer={31}>
+    <Collapse show={isFocused}>
       <div>
         {!loading && movies && movies.results && movies.results.length > 0 ? (
           movies?.results?.slice(0, 5).map((movie) => (
@@ -103,7 +102,9 @@ export default function MovieSearch({ searchTerm, isFocused }: Props) {
             />
           </div>
         ) : (
-          <div className="p-4 text-center">No results Found</div>
+          searchTerm && (
+            <div className="p-4 pb-8 text-center">No results Found</div>
+          )
         )}
       </div>
     </Collapse>
