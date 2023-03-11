@@ -5,10 +5,13 @@ import { Collapse } from "../Animations";
 import AnimeSearch from "./AnimeSearch/AnimeSearch";
 import MovieSearch from "./MovieSearch/MovieSearch";
 import ShowSearch from "./ShowSearch/ShowSearch";
+import { FaSearch } from "react-icons/fa";
 
 type ActiveTab = "Movies" | "Shows" | "Anime";
 
-export default function MediaSearchQuery() {
+interface SearchQueryProps extends React.FormHTMLAttributes<HTMLFormElement> {}
+
+export default function MediaSearchQuery(props: SearchQueryProps) {
   const { theme } = useContext(ThemeContext);
   const isDarkMode = theme === "dark" ? true : false;
   const [activeTab, setActiveTab] = useState<ActiveTab>("Movies");
@@ -27,6 +30,11 @@ export default function MediaSearchQuery() {
 
   const handleFocus = () => {
     setIsFocused(true);
+  };
+
+  const handleCloseFocus = () => {
+    setIsFocused(false);
+    setSearchTerm("");
   };
 
   function handleInputChange(event: any) {
@@ -50,21 +58,37 @@ export default function MediaSearchQuery() {
     };
   }, []);
   return (
-    <form ref={containerRef} onSubmit={handleSubmit} className="relative">
+    <form
+      ref={containerRef}
+      onSubmit={handleSubmit}
+      className="relative"
+      {...props}
+    >
       <div
-        className={classNames("flex items-center border-b-2  py-2", {
-          "border-dark-tertiary": isDarkMode,
-          "border-light-tertiary": !isDarkMode,
+        className={classNames("flex items-center py-2", {
+          "bg-dark-secondary": isDarkMode,
+          "bg-light-secondary": !isDarkMode,
         })}
       >
-        <input
-          onFocus={handleFocus}
-          className="appearance-none bg-transparent border-none w-full mr-3 py-1 px-2 leading-tight focus:outline-none"
-          type="text"
-          placeholder="Search"
-          value={searchTerm}
-          onChange={handleInputChange}
-        />
+        <div className="relative flex items-center  w-full">
+          <div className="absolute left-0 ml-3">
+            <FaSearch />
+          </div>
+          <input
+            onFocus={handleFocus}
+            className={classNames(
+              "appearance-none bg-transparent border-none w-full ml-10 py-1 px-2 leading-tight focus:outline-none flex-1",
+              {
+                " placeholder-dark-font-primary": isDarkMode,
+                " placeholder-light-font-primary": !isDarkMode,
+              }
+            )}
+            type="text"
+            placeholder="Search"
+            value={searchTerm}
+            onChange={handleInputChange}
+          />
+        </div>
       </div>
 
       {/* Search below starts */}
@@ -122,13 +146,25 @@ export default function MediaSearchQuery() {
 
         {/* results starts */}
         {activeTab === "Movies" && (
-          <MovieSearch searchTerm={searchTerm} isFocused={isFocused} />
+          <MovieSearch
+            searchTerm={searchTerm}
+            isFocused={isFocused}
+            handleCloseFocus={handleCloseFocus}
+          />
         )}
         {activeTab === "Shows" && (
-          <ShowSearch searchTerm={searchTerm} isFocused={isFocused} />
+          <ShowSearch
+            searchTerm={searchTerm}
+            isFocused={isFocused}
+            handleCloseFocus={handleCloseFocus}
+          />
         )}
         {activeTab === "Anime" && (
-          <AnimeSearch searchTerm={searchTerm} isFocused={isFocused} />
+          <AnimeSearch
+            searchTerm={searchTerm}
+            isFocused={isFocused}
+            handleCloseFocus={handleCloseFocus}
+          />
         )}
       </div>
       {/* Search below ends */}

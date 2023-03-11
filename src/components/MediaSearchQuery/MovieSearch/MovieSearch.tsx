@@ -11,9 +11,14 @@ import { useNavigate } from "react-router";
 interface Props {
   searchTerm: string;
   isFocused: boolean;
+  handleCloseFocus: () => void;
 }
 
-export default function MovieSearch({ searchTerm, isFocused }: Props) {
+export default function MovieSearch({
+  searchTerm,
+  isFocused,
+  handleCloseFocus,
+}: Props) {
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState(searchTerm);
   const [loading, setLoading] = useState(false);
   const { data: movies } = useGetMoviesBySearchTermQuery(debouncedSearchTerm, {
@@ -25,6 +30,7 @@ export default function MovieSearch({ searchTerm, isFocused }: Props) {
 
   const goToPage = (id: number) => {
     navigate(`/watch/movies/${id}`);
+    handleCloseFocus();
   };
 
   useEffect(() => {
