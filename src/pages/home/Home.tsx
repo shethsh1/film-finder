@@ -1,12 +1,7 @@
-import { useContext, useState, useRef, useEffect } from "react";
+import { useContext, useRef } from "react";
 import { ThemeContext } from "../../context/Theme/ThemeContext";
 import classNames from "classnames";
-import { MDContainer, Collapse, MediaSearchQuery } from "../../components";
-import MovieSearch from "../../components/MediaSearchQuery/MovieSearch/MovieSearch";
-import ShowSearch from "../../components/MediaSearchQuery/ShowSearch/ShowSearch";
-import AnimeSearch from "../../components/MediaSearchQuery/AnimeSearch/AnimeSearch";
-
-type ActiveTab = "Movies" | "Shows" | "Anime";
+import { MDContainer, MediaSearchQuery } from "../../components";
 
 export const Home = () => {
   const { theme } = useContext(ThemeContext);
