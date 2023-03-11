@@ -79,7 +79,6 @@ export default function MediaSearchQuery(props: SearchQueryProps) {
             className={classNames(
               "appearance-none bg-transparent border-none w-full ml-10 py-1 px-2 leading-tight focus:outline-none flex-1",
               {
-                " placeholder-dark-font-primary": isDarkMode,
                 " placeholder-light-font-primary": !isDarkMode,
               }
             )}

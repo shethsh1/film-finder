@@ -6,8 +6,10 @@ import { Navigation } from "../Navigation/Navigation";
 import { ThemeContext } from "../../context/Theme/ThemeContext";
 import classNames from "classnames";
 import MediaSearchQuery from "../MediaSearchQuery/MediaSearchQuery";
+import { useLocation } from "react-router-dom";
 
 export const Header = () => {
+  const location = useLocation();
   const { theme } = useContext(ThemeContext);
   const isDarkMode = theme === "dark" ? true : false;
   return (
@@ -27,10 +29,12 @@ export const Header = () => {
               Film Finder
             </h1>
           </NavLink>
-          <MediaSearchQuery
-            style={{ width: "500px", marginLeft: "20px" }}
-            className="lg:block hidden relative"
-          />
+          {location.pathname !== "/" && (
+            <MediaSearchQuery
+              style={{ width: "500px", marginLeft: "20px" }}
+              className="lg:block hidden relative"
+            />
+          )}
         </div>
 
         <div>
