@@ -15,7 +15,7 @@ interface Props {
 
 export default function ShowSearch({ searchTerm, isFocused }: Props) {
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState(searchTerm);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const { data: shows } = useGetShowsBySearchTermQuery(debouncedSearchTerm, {
     skip: debouncedSearchTerm === "",
   });
