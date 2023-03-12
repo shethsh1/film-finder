@@ -34,7 +34,7 @@ export const AnimeCards: React.FC<Props> = ({ topAnime, goToMedia }) => {
           />
           <div className="py-2 mt-2">
             <p className="font-bold">{anime.title}</p>
-            <p className="inline-flex gap-1 mt-1 items-center">
+            <div className="inline-flex gap-1 mt-1 items-center">
               <div className="inline-flex text-md items-center gap-1">
                 <AiFillStar color="gold" size={16} />
                 <span>{anime.score}</span>
@@ -43,7 +43,7 @@ export const AnimeCards: React.FC<Props> = ({ topAnime, goToMedia }) => {
               <span>Popularity: {anime.popularity}</span>
               <span>&bull;</span>
               <span>{format(new Date(anime.aired.from), "yyyy-MM-dd")}</span>
-            </p>
+            </div>
           </div>
         </div>
       ))}
