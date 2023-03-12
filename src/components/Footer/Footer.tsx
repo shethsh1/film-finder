@@ -6,7 +6,7 @@ function Footer() {
   const { theme } = useContext(ThemeContext);
   return (
     <footer
-      className={classNames("bg-gray-800 text-gray-400 py-6", {
+      className={classNames("mt-auto py-6", {
         "bg-light-secondary text-light-font-primary": theme === "light",
         "bg-dark-secondary text-dark-font-primary": theme === "dark",
       })}

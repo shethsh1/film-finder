@@ -17,7 +17,7 @@ const RouteComponent = () => {
   const { theme } = useContext(ThemeContext);
   return (
     <div
-      className={classNames("min-h-screen overflow-hidden", {
+      className={classNames("min-h-screen overflow-hidden flex flex-col", {
         "bg-light-primary": theme === "light",
         "bg-dark-primary": theme === "dark",
       })}
@@ -50,8 +50,8 @@ const RouteComponent = () => {
             </Routes>
           </div>
         </BrowserRouter>
-        <Footer />
       </main>
+      <Footer />
     </div>
   );
 };
