@@ -8,7 +8,11 @@ import { MediaTypes, MediaType } from "../../types/MediaTypes";
 import { interfaceShowDetail } from "../../features/showSlice";
 import { interfaceMovieDetail } from "../../features/movieSlice";
 import { interfaceAnimeDetail } from "../../features/animeSlice";
-
+import { Sidebar } from "../../components";
+import { MDContainer, XLContainer, FourXLContainer } from "../../components";
+import { getTopRatedMovies } from "../../features/movieSlice";
+import { getTopRatedAnime } from "../../features/animeSlice";
+import { getTopRatedShows } from "../../features/showSlice";
 type Props = {
   detailMethod: any;
   type: MediaTypes;
@@ -37,6 +41,16 @@ export const Watch = ({ detailMethod, type }: Props) => {
       ? (state.show.showDetails as interfaceShowDetail)
       : (state.anime.animeDetail as interfaceAnimeDetail)
   );
+  const topMovies = useAppSelector((state) => state.movie.topRatedMovies);
+
+  const topMedia = useAppSelector((state) =>
+    type === MediaType.MOVIE
+      ? state.movie.topRatedMovies
+      : type === MediaType.SHOW
+      ? state.show.topRatedShows
+      : state.anime.topRatedAnime
+  );
+
   const loading = useAppSelector((state) => state.movie.cardDetailLoading);
   const dispatch = useAppDispatch();
   const id = useParams().id;
@@ -121,20 +135,66 @@ export const Watch = ({ detailMethod, type }: Props) => {
     return "";
   };
 
+  useEffect(() => {
+    switch (type) {
+      case "movie":
+        dispatch(getTopRatedMovies(1));
+        break;
+      case "show":
+        dispatch(getTopRatedShows(1));
+        break;
+      case "anime":
+        dispatch(getTopRatedAnime(1));
+        break;
+      default:
+        dispatch(getTopRatedMovies(1));
+    }
+  }, [dispatch, type]);
+
+  const getTypeOfMedia = () => {
+    switch (type) {
+      case "movie":
+        return "movies";
+      case "show":
+        return "shows";
+
+      case "anime":
+        return "anime";
+
+      default:
+        return "anime";
+    }
+  };
+
   if (loading || !details) {
     return <div className="text-white">Loading...</div>;
   }
 
   return (
-    <div className="mt-8">
-      {getMovie() && (
-        <ReactPlayer
-          url={`https://www.youtube.com/watch?v=${getMovie()}`}
-          controls={true}
-        />
-      )}
+    <FourXLContainer>
+      <div className="flex gap-8 justify-between">
+        <div className="mt-8 w-full p-4">
+          <div className="player-wrapper">
+            <ReactPlayer
+              url={`https://www.youtube.com/watch?v=${getMovie()}`}
+              controls={true}
+              className="react-player"
+              width="100%"
+              height="100%"
+            />
+          </div>
+        </div>
 
-      <div className="mt-4 flex">
+        <Sidebar
+          title={`Top ${getTypeOfMedia().replace(/^\w/, (c) =>
+            c.toUpperCase()
+          )}`}
+          topMedia={topMedia}
+          type={getTypeOfMedia()}
+          hideScreen="xl"
+        />
+
+        {/* <div className="mt-4 flex">
         <div className="p-6 flex-shrink-0">
           <img className="h-80 w-60" alt="img" src={getPosterPath()} />
         </div>
@@ -161,7 +221,8 @@ export const Watch = ({ detailMethod, type }: Props) => {
             </div>
           </div>
         </div>
+      </div> */}
       </div>
-    </div>
+    </FourXLContainer>
   );
 };

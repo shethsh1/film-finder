@@ -1,3 +1,4 @@
 import { MDContainer } from "./MDContainer";
 import { XLContainer } from "./XLContainer";
-export { MDContainer, XLContainer };
+import { FourXLContainer } from "./FourXLContainer";
+export { MDContainer, XLContainer, FourXLContainer };

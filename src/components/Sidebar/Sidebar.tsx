@@ -9,13 +9,21 @@ import { Anime } from "../../features/animeSlice";
 import { AnimeCards } from "./AnimeCards/AnimeCards";
 import { useNavigate } from "react-router-dom";
 
+type HideScreen = "xs" | "md" | "lg" | "xl";
+
 interface Props {
   title: string;
   topMedia: Movies | Shows | Anime | null;
   type: "movies" | "shows" | "anime";
+  hideScreen?: HideScreen;
 }
 
-export default function Sidebar({ title, topMedia, type }: Props) {
+export default function Sidebar({
+  title,
+  topMedia,
+  type,
+  hideScreen = "lg",
+}: Props) {
   const navigate = useNavigate();
   const { theme } = useContext(ThemeContext);
   const isDarkMode = theme === "dark" ? true : false;
@@ -25,7 +33,13 @@ export default function Sidebar({ title, topMedia, type }: Props) {
   };
 
   return (
-    <div className="flex-shrink-0 basis-[22rem] hidden lg:block">
+    <div
+      className={classNames("flex-shrink-0 basis-[22rem]", {
+        "hidden xl:block": hideScreen === "xl",
+        "hidden lg:block": hideScreen === "lg",
+        "hidden md:block": hideScreen === "md",
+      })}
+    >
       <div
         className={classNames("text-2xl font-bold my-4", {
           "text-dark-font-primary": isDarkMode,
