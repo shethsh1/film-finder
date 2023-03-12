@@ -60,7 +60,7 @@ export const AnimeCards: React.FC<Props> = ({ topAnime, goToMedia }) => {
             {Array(8)
               .fill(8)
               .map((_, idx) => (
-                <Skeleton />
+                <Skeleton key={idx} />
               ))}
           </div>
         </SkeletonTheme>
