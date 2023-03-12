@@ -12,7 +12,7 @@ import { Shows } from "./pages/shows/Shows";
 import { getShowDetails } from "./features/showSlice";
 import { Anime } from "./pages/anime/Anime";
 import { getAnimeDetails } from "./features/animeSlice";
-
+import Footer from "./components/Footer/Footer";
 const RouteComponent = () => {
   const { theme } = useContext(ThemeContext);
   return (
@@ -50,6 +50,7 @@ const RouteComponent = () => {
             </Routes>
           </div>
         </BrowserRouter>
+        <Footer />
       </main>
     </div>
   );
