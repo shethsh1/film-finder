@@ -1,6 +1,7 @@
 import classNames from "classnames";
 import { useContext } from "react";
 import { ThemeContext } from "../../../context/Theme/ThemeContext";
+import { FaPlay } from "react-icons/fa";
 
 interface VideoTableProps {
   videos: { name: string }[];
@@ -37,6 +38,11 @@ export const VideoTable: React.FC<VideoTableProps> = ({
         >
           <span className="font-bold">{idx + 1}</span>
           <span className="flex-1">{video.name}</span>
+          {activeVideo === idx && (
+            <span>
+              <FaPlay size={14} />
+            </span>
+          )}
         </div>
       ))}
     </div>
