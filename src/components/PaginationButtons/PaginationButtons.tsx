@@ -16,8 +16,6 @@ export const PaginationButtons: React.FC<PaginationTooltipProps> = ({
   const { theme } = useContext(ThemeContext);
   const isDarkMode = theme === "dark" ? true : false;
 
-  console.log(props);
-
   return (
     <div
       className={classNames(

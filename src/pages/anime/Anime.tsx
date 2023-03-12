@@ -93,7 +93,7 @@ export const Anime = () => {
         <PaginationButtons
           page={page}
           handlePageChange={handlePageChange}
-          disabled={loading || !animeState?.pagination.has_next_page}
+          disabled={loading || !animeState?.pagination?.has_next_page}
         />
 
         <div
