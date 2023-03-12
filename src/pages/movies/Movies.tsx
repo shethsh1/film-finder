@@ -12,12 +12,14 @@ import styles from "./Movies.module.css";
 import { TypeButton } from "../../components";
 import { MediaType } from "../../types/MediaTypes";
 import { ThreeDots } from "react-loader-spinner";
+import { useGetTopMoviesQuery } from "../../features/apiSlice";
 
 type PageType = "Trending" | "Top Rated" | "Upcoming";
 
 export const Movies = () => {
   const movieState = useAppSelector((state) => state.movie.popularMovies);
-  const topMovies = useAppSelector((state) => state.movie.topRatedMovies);
+  const { data: topMovies } = useGetTopMoviesQuery(1);
+
   const loading = useAppSelector((state) => state.movie.loading);
 
   const [pageType, setPageType] = useState<PageType>("Trending");

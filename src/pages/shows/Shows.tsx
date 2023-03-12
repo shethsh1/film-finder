@@ -13,12 +13,14 @@ import styles from "./Shows.module.css";
 import { TypeButton } from "../../components";
 import { MediaType } from "../../types/MediaTypes";
 import { ThreeDots } from "react-loader-spinner";
+import { useGetTopShowsQuery } from "../../features/apiSlice";
 
 type PageType = "Trending" | "Top Rated" | "Upcoming";
 
 export const Shows = () => {
   const Showstate = useAppSelector((state) => state.show.activeShows);
-  const topRatedShows = useAppSelector((state) => state.show.topRatedShows);
+  const { data: topRatedShows } = useGetTopShowsQuery(1);
+
   const loading = useAppSelector((state) => state.show.loading);
   const [pageType, setPageType] = useState<PageType>("Trending");
   const dispatch = useAppDispatch();

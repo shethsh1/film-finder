@@ -13,12 +13,13 @@ import styles from "./Anime.module.css";
 import { TypeButton } from "../../components";
 import { MediaType } from "../../types/MediaTypes";
 import { ThreeDots } from "react-loader-spinner";
+import { useGetTopAnimeQuery } from "../../features/apiSlice";
 
 type PageType = "Trending" | "Top Rated" | "Upcoming";
 
 export const Anime = () => {
   const animeState = useAppSelector((state) => state.anime.activeAnimes);
-  const topRatedAnime = useAppSelector((state) => state.anime.topRatedAnime);
+  const { data: topRatedAnime } = useGetTopAnimeQuery(1);
   const loading = useAppSelector((state) => state.anime.loading);
 
   const [pageType, setPageType] = useState<PageType>("Trending");

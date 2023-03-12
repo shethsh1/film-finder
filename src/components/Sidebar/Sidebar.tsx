@@ -13,7 +13,7 @@ type HideScreen = "xs" | "md" | "lg" | "xl";
 
 interface Props {
   title: string;
-  topMedia: Movies | Shows | Anime | null;
+  topMedia: Movies | Shows | Anime | null | undefined;
   type: "movies" | "shows" | "anime";
   hideScreen?: HideScreen;
 }
