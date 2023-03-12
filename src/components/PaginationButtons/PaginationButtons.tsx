@@ -16,6 +16,8 @@ export const PaginationButtons: React.FC<PaginationTooltipProps> = ({
   const { theme } = useContext(ThemeContext);
   const isDarkMode = theme === "dark" ? true : false;
 
+  console.log(props);
+
   return (
     <div
       className={classNames(
@@ -30,7 +32,6 @@ export const PaginationButtons: React.FC<PaginationTooltipProps> = ({
         <button
           onClick={() => handlePageChange(page - 1)}
           disabled={page === 1}
-          {...props}
           className={classNames(
             "py-2 px-4 rounded-md transition duration-500 ease-in-out w-36",
             {

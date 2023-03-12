@@ -55,10 +55,6 @@ export const Anime = () => {
     dispatch(getTopRatedAnime(1));
   }, [dispatch]);
 
-  useEffect(() => {
-    console.log(topRatedAnime);
-  });
-
   return (
     <div className="flex gap-4 justify-between">
       <section className="flex-1">
@@ -97,7 +93,7 @@ export const Anime = () => {
         <PaginationButtons
           page={page}
           handlePageChange={handlePageChange}
-          disabled={loading}
+          disabled={loading || !animeState?.pagination.has_next_page}
         />
 
         <div

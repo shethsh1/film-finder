@@ -96,6 +96,7 @@ interface Anime {
   data: AnimeObject[];
   pagination: {
     current_page: number;
+    has_next_page: boolean;
   };
   status: string;
 }
