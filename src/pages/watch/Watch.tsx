@@ -137,7 +137,7 @@ export const Watch = ({ detailMethod, type }: Props) => {
     if (type === MediaType.ANIME && isAnimeDetail(details)) {
       return details?.aired?.string;
     } else if (type === MediaType.SHOW && isShowDetail(details)) {
-      return details?.release_date;
+      return details?.first_air_date;
     } else if (type === MediaType.MOVIE && isMovieDetail(details)) {
       return details?.release_date;
     }
