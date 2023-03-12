@@ -5,15 +5,20 @@ import ReactPlayer from "react-player/youtube";
 import { ThemeContext } from "../../context/Theme/ThemeContext";
 import classNames from "classnames";
 import { MediaTypes, MediaType } from "../../types/MediaTypes";
-import { interfaceShowDetail } from "../../features/showSlice";
-import { interfaceMovieDetail } from "../../features/movieSlice";
-import { interfaceAnimeDetail } from "../../features/animeSlice";
+import { interfaceShowDetail, Shows } from "../../features/showSlice";
+import { interfaceMovieDetail, Movies } from "../../features/movieSlice";
+import { Anime, interfaceAnimeDetail } from "../../features/animeSlice";
 import { Sidebar } from "../../components";
 import { FourXLContainer } from "../../components";
 import { getTopRatedMovies } from "../../features/movieSlice";
 import { getTopRatedAnime } from "../../features/animeSlice";
 import { getTopRatedShows } from "../../features/showSlice";
 import { VideoTable } from "./VideoTable/VideoTable";
+import {
+  useGetTopAnimeQuery,
+  useGetTopMoviesQuery,
+  useGetTopShowsQuery,
+} from "../../features/apiSlice";
 type Props = {
   detailMethod: any;
   type: MediaTypes;
@@ -63,13 +68,11 @@ export const Watch = ({ detailMethod, type }: Props) => {
     return videos;
   };
 
-  const topMedia = useAppSelector((state) =>
-    type === MediaType.MOVIE
-      ? state.movie.topRatedMovies
-      : type === MediaType.SHOW
-      ? state.show.topRatedShows
-      : state.anime.topRatedAnime
-  );
+  const { data: topMovies } = useGetTopMoviesQuery(1, {
+    skip: type !== "movie",
+  });
+  const { data: topShows } = useGetTopShowsQuery(1, { skip: type !== "show" });
+  const { data: topAnime } = useGetTopAnimeQuery(1, { skip: type !== "anime" });
 
   const dispatch = useAppDispatch();
   const id = useParams().id;
@@ -183,6 +186,19 @@ export const Watch = ({ detailMethod, type }: Props) => {
     }
   };
 
+  const getTopMedia = (): Movies | Anime | Shows => {
+    switch (type) {
+      case "movie":
+        return topMovies as Movies;
+      case "show":
+        return topShows as Shows;
+      case "anime":
+        return topAnime as Anime;
+      default:
+        return topMovies as Movies;
+    }
+  };
+
   useEffect(() => {
     setActiveVideo(0);
   }, [id]);
@@ -263,7 +279,7 @@ export const Watch = ({ detailMethod, type }: Props) => {
           title={`Top ${getTypeOfMedia().replace(/^\w/, (c) =>
             c.toUpperCase()
           )}`}
-          topMedia={topMedia}
+          topMedia={getTopMedia()}
           type={getTypeOfMedia()}
           hideScreen="xl"
         />

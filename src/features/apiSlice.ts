@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { interfaceMovieDetail, Movies } from "./movieSlice";
 import { interfaceShowDetail, Shows } from "./showSlice";
-import { AnimeObject, interfaceAnimeDetail } from "./animeSlice";
+import { Anime, AnimeObject, interfaceAnimeDetail } from "./animeSlice";
 
 let API_KEY = "";
 let cond = "&";
@@ -24,6 +24,10 @@ export const moviesApi = createApi({
       query: (searchterm) =>
         `/search/movie${cond}language=en-US&query=${searchterm}&include_adult=false${API_KEY}`,
     }),
+    getTopMovies: builder.query<Movies, number>({
+      query: (page) =>
+        `/movie/top_rated${cond}language=en-US&page=${page}${API_KEY}`,
+    }),
   }),
 });
 
@@ -41,26 +45,44 @@ export const showsApi = createApi({
       query: (searchterm) =>
         `/search/tv${cond}language=en-US&query=${searchterm}&include_adult=false${API_KEY}`,
     }),
+    getTopShows: builder.query<Shows, number>({
+      query: (page) =>
+        `/tv/popular${cond}language=en-US&page=${page}${API_KEY}`,
+    }),
   }),
 });
 
 export const animeApi = createApi({
   reducerPath: "animeApi",
-  baseQuery: fetchBaseQuery({ baseUrl: `https://api.jikan.moe/v4/anime` }),
+  baseQuery: fetchBaseQuery({ baseUrl: `https://api.jikan.moe/v4` }),
   endpoints: (builder) => ({
     getAnimeById: builder.query<interfaceAnimeDetail, number>({
-      query: (id) => `${id}`,
+      query: (id) => `/anime/${id}`,
       transformResponse: (response: { data: interfaceAnimeDetail }) =>
         response.data,
     }),
     getAnimeBySearchTerm: builder.query<AnimeObject[], string>({
-      query: (searchterm) => `?q=${searchterm}`,
+      query: (searchterm) => `/anime?q=${searchterm}`,
       transformResponse: (response: { data: AnimeObject[] }) => response.data,
+    }),
+    getTopAnime: builder.query<Anime, number>({
+      query: (page) => `/top/anime?page=${page}`,
     }),
   }),
 });
 
-export const { useGetMovieByIdQuery, useGetMoviesBySearchTermQuery } =
-  moviesApi;
-export const { useGetShowByIdQuery, useGetShowsBySearchTermQuery } = showsApi;
-export const { useGetAnimeByIdQuery, useGetAnimeBySearchTermQuery } = animeApi;
+export const {
+  useGetMovieByIdQuery,
+  useGetMoviesBySearchTermQuery,
+  useGetTopMoviesQuery,
+} = moviesApi;
+export const {
+  useGetShowByIdQuery,
+  useGetShowsBySearchTermQuery,
+  useGetTopShowsQuery,
+} = showsApi;
+export const {
+  useGetAnimeByIdQuery,
+  useGetAnimeBySearchTermQuery,
+  useGetTopAnimeQuery,
+} = animeApi;
