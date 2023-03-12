@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useAppSelector, useAppDispatch } from "../../store/hooks";
 import ReactPlayer from "react-player/youtube";
@@ -9,10 +9,11 @@ import { interfaceShowDetail } from "../../features/showSlice";
 import { interfaceMovieDetail } from "../../features/movieSlice";
 import { interfaceAnimeDetail } from "../../features/animeSlice";
 import { Sidebar } from "../../components";
-import { MDContainer, XLContainer, FourXLContainer } from "../../components";
+import { FourXLContainer } from "../../components";
 import { getTopRatedMovies } from "../../features/movieSlice";
 import { getTopRatedAnime } from "../../features/animeSlice";
 import { getTopRatedShows } from "../../features/showSlice";
+import { VideoTable } from "./VideoTable/VideoTable";
 type Props = {
   detailMethod: any;
   type: MediaTypes;
@@ -32,6 +33,7 @@ function isAnimeDetail(details: any): details is interfaceAnimeDetail {
 
 export const Watch = ({ detailMethod, type }: Props) => {
   const { theme } = useContext(ThemeContext);
+  const [activeVideo, setActiveVideo] = useState<number>(0);
   const isDarkMode = theme === "dark" ? true : false;
 
   const details = useAppSelector((state) =>
@@ -41,7 +43,25 @@ export const Watch = ({ detailMethod, type }: Props) => {
       ? (state.show.showDetails as interfaceShowDetail)
       : (state.anime.animeDetail as interfaceAnimeDetail)
   );
-  const topMovies = useAppSelector((state) => state.movie.topRatedMovies);
+
+  const handleActiveVideo = (idx: number) => {
+    setActiveVideo(idx);
+  };
+
+  const getVideos = (): { name: string }[] => {
+    let videos: { name: string }[] = [];
+    if (type === MediaType.MOVIE || type === MediaType.SHOW) {
+      if (isMovieDetail(details) || isShowDetail(details)) {
+        videos = details.videos.results.map((video) => ({
+          name: video.name,
+        }));
+      }
+    } else if (type === MediaType.ANIME) {
+      videos.push({ name: "Trailer" });
+    }
+
+    return videos;
+  };
 
   const topMedia = useAppSelector((state) =>
     type === MediaType.MOVIE
@@ -63,9 +83,9 @@ export const Watch = ({ detailMethod, type }: Props) => {
     if (type === MediaType.ANIME && isAnimeDetail(details)) {
       return details?.trailer?.youtube_id;
     } else if (type === MediaType.SHOW && isShowDetail(details)) {
-      return details?.videos?.results?.[0]?.key;
+      return details?.videos?.results?.[activeVideo]?.key;
     } else if (type === MediaType.MOVIE && isMovieDetail(details)) {
-      return details?.videos?.results?.[0]?.key;
+      return details?.videos?.results?.[activeVideo]?.key;
     }
   };
 
@@ -172,8 +192,15 @@ export const Watch = ({ detailMethod, type }: Props) => {
     <FourXLContainer>
       <div className="flex gap-8 justify-between">
         <div className="mt-8 w-full p-4">
-          <div className="player-wrapper">
-            {getMovie() && (
+          <div
+            className={classNames("player-wrapper", {
+              "bg-dark-secondary text-dark-font-primary":
+                isDarkMode && !getMovie(),
+              "bg-light-secondary text-light-font-primary":
+                !isDarkMode && !getMovie(),
+            })}
+          >
+            {getMovie() ? (
               <ReactPlayer
                 url={`https://www.youtube.com/watch?v=${getMovie()}`}
                 controls={true}
@@ -181,9 +208,18 @@ export const Watch = ({ detailMethod, type }: Props) => {
                 width="100%"
                 height="100%"
               />
+            ) : (
+              <div className="absolute inset-0 flex items-center justify-center">
+                <p className="text-center font-bold">No Video Found</p>
+              </div>
             )}
           </div>
 
+          <VideoTable
+            videos={getVideos()}
+            handleActiveVideo={handleActiveVideo}
+            activeVideo={activeVideo}
+          />
           <div className="mt-4 flex flex-row">
             <div className="p-6 flex-shrink-0 hidden sm:block">
               <img

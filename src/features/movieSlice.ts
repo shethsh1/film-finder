@@ -85,7 +85,7 @@ interface interfaceMovieDetail {
   release_date: string;
   poster_path: string;
   videos: {
-    results: { key: string; id: number }[];
+    results: { key: string; id: number; name: string }[];
   };
 }
 
