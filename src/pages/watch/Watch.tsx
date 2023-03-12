@@ -157,12 +157,10 @@ export const Watch = ({ detailMethod, type }: Props) => {
         return "movies";
       case "show":
         return "shows";
-
       case "anime":
         return "anime";
-
       default:
-        return "anime";
+        return "movies";
     }
   };
 
@@ -183,6 +181,39 @@ export const Watch = ({ detailMethod, type }: Props) => {
               height="100%"
             />
           </div>
+
+          <div className="mt-4 flex flex-row">
+            <div className="p-6 flex-shrink-0">
+              <img
+                className="lg:h-80 lg:w-60 md:h-40 md:w-30 h-20 w-20"
+                alt="img"
+                src={getPosterPath()}
+              />
+            </div>
+            <div
+              className={classNames("pr-6 py-6 max-w-3xl", {
+                "text-dark-font-primary": isDarkMode,
+                "text-light-font-primary": !isDarkMode,
+              })}
+            >
+              <h1 className="text-4xl font-bold">{getTitle()}</h1>
+              <div className="mt-2">
+                <p className="mb-2 text-sm">{getOverview()?.slice(0, 1500)}</p>
+                <p className="text-sm">Score: {getVoteAverage()}</p>
+                <p className="text-sm">Status: {getStatus()}</p>
+                <p className="text-sm">Release date: {getReleaseDate()}</p>
+              </div>
+
+              <div className="genre mt-2 text-md">
+                <div className="inline-flex gap-1 flex-wrap">
+                  <span className="font-bold">Genre:</span>
+                  {details?.genres?.map((o, i) => (
+                    <span key={i}>{o.name}</span>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
         <Sidebar
@@ -193,35 +224,6 @@ export const Watch = ({ detailMethod, type }: Props) => {
           type={getTypeOfMedia()}
           hideScreen="xl"
         />
-
-        {/* <div className="mt-4 flex">
-        <div className="p-6 flex-shrink-0">
-          <img className="h-80 w-60" alt="img" src={getPosterPath()} />
-        </div>
-        <div
-          className={classNames("pr-6 py-6 max-w-lg", {
-            "text-dark-font-primary": isDarkMode,
-            "text-light-font-primary": !isDarkMode,
-          })}
-        >
-          <h1 className="text-4xl font-bold">{getTitle()}</h1>
-          <div className="mt-2">
-            <p className="mb-2">{getOverview()}</p>
-            <p className="text-xs">Score: {getVoteAverage()}</p>
-            <p className="text-xs">Status: {getStatus()}</p>
-            <p className="text-xs">Release date: {getReleaseDate()}</p>
-          </div>
-
-          <div className="genre mt-2 text-md">
-            <div className="inline-flex gap-1 flex-wrap">
-              <span className="font-bold">Genre:</span>
-              {details?.genres?.map((o, i) => (
-                <span key={i}>{o.name}</span>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div> */}
       </div>
     </FourXLContainer>
   );
