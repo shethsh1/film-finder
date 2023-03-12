@@ -144,21 +144,21 @@ export default function MediaSearchQuery(props: SearchQueryProps) {
         </Collapse>
 
         {/* results starts */}
-        {activeTab === "Movies" && (
+        {activeTab === "Movies" && searchTerm !== "" && (
           <MovieSearch
             searchTerm={searchTerm}
             isFocused={isFocused}
             handleCloseFocus={handleCloseFocus}
           />
         )}
-        {activeTab === "Shows" && (
+        {activeTab === "Shows" && searchTerm !== "" && (
           <ShowSearch
             searchTerm={searchTerm}
             isFocused={isFocused}
             handleCloseFocus={handleCloseFocus}
           />
         )}
-        {activeTab === "Anime" && (
+        {activeTab === "Anime" && searchTerm !== "" && (
           <AnimeSearch
             searchTerm={searchTerm}
             isFocused={isFocused}

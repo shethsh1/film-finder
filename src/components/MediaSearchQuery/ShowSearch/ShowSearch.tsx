@@ -19,7 +19,7 @@ export default function ShowSearch({
   isFocused,
   handleCloseFocus,
 }: Props) {
-  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState(searchTerm);
+  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
   const [loading, setLoading] = useState(false);
   const { data: shows } = useGetShowsBySearchTermQuery(debouncedSearchTerm, {
     skip: debouncedSearchTerm === "",
@@ -102,7 +102,7 @@ export default function ShowSearch({
             />
           </div>
         ) : (
-          searchTerm && (
+          debouncedSearchTerm && (
             <div className="p-4 pb-8 text-center">No results Found</div>
           )
         )}
