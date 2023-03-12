@@ -32,7 +32,7 @@ export const MovieCards: React.FC<Props> = ({ topMovies, goToMedia }) => {
           />
           <div className="py-2 mt-2">
             <p className="font-bold">{movie.title}</p>
-            <p className="inline-flex gap-1 mt-1 items-center">
+            <div className="inline-flex gap-1 mt-1 items-center">
               <div className="inline-flex text-md items-center gap-1">
                 <AiFillStar color="gold" size={16} />
                 <span>{movie.vote_average}</span>
@@ -41,7 +41,7 @@ export const MovieCards: React.FC<Props> = ({ topMovies, goToMedia }) => {
               <span>Popularity: {movie.popularity}</span>
               <span>&bull;</span>
               <span>{movie.release_date}</span>
-            </p>
+            </div>
           </div>
         </div>
       ))}

@@ -31,7 +31,7 @@ export const ShowCards: React.FC<Props> = ({ topShows, goToMedia }) => {
           />
           <div className="py-2 mt-2">
             <p className="font-bold">{show.name}</p>
-            <p className="inline-flex gap-1 mt-1 items-center">
+            <div className="inline-flex gap-1 mt-1 items-center">
               <div className="inline-flex text-md items-center gap-1">
                 <AiFillStar color="gold" size={16} />
                 <span>{show.vote_average}</span>
@@ -40,7 +40,7 @@ export const ShowCards: React.FC<Props> = ({ topShows, goToMedia }) => {
               <span>Popularity: {show.popularity}</span>
               <span>&bull;</span>
               <span>{show.first_air_date}</span>
-            </p>
+            </div>
           </div>
         </div>
       ))}

@@ -10,7 +10,7 @@ import {
 import { Fade, Collapse } from "./Animations";
 import { PaginationButtons } from "./PaginationButtons/PaginationButtons";
 import { TypeButton } from "./TypeButton/TypeButton";
-import { MDContainer, XLContainer } from "./Containers";
+import { MDContainer, XLContainer, FourXLContainer } from "./Containers";
 import { NavDropdown } from "./NavDropdown/NavDropdown";
 import Sidebar from "./Sidebar/Sidebar";
 import MediaSearchQuery from "./MediaSearchQuery/MediaSearchQuery";
@@ -31,4 +31,5 @@ export {
   NavDropdown,
   Sidebar,
   MediaSearchQuery,
+  FourXLContainer,
 };

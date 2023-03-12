@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useAppSelector, useAppDispatch } from "../../store/hooks";
 import ReactPlayer from "react-player/youtube";
@@ -8,7 +8,12 @@ import { MediaTypes, MediaType } from "../../types/MediaTypes";
 import { interfaceShowDetail } from "../../features/showSlice";
 import { interfaceMovieDetail } from "../../features/movieSlice";
 import { interfaceAnimeDetail } from "../../features/animeSlice";
-
+import { Sidebar } from "../../components";
+import { FourXLContainer } from "../../components";
+import { getTopRatedMovies } from "../../features/movieSlice";
+import { getTopRatedAnime } from "../../features/animeSlice";
+import { getTopRatedShows } from "../../features/showSlice";
+import { VideoTable } from "./VideoTable/VideoTable";
 type Props = {
   detailMethod: any;
   type: MediaTypes;
@@ -28,6 +33,7 @@ function isAnimeDetail(details: any): details is interfaceAnimeDetail {
 
 export const Watch = ({ detailMethod, type }: Props) => {
   const { theme } = useContext(ThemeContext);
+  const [activeVideo, setActiveVideo] = useState<number>(0);
   const isDarkMode = theme === "dark" ? true : false;
 
   const details = useAppSelector((state) =>
@@ -37,6 +43,34 @@ export const Watch = ({ detailMethod, type }: Props) => {
       ? (state.show.showDetails as interfaceShowDetail)
       : (state.anime.animeDetail as interfaceAnimeDetail)
   );
+
+  const handleActiveVideo = (idx: number) => {
+    setActiveVideo(idx);
+  };
+
+  const getVideos = (): { name: string }[] => {
+    let videos: { name: string }[] = [];
+    if (type === MediaType.MOVIE || type === MediaType.SHOW) {
+      if (isMovieDetail(details) || isShowDetail(details)) {
+        videos = details.videos.results.map((video) => ({
+          name: video.name,
+        }));
+      }
+    } else if (type === MediaType.ANIME) {
+      videos.push({ name: "Trailer" });
+    }
+
+    return videos;
+  };
+
+  const topMedia = useAppSelector((state) =>
+    type === MediaType.MOVIE
+      ? state.movie.topRatedMovies
+      : type === MediaType.SHOW
+      ? state.show.topRatedShows
+      : state.anime.topRatedAnime
+  );
+
   const loading = useAppSelector((state) => state.movie.cardDetailLoading);
   const dispatch = useAppDispatch();
   const id = useParams().id;
@@ -49,9 +83,9 @@ export const Watch = ({ detailMethod, type }: Props) => {
     if (type === MediaType.ANIME && isAnimeDetail(details)) {
       return details?.trailer?.youtube_id;
     } else if (type === MediaType.SHOW && isShowDetail(details)) {
-      return details?.videos?.results?.[0]?.key;
+      return details?.videos?.results?.[activeVideo]?.key;
     } else if (type === MediaType.MOVIE && isMovieDetail(details)) {
-      return details?.videos?.results?.[0]?.key;
+      return details?.videos?.results?.[activeVideo]?.key;
     }
   };
 
@@ -121,47 +155,120 @@ export const Watch = ({ detailMethod, type }: Props) => {
     return "";
   };
 
+  useEffect(() => {
+    switch (type) {
+      case "movie":
+        dispatch(getTopRatedMovies(1));
+        break;
+      case "show":
+        dispatch(getTopRatedShows(1));
+        break;
+      case "anime":
+        dispatch(getTopRatedAnime(1));
+        break;
+      default:
+        dispatch(getTopRatedMovies(1));
+    }
+  }, [dispatch, type]);
+
+  const getTypeOfMedia = () => {
+    switch (type) {
+      case "movie":
+        return "movies";
+      case "show":
+        return "shows";
+      case "anime":
+        return "anime";
+      default:
+        return "movies";
+    }
+  };
+
   if (loading || !details) {
     return <div className="text-white">Loading...</div>;
   }
 
   return (
-    <div className="mt-8">
-      {getMovie() && (
-        <ReactPlayer
-          url={`https://www.youtube.com/watch?v=${getMovie()}`}
-          controls={true}
-        />
-      )}
-
-      <div className="mt-4 flex">
-        <div className="p-6 flex-shrink-0">
-          <img className="h-80 w-60" alt="img" src={getPosterPath()} />
-        </div>
-        <div
-          className={classNames("pr-6 py-6 max-w-lg", {
-            "text-dark-font-primary": isDarkMode,
-            "text-light-font-primary": !isDarkMode,
-          })}
-        >
-          <h1 className="text-4xl font-bold">{getTitle()}</h1>
-          <div className="mt-2">
-            <p className="mb-2">{getOverview()}</p>
-            <p className="text-xs">Score: {getVoteAverage()}</p>
-            <p className="text-xs">Status: {getStatus()}</p>
-            <p className="text-xs">Release date: {getReleaseDate()}</p>
+    <FourXLContainer>
+      <div className="flex gap-8 justify-between">
+        <div className="mt-8 w-full p-4">
+          <div
+            className={classNames("player-wrapper", {
+              "bg-dark-secondary text-dark-font-primary":
+                isDarkMode && !getMovie(),
+              "bg-light-secondary text-light-font-primary":
+                !isDarkMode && !getMovie(),
+            })}
+          >
+            {getMovie() ? (
+              <ReactPlayer
+                url={`https://www.youtube.com/watch?v=${getMovie()}`}
+                controls={true}
+                className="react-player"
+                width="100%"
+                height="100%"
+              />
+            ) : (
+              <div className="absolute inset-0 flex items-center justify-center">
+                <p className="text-center font-bold">No Video Found</p>
+              </div>
+            )}
           </div>
 
-          <div className="genre mt-2 text-md">
-            <div className="inline-flex gap-1 flex-wrap">
-              <span className="font-bold">Genre:</span>
-              {details?.genres?.map((o, i) => (
-                <span key={i}>{o.name}</span>
-              ))}
+          <VideoTable
+            videos={getVideos()}
+            handleActiveVideo={handleActiveVideo}
+            activeVideo={activeVideo}
+          />
+          <div className="mt-4 flex flex-row">
+            <div className="p-6 flex-shrink-0 hidden sm:block">
+              <img
+                className="lg:h-80 lg:w-60 md:h-40 md:w-30 h-20 w-20"
+                alt="img"
+                src={getPosterPath()}
+              />
+            </div>
+            <div
+              className={classNames("md:pr-6 md:py-6 max-w-3xl", {
+                "text-dark-font-primary": isDarkMode,
+                "text-light-font-primary": !isDarkMode,
+              })}
+            >
+              <h1 className="xl:text-4xl lg:text-3xl md:text-2xl text-xl font-bold">
+                {getTitle()}
+              </h1>
+              <div className="mt-2">
+                <p className="mb-2 md:text-sm text-xs">
+                  {getOverview()?.slice(0, 1500)}
+                </p>
+                <p className="md:text-sm text-xs">Score: {getVoteAverage()}</p>
+                <p className="md:text-sm text-xs">Status: {getStatus()}</p>
+                <p className="md:text-sm text-xs">
+                  Release date: {getReleaseDate()}
+                </p>
+              </div>
+
+              <div className="genre mt-2 text-md">
+                <div className="inline-flex gap-1 flex-wrap">
+                  <span className="font-bold">Genre:</span>
+                  {details?.genres?.map((o, i) => (
+                    <span key={i}>{o.name}</span>
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
         </div>
+
+        <Sidebar
+          title={`Top ${getTypeOfMedia().replace(/^\w/, (c) =>
+            c.toUpperCase()
+          )}`}
+          topMedia={topMedia}
+          type={getTypeOfMedia()}
+          hideScreen="xl"
+        />
       </div>
-    </div>
+    </FourXLContainer>
   );
 };
