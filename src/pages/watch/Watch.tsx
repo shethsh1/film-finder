@@ -188,10 +188,6 @@ export const Watch = ({ detailMethod, type }: Props) => {
     setActiveVideo(0);
   }, [id]);
 
-  if (loading || !details) {
-    return <div className="text-white">Loading...</div>;
-  }
-
   return (
     <FourXLContainer>
       <div className="flex gap-8 justify-between">
