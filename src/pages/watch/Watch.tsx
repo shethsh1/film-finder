@@ -173,17 +173,19 @@ export const Watch = ({ detailMethod, type }: Props) => {
       <div className="flex gap-8 justify-between">
         <div className="mt-8 w-full p-4">
           <div className="player-wrapper">
-            <ReactPlayer
-              url={`https://www.youtube.com/watch?v=${getMovie()}`}
-              controls={true}
-              className="react-player"
-              width="100%"
-              height="100%"
-            />
+            {getMovie() && (
+              <ReactPlayer
+                url={`https://www.youtube.com/watch?v=${getMovie()}`}
+                controls={true}
+                className="react-player"
+                width="100%"
+                height="100%"
+              />
+            )}
           </div>
 
           <div className="mt-4 flex flex-row">
-            <div className="p-6 flex-shrink-0">
+            <div className="p-6 flex-shrink-0 hidden sm:block">
               <img
                 className="lg:h-80 lg:w-60 md:h-40 md:w-30 h-20 w-20"
                 alt="img"
@@ -191,17 +193,23 @@ export const Watch = ({ detailMethod, type }: Props) => {
               />
             </div>
             <div
-              className={classNames("pr-6 py-6 max-w-3xl", {
+              className={classNames("md:pr-6 md:py-6 max-w-3xl", {
                 "text-dark-font-primary": isDarkMode,
                 "text-light-font-primary": !isDarkMode,
               })}
             >
-              <h1 className="text-4xl font-bold">{getTitle()}</h1>
+              <h1 className="xl:text-4xl lg:text-3xl md:text-2xl text-xl font-bold">
+                {getTitle()}
+              </h1>
               <div className="mt-2">
-                <p className="mb-2 text-sm">{getOverview()?.slice(0, 1500)}</p>
-                <p className="text-sm">Score: {getVoteAverage()}</p>
-                <p className="text-sm">Status: {getStatus()}</p>
-                <p className="text-sm">Release date: {getReleaseDate()}</p>
+                <p className="mb-2 md:text-sm text-xs">
+                  {getOverview()?.slice(0, 1500)}
+                </p>
+                <p className="md:text-sm text-xs">Score: {getVoteAverage()}</p>
+                <p className="md:text-sm text-xs">Status: {getStatus()}</p>
+                <p className="md:text-sm text-xs">
+                  Release date: {getReleaseDate()}
+                </p>
               </div>
 
               <div className="genre mt-2 text-md">
