@@ -71,7 +71,6 @@ export const Watch = ({ detailMethod, type }: Props) => {
       : state.anime.topRatedAnime
   );
 
-  const loading = useAppSelector((state) => state.movie.cardDetailLoading);
   const dispatch = useAppDispatch();
   const id = useParams().id;
 
