@@ -184,6 +184,10 @@ export const Watch = ({ detailMethod, type }: Props) => {
     }
   };
 
+  useEffect(() => {
+    setActiveVideo(0);
+  }, [id]);
+
   if (loading || !details) {
     return <div className="text-white">Loading...</div>;
   }
