@@ -27,14 +27,17 @@ export const VideoTable: React.FC<VideoTableProps> = ({
         <div
           key={idx}
           onClick={() => handleActiveVideo(idx)}
-          className={classNames("flex p-4 gap-4 select-none cursor-pointer", {
-            "bg-dark-secondary hover:bg-dark-hover":
-              isDarkMode && activeVideo !== idx,
-            "bg-light-secondary hover:bg-light-hover":
-              !isDarkMode && activeVideo !== idx,
-            "bg-dark-hover": activeVideo === idx && isDarkMode,
-            "bg-light-hover": activeVideo === idx && !isDarkMode,
-          })}
+          className={classNames(
+            "flex p-4 gap-4 select-none cursor-pointer items-center",
+            {
+              "bg-dark-secondary hover:bg-dark-hover":
+                isDarkMode && activeVideo !== idx,
+              "bg-light-secondary hover:bg-light-hover":
+                !isDarkMode && activeVideo !== idx,
+              "bg-dark-hover": activeVideo === idx && isDarkMode,
+              "bg-light-hover": activeVideo === idx && !isDarkMode,
+            }
+          )}
         >
           <span className="font-bold">{idx + 1}</span>
           <span className="flex-1">{video.name}</span>
