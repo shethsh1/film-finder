@@ -9,16 +9,35 @@ const typeDefs = gql`
 
   type Query {
     users: [User!]!
+    checkJwt: Boolean!
   }
 
+  # Create User inputs
   input CreateUserInput {
     username: String!
     email: String!
     password: String!
   }
 
+  type createUserResult {
+    id: ID!
+  }
+  # Create User inputs Ends
+
+  # Login inputs
+  input LoginInput {
+    email: String!
+    password: String!
+  }
+
+  type LoginResult {
+    jwt: String!
+  }
+  # Login inputs Ends
+
   type Mutation {
-    createUser(input: CreateUserInput!): [User]!
+    createUser(input: CreateUserInput!): createUserResult!
+    login(input: LoginInput!): LoginResult!
   }
 `;
 
