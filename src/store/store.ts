@@ -1,14 +1,16 @@
-import { configureStore } from "@reduxjs/toolkit";
-import MovieReducer from "../features/movieSlice";
-import ShowReducer from "../features/showSlice";
-import AnimeReducer from "../features/animeSlice";
-import { moviesApi, showsApi, animeApi } from "../features/apiSlice";
+import { configureStore } from '@reduxjs/toolkit';
+import MovieReducer from '../features/movieSlice';
+import ShowReducer from '../features/showSlice';
+import AnimeReducer from '../features/animeSlice';
+import AuthReducer from '../features/authSlice';
+import { moviesApi, showsApi, animeApi } from '../features/apiSlice';
 
 export const store = configureStore({
   reducer: {
     movie: MovieReducer,
     show: ShowReducer,
     anime: AnimeReducer,
+    auth: AuthReducer,
     [moviesApi.reducerPath]: moviesApi.reducer,
     [showsApi.reducerPath]: showsApi.reducer,
     [animeApi.reducerPath]: animeApi.reducer,

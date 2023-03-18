@@ -1,4 +1,5 @@
 const knex = require('../db/knex');
+const bcrypt = require('bcrypt');
 
 const getUserByEmail = async (email) => {
   const users = knex('users');
@@ -6,11 +7,10 @@ const getUserByEmail = async (email) => {
   return result;
 };
 
-const getUserByEmailAndPassword = async (email, password) => {
+const verifyCredentials = async (email, password) => {
   const users = knex('users');
-  const [result] = await users
-    .select('*')
-    .where({ email: email, password: password });
+  const [user] = await users.select('*').where({ email: email });
+  const result = user ? await bcrypt.compare(password, user.password) : false;
   return result;
 };
 
@@ -21,9 +21,10 @@ const getAllUsers = async () => {
 };
 
 const createUser = async ({ username, email, password }) => {
+  const hashedPW = await bcrypt.hash(password, 10);
   const users = knex('users');
   const [result] = await users
-    .insert({ username, email, password })
+    .insert({ username, email, password: hashedPW })
     .returning('id');
   return result;
 };
@@ -32,5 +33,5 @@ module.exports = {
   getUserByEmail,
   createUser,
   getAllUsers,
-  getUserByEmailAndPassword,
+  verifyCredentials,
 };

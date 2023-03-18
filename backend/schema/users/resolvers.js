@@ -22,7 +22,7 @@ const resolvers = {
       }
 
       const { email, password } = value;
-      const userLoginCheck = await UserService.getUserByEmailAndPassword(
+      const userLoginCheck = await UserService.verifyCredentials(
         email,
         password
       );
