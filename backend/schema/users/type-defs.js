@@ -1,4 +1,4 @@
-const { gql } = require('apollo-server');
+const { gql } = require("apollo-server");
 
 const typeDefs = gql`
   type User {
@@ -35,9 +35,16 @@ const typeDefs = gql`
   }
   # Login inputs Ends
 
+  # Google Login Input
+  input GoogleLoginInput {
+    credentials: String!
+  }
+  # Google Login Input Ends
+
   type Mutation {
     createUser(input: CreateUserInput!): createUserResult!
     login(input: LoginInput!): LoginResult!
+    googleLogin(input: GoogleLoginInput!): LoginResult!
   }
 `;
 

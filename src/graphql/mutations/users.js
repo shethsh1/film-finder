@@ -15,3 +15,11 @@ export const CREATE_USER_MUTATION = gql`
     }
   }
 `;
+
+export const GOOGLE_LOGIN_MUTATION = gql`
+  mutation LoginInput($loginInput: GoogleLoginInput!) {
+    googleLogin(input: $loginInput) {
+      jwt
+    }
+  }
+`;

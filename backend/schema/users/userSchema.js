@@ -1,4 +1,4 @@
-const Joi = require('joi');
+const Joi = require("joi");
 
 const UserSchema = {
   userInputSchema: Joi.object({
@@ -10,6 +10,10 @@ const UserSchema = {
   userLoginSchema: Joi.object({
     email: Joi.string().email().required(),
     password: Joi.string().required(),
+  }),
+
+  userGoogleLoginSchema: Joi.object({
+    credentials: Joi.string().required(),
   }),
 };
 

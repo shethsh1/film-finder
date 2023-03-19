@@ -57,6 +57,44 @@ const resolvers = {
       });
       return createResult;
     },
+
+    googleLogin: async (parent, { input }) => {
+      const { error, value } = UserSchema.userGoogleLoginSchema.validate(input);
+      if (error) {
+        throw new Error(error.message);
+      }
+      const { credentials } = value;
+
+      const { email, firstName, lastName } =
+        await UserService.verifyGoogleCredentials(credentials);
+
+      const userExists = await UserService.getUserByEmail(email);
+
+      if (!userExists) {
+        const randomNum = Math.floor(Math.random() * 9000) + 1000;
+        const formattedUsername = `${firstName}_${lastName}_${randomNum}`;
+        const userCreated = await UserService.createGoogleUser({
+          username: formattedUsername,
+          email,
+        });
+        if (!userCreated) {
+          throw new Error("Something went wrong...");
+        }
+      }
+
+      const isGoogleUser = await UserService.checkIfGoogleUser(email);
+      if (!isGoogleUser) {
+        throw new Error("This account was created without google login");
+      }
+
+      const jwt = HelperService.createToken({
+        email: isGoogleUser.email,
+        userId: isGoogleUser.id,
+        username: isGoogleUser.username,
+        expiredTime: "1d",
+      });
+      return { jwt };
+    },
   },
 };
 

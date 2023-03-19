@@ -1,3 +1,5 @@
+// @ts-nocheck
+import { useEffect, useCallback } from "react";
 import { useMutation } from "@apollo/client";
 import { yupResolver } from "@hookform/resolvers/yup";
 import classNames from "classnames";
@@ -26,6 +28,9 @@ export const LoginForm: React.FC<LoginFormProps> = ({
   const [login, { loading, error }] = useMutation<{ login: { jwt: string } }>(
     Users.LOGIN_MUTATION
   );
+  const [googleLogin, { error: googleError }] = useMutation<{
+    googleLogin: { jwt: string };
+  }>(Users.GOOGLE_LOGIN_MUTATION);
   const {
     register,
     handleSubmit,
@@ -51,11 +56,44 @@ export const LoginForm: React.FC<LoginFormProps> = ({
       console.log(e);
     }
   };
+
+  const handleCallbackResponse = useCallback(
+    async (res) => {
+      const body = {
+        credentials: res.credential,
+      };
+      try {
+        const res = await googleLogin({ variables: { loginInput: body } });
+        dispatch(setToken(res.data!.googleLogin.jwt));
+        localStorage.setItem("authToken", res.data!.googleLogin.jwt);
+        closeModal();
+        reset();
+      } catch (e) {
+        console.log(e);
+      }
+    },
+    [closeModal, dispatch, googleLogin, reset]
+  );
+
+  useEffect(() => {
+    google.accounts.id.initialize({
+      client_id: process.env.REACT_APP_GOOGLE_CLIENT_ID,
+      callback: handleCallbackResponse,
+    });
+
+    google.accounts.id.renderButton(document.getElementById("signInDiv"), {
+      scope: "profile email",
+      theme: "outline",
+      size: "large",
+    });
+  }, [handleCallbackResponse]);
+
   return (
     <div>
       <h2 className="font-bold text-2xl mb-6">Sign in to your account</h2>
       <div className="mb-4">
         {error?.message && <ErrorAlert message={error.message} />}
+        {googleError?.message && <ErrorAlert message={googleError.message} />}
       </div>
       <form className="flex flex-col gap-8" onSubmit={handleSubmit(onSubmit)}>
         <div className="flex flex-col gap-2">
@@ -145,6 +183,10 @@ export const LoginForm: React.FC<LoginFormProps> = ({
             )}
           </div>
         </button>
+        <div
+          id="signInDiv"
+          className="flex items-center justify-center relative"
+        ></div>
       </form>
 
       <p
