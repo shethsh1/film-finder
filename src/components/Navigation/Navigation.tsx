@@ -5,8 +5,9 @@ import { ThemeContext } from "../../context/Theme/ThemeContext";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { NavDropdown } from "../NavDropdown/NavDropdown";
 import { LoginModal } from "..";
-import { useAppSelector } from "../../store/hooks";
+import { useAppSelector, useAppDispatch } from "../../store/hooks";
 import * as HelperService from "../../util/helper";
+import { logout } from "../../features/authSlice";
 const NavItems = [
   {
     to: "/",
@@ -31,6 +32,7 @@ export const Navigation = () => {
   const isDarkMode = theme === "dark";
   const [isOpen, setIsOpen] = useState(false);
   const token = useAppSelector((state) => state.auth.token);
+  const dispatch = useAppDispatch();
 
   function openModal() {
     setIsOpen(true);
@@ -39,6 +41,10 @@ export const Navigation = () => {
   function closeModal() {
     setIsOpen(false);
   }
+
+  const signOut = () => {
+    dispatch(logout());
+  };
 
   return (
     <>
@@ -96,7 +102,19 @@ export const Navigation = () => {
           </div>
         ) : (
           <div>
-            <span>Welcome back, {HelperService.decodeJWT(token).username}</span>
+            <NavDropdown
+              label={
+                <span className="text-sm">
+                  Welcome back, {HelperService.decodeJWT(token).username}
+                </span>
+              }
+            >
+              <NavDropdown.DivItem
+                onClick={() => signOut()}
+                label={"Sign out"}
+                href="/"
+              />
+            </NavDropdown>
           </div>
         )}
       </nav>

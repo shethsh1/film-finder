@@ -8,6 +8,8 @@ import { useAppDispatch } from "../../store/hooks";
 import { useMutation } from "@apollo/client";
 import { setToken } from "../../features/authSlice";
 import * as users from "../../graphql/mutations/users";
+import { Oval } from "react-loader-spinner";
+import { ErrorAlert } from "../Alerts";
 
 interface ModalProps {
   isOpen: boolean;
@@ -18,7 +20,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
   const { theme } = useContext(ThemeContext);
   const isDarkMode = theme === "dark";
   const dispatch = useAppDispatch();
-  const [login, { loading }] = useMutation<{ login: { jwt: string } }>(
+  const [login, { loading, error }] = useMutation<{ login: { jwt: string } }>(
     users.LOGIN_MUTATION
   );
   const {
@@ -39,8 +41,10 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
     try {
       const res = await login({ variables: { loginInput: body } });
       dispatch(setToken(res.data!.login.jwt));
+      localStorage.setItem("authToken", res.data!.login.jwt);
+      closeModal();
       reset();
-    } catch (e) {
+    } catch (e: any) {
       console.log(e);
     }
   };
@@ -84,6 +88,9 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
         )}
       >
         <h2 className="font-bold text-2xl mb-6">Sign in to your account</h2>
+        <div className="mb-4">
+          {error?.message && <ErrorAlert message={error.message} />}
+        </div>
         <form className="flex flex-col gap-8" onSubmit={handleSubmit(onSubmit)}>
           <div className="flex flex-col gap-2">
             <label htmlFor="email" className="text-sm">
@@ -146,13 +153,31 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
             )}
           </div>
           <button
+            disabled={loading}
             type="submit"
             className={classNames("", {
-              "bg-gradient-to-r from-blue-900 to-indigo-900 hover:from-indigo-900 hover:to-blue-900 text-white py-2 px-4 rounded":
+              "bg-gradient-to-r from-blue-900 to-indigo-900 hover:from-indigo-900 hover:to-blue-900 text-white py-2 px-4 rounded relative":
                 true,
             })}
           >
-            Login
+            <div className="flex justify-center items-center h-10">
+              {loading ? (
+                <Oval
+                  height={40}
+                  width={40}
+                  color={isDarkMode ? "#1d2d44" : "#004f44"}
+                  wrapperStyle={{}}
+                  wrapperClass=""
+                  visible={true}
+                  ariaLabel="oval-loading"
+                  secondaryColor="#d5dfed"
+                  strokeWidth={2}
+                  strokeWidthSecondary={2}
+                />
+              ) : (
+                <span>Login</span>
+              )}
+            </div>
           </button>
         </form>
 
