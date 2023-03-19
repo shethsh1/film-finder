@@ -1,11 +1,11 @@
-import { useContext, useRef } from "react";
-import { ThemeContext } from "../../context/Theme/ThemeContext";
-import classNames from "classnames";
-import { MDContainer, MediaSearchQuery } from "../../components";
+import { useContext, useRef } from 'react';
+import { ThemeContext } from '../../context/Theme/ThemeContext';
+import classNames from 'classnames';
+import { MDContainer, MediaSearchQuery } from '../../components';
 
 export const Home = () => {
   const { theme } = useContext(ThemeContext);
-  const isDarkMode = theme === "dark" ? true : false;
+  const isDarkMode = theme === 'dark' ? true : false;
   const containerRef = useRef<HTMLDivElement>(null);
 
   return (
@@ -14,17 +14,17 @@ export const Home = () => {
         <div
           ref={containerRef}
           className={classNames({
-            "text-dark-font-primary": isDarkMode,
-            "text-light-font-primary": !isDarkMode,
+            'text-dark-font-primary': isDarkMode,
+            'text-light-font-primary': !isDarkMode,
           })}
         >
           <div className="lg:text-4xl md:text-3xl text-2xl  flex flex-col gap-4 items-center mb-12">
-            <h1 className="text-center" style={{ fontFamily: "Lobster Two" }}>
+            <h1 className="text-center" style={{ fontFamily: 'Lobster Two' }}>
               Hello! Welcome to Film Finder
             </h1>
             <p
               className="lg:text-3xl md:text-2xl text-xl text-center"
-              style={{ fontFamily: "Poppins" }}
+              style={{ fontFamily: 'Poppins' }}
             >
               Find Your Favorite Movies, TV Shows, and Anime
             </p>

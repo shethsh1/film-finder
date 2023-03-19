@@ -12,9 +12,15 @@ interface NavDropdownProps extends React.HTMLAttributes<HTMLDivElement> {
 
 interface NavDropdownType extends React.FC<NavDropdownProps> {
   Item: React.FC<NavItemProps>;
+  DivItem: React.FC<NavDivItemProps>;
 }
 
-interface NavItemProps {
+interface NavItemProps extends React.HTMLAttributes<HTMLAnchorElement> {
+  href: string;
+  label: React.ReactNode;
+}
+
+interface NavDivItemProps extends React.HTMLAttributes<HTMLDivElement> {
   href: string;
   label: React.ReactNode;
 }
@@ -88,12 +94,13 @@ export const NavDropdown: NavDropdownType = ({
   );
 };
 
-const NavDropdownItem: React.FC<NavItemProps> = ({ href, label }) => {
+const NavDropdownItem: React.FC<NavItemProps> = ({ href, label, ...props }) => {
   const { theme } = useContext(ThemeContext);
   const isDarkMode = theme === "dark" ? true : false;
   return (
     <NavLink
       to={href}
+      {...props}
       className={({ isActive }) =>
         classNames(
           "block px-4 py-2 text-sm  hover:bg-gray-100 hover:text-gray-900",
@@ -110,4 +117,28 @@ const NavDropdownItem: React.FC<NavItemProps> = ({ href, label }) => {
   );
 };
 
+const NavDropdownDivItem: React.FC<NavDivItemProps> = ({
+  href,
+  label,
+  ...props
+}) => {
+  const { theme } = useContext(ThemeContext);
+  const isDarkMode = theme === "dark" ? true : false;
+  return (
+    <div
+      {...props}
+      className={classNames(
+        "block px-4 py-2 text-sm  hover:bg-gray-100 hover:text-gray-900",
+        {
+          "text-light-font-primary": !isDarkMode,
+          "text-dark-font-primary": isDarkMode,
+        }
+      )}
+    >
+      {label}
+    </div>
+  );
+};
+
 NavDropdown.Item = NavDropdownItem;
+NavDropdown.DivItem = NavDropdownDivItem;

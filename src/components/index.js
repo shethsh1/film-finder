@@ -14,6 +14,8 @@ import { MDContainer, XLContainer, FourXLContainer } from "./Containers";
 import { NavDropdown } from "./NavDropdown/NavDropdown";
 import Sidebar from "./Sidebar/Sidebar";
 import MediaSearchQuery from "./MediaSearchQuery/MediaSearchQuery";
+import LoginModal from "./LoginModal/LoginModal";
+import { ErrorAlert } from "./Alerts";
 export {
   Header,
   ThemeChangeButton,
@@ -32,4 +34,6 @@ export {
   Sidebar,
   MediaSearchQuery,
   FourXLContainer,
+  LoginModal,
+  ErrorAlert,
 };
