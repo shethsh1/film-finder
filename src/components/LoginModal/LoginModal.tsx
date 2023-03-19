@@ -1,13 +1,13 @@
-import React, { useContext } from 'react';
-import classNames from 'classnames';
-import { ThemeContext } from '../../context/Theme/ThemeContext';
-import schema from '../../form-schema/schema';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { useForm } from 'react-hook-form';
-import { useAppDispatch } from '../../store/hooks';
-import { useMutation } from '@apollo/client';
-import { setToken } from '../../features/authSlice';
-import * as users from '../../graphql/mutations/users';
+import React, { useContext, useEffect } from "react";
+import classNames from "classnames";
+import { ThemeContext } from "../../context/Theme/ThemeContext";
+import schema from "../../form-schema/schema";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useForm } from "react-hook-form";
+import { useAppDispatch } from "../../store/hooks";
+import { useMutation } from "@apollo/client";
+import { setToken } from "../../features/authSlice";
+import * as users from "../../graphql/mutations/users";
 
 interface ModalProps {
   isOpen: boolean;
@@ -16,7 +16,7 @@ interface ModalProps {
 
 const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
   const { theme } = useContext(ThemeContext);
-  const isDarkMode = theme === 'dark';
+  const isDarkMode = theme === "dark";
   const dispatch = useAppDispatch();
   const [login, { loading }] = useMutation<{ login: { jwt: string } }>(
     users.LOGIN_MUTATION
@@ -49,6 +49,14 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
     onClose();
   };
 
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, []);
+
   return (
     <>
       {/* Background overlay */}
@@ -56,8 +64,8 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
         className={classNames(
           `fixed top-0 left-0 w-full h-full bg-gray-900 bg-opacity-50 transition-opacity duration-300`,
           {
-            'pointer-events-auto opacity-100': isOpen,
-            'pointer-events-none opacity-0': !isOpen,
+            "pointer-events-auto opacity-100": isOpen,
+            "pointer-events-none opacity-0": !isOpen,
           }
         )}
         onClick={closeModal}
@@ -66,12 +74,12 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
       {/* Modal content */}
       <div
         className={classNames(
-          `w-full max-w-[540px] fixed top-1/2 md:top-1/3 left-1/2 transform -translate-x-1/2 -translate-y-1/2  rounded-lg shadow-lg py-[56px] px-[48px] transition-opacity duration-300`,
+          `w-full max-w-[400px] md:max-w-[540px] fixed top-1/2 md:top-[40%] left-1/2 transform -translate-x-1/2 -translate-y-1/2  rounded-lg shadow-lg py-[56px] px-[48px] transition-opacity duration-300`,
           {
-            'pointer-events-auto opacity-100': isOpen,
-            'pointer-events-none opacity-0': !isOpen,
-            'bg-dark-secondary': isDarkMode,
-            'bg-white': !isDarkMode,
+            "pointer-events-auto opacity-100": isOpen,
+            "pointer-events-none opacity-0": !isOpen,
+            "bg-dark-secondary": isDarkMode,
+            "bg-white": !isDarkMode,
           }
         )}
       >
@@ -84,20 +92,25 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
             <div className="min-h-[44px] w-full max-w-full ">
               <input
                 type="text"
-                {...register('email')}
+                {...register("email")}
                 className={classNames(
-                  'px-4 py-2 w-full border border-solid border-gray-300 outline-none',
+                  "px-4 py-2 w-full border border-solid border-gray-300 outline-none",
                   {
-                    'text-black placeholder:text-black bg-gray-200 dark:focus:border-blue-500 focus:ring dark:focus:ring-blue-200':
+                    "text-black placeholder:text-black bg-gray-200 dark:focus:border-blue-500 focus:ring dark:focus:ring-blue-200":
                       isDarkMode,
-                    'focus:border-blue-500 focus:ring focus:ring-blue-200':
+                    "focus:border-blue-500 focus:ring focus:ring-blue-200":
                       !isDarkMode,
                   }
                 )}
               />
             </div>
             {errors.email && (
-              <p className="text-xs text-red-500">
+              <p
+                className={classNames("text-xs ", {
+                  "text-red-500": !isDarkMode,
+                  "text-yellow-400": isDarkMode,
+                })}
+              >
                 {errors?.email?.message?.toString()}
               </p>
             )}
@@ -109,34 +122,43 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
             <div className="min-h-[44px] w-full max-w-full border-1 border-solid border-gray-900">
               <input
                 type="password"
-                {...register('password')}
+                {...register("password")}
                 className={classNames(
-                  'px-4 py-2 w-full border border-solid border-gray-300 outline-none',
+                  "px-4 py-2 w-full border border-solid border-gray-300 outline-none",
                   {
-                    'text-black placeholder:text-black bg-gray-200 dark:focus:border-blue-500 focus:ring dark:focus:ring-blue-200':
+                    "text-black placeholder:text-black bg-gray-200 dark:focus:border-blue-500 focus:ring dark:focus:ring-blue-200":
                       isDarkMode,
-                    'focus:border-blue-500 focus:ring focus:ring-blue-200':
+                    "focus:border-blue-500 focus:ring focus:ring-blue-200":
                       !isDarkMode,
                   }
                 )}
               />
             </div>
             {errors.password && (
-              <p className="text-xs text-red-500">
+              <p
+                className={classNames("text-xs ", {
+                  "text-red-500": !isDarkMode,
+                  "text-yellow-400": isDarkMode,
+                })}
+              >
                 {errors?.password?.message?.toString()}
               </p>
             )}
           </div>
           <button
             type="submit"
-            className={classNames('', {
-              'bg-gradient-to-r from-blue-900 to-indigo-900 hover:from-indigo-900 hover:to-blue-900 text-white py-2 px-4 rounded':
+            className={classNames("", {
+              "bg-gradient-to-r from-blue-900 to-indigo-900 hover:from-indigo-900 hover:to-blue-900 text-white py-2 px-4 rounded":
                 true,
             })}
           >
             Login
           </button>
         </form>
+
+        <p className="text-center mt-8 under cursor-pointer">
+          Don't have an account? Sign up.
+        </p>
       </div>
     </>
   );

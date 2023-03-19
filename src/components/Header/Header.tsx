@@ -14,7 +14,7 @@ export const Header = () => {
   const isDarkMode = theme === "dark" ? true : false;
   return (
     <div
-      className={classNames("h-[128px] fixed z-50 w-full px-6 pt-3", {
+      className={classNames("h-[140px] fixed z-50 w-full px-6 pt-3", {
         "bg-light-primary text-light-font-primary": !isDarkMode,
         "bg-dark-primary text-dark-font-primary": isDarkMode,
       })}
