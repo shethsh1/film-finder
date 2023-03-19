@@ -2,9 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url("https://fonts.googleapis.com/css?family=Manrope:400,700&display=swap");
-@import url("https://fonts.googleapis.com/css?family=Poppins:400,700&display=swap");
-@import url("https://fonts.googleapis.com/css?family=Lobster+Two");
+@import url('https://fonts.googleapis.com/css?family=Manrope:400,700&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Poppins:400,700&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Lobster+Two');
 
 body {
   font-family: Manrope, Poppins, sans-serif;
@@ -49,5 +49,17 @@ body {
   .player-wrapper {
     position: relative;
     padding-top: 56.25%; /* 16:9 aspect ratio */
+  }
+}
+
+.modal {
+  transition-property: transform;
+}
+
+@media (min-width: 640px) {
+  .modal {
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
   }
 }
