@@ -31,6 +31,7 @@ export const Navigation = () => {
   const { theme } = useContext(ThemeContext);
   const isDarkMode = theme === "dark";
   const [isOpen, setIsOpen] = useState(false);
+  const [tab, setTab] = useState<"login" | "signup">("login");
   const token = useAppSelector((state) => state.auth.token);
   const dispatch = useAppDispatch();
 
@@ -46,9 +47,20 @@ export const Navigation = () => {
     dispatch(logout());
   };
 
+  const handleTab = (newTab: "login" | "signup") => {
+    setTab(newTab);
+  };
+
   return (
     <>
-      {isOpen && <LoginModal isOpen={isOpen} onClose={closeModal}></LoginModal>}
+      {isOpen && (
+        <LoginModal
+          isOpen={isOpen}
+          onClose={closeModal}
+          tab={tab}
+          handleTab={handleTab}
+        ></LoginModal>
+      )}
 
       <nav className="mt-4 flex justify-between items-center">
         <ul
@@ -83,7 +95,10 @@ export const Navigation = () => {
         {!token ? (
           <div className="inline-flex gap-2">
             <button
-              onClick={() => openModal()}
+              onClick={() => {
+                handleTab("login");
+                openModal();
+              }}
               className={classNames("", {
                 "bg-gradient-to-r from-gray-700 to-gray-800 hover:from-gray-800 hover:to-gray-900 text-white py-2 px-4 rounded border border-gray-800 transition-colors duration-200":
                   true,
@@ -92,6 +107,10 @@ export const Navigation = () => {
               Login
             </button>
             <button
+              onClick={() => {
+                handleTab("signup");
+                openModal();
+              }}
               className={classNames("", {
                 "bg-gradient-to-r from-blue-900 to-indigo-900 hover:from-indigo-900 hover:to-blue-900 text-white py-2 px-4 rounded":
                   true,
