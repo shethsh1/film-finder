@@ -28,9 +28,10 @@ export const LoginForm: React.FC<LoginFormProps> = ({
   const [login, { loading, error }] = useMutation<{ login: { jwt: string } }>(
     Users.LOGIN_MUTATION
   );
-  const [googleLogin, { error: googleError }] = useMutation<{
-    googleLogin: { jwt: string };
-  }>(Users.GOOGLE_LOGIN_MUTATION);
+  const [googleLogin, { error: googleError, loading: googleLoading }] =
+    useMutation<{
+      googleLogin: { jwt: string };
+    }>(Users.GOOGLE_LOGIN_MUTATION);
   const {
     register,
     handleSubmit,
@@ -165,7 +166,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
           })}
         >
           <div className="flex justify-center items-center h-10">
-            {loading ? (
+            {loading || googleLoading ? (
               <Oval
                 height={40}
                 width={40}
