@@ -11,6 +11,9 @@ const server = new ApolloServer({
   typeDefs: [userTypeDefs],
   resolvers: [userResolvers],
   context,
+  cacheControl: {
+    cache: 'bounded',
+  },
 });
 
 server.listen().then(({ url }) => {
