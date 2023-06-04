@@ -11,9 +11,7 @@ const server = new ApolloServer({
   typeDefs: [userTypeDefs],
   resolvers: [userResolvers],
   context,
-  cacheControl: {
-    cache: 'bounded',
-  },
+  persistedQueries: false, // Disable persistent queries
 });
 
 server.listen().then(({ url }) => {
