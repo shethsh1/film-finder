@@ -14,6 +14,8 @@ const server = new ApolloServer({
   persistedQueries: false, // Disable persistent queries
 });
 
-server.listen().then(({ url }) => {
-  console.log('Your API is running :' + url);
-});
+server
+  .listen({ port: process.env.PORT || 4000, host: '0.0.0.0' })
+  .then(({ url }) => {
+    console.log(`Your API is running at ${url}`);
+  });
